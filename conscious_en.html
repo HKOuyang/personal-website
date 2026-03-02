@@ -1,0 +1,1191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>A Beginner’s Guide for Conscious Entities • HKOuyang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&family=Noto+Serif:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    :root {
+      --conscious-bg: #05070d;
+      --conscious-panel: rgba(10, 15, 28, 0.92);
+      --conscious-panel-soft: rgba(16, 23, 40, 0.78);
+      --conscious-line: rgba(145, 169, 255, 0.16);
+      --conscious-line-strong: rgba(240, 199, 143, 0.22);
+      --conscious-text: rgba(236, 240, 250, 0.95);
+      --conscious-muted: rgba(183, 191, 214, 0.82);
+      --conscious-system: rgba(154, 223, 255, 0.94);
+      --conscious-left: rgba(62, 84, 150, 0.56);
+      --conscious-right: rgba(86, 63, 26, 0.56);
+      --conscious-thought: rgba(108, 84, 154, 0.24);
+      --conscious-serif: "Noto Serif", "Georgia", serif;
+    }
+
+    body.conscious-page {
+      margin: 0;
+      background:
+        radial-gradient(circle at top, rgba(68, 93, 178, 0.16), transparent 24%),
+        radial-gradient(circle at 78% 18%, rgba(240, 199, 143, 0.08), transparent 18%),
+        linear-gradient(180deg, #04060b 0%, #060914 46%, #04070d 100%);
+      color: var(--conscious-text);
+    }
+
+    body.conscious-page .novel-header {
+      position: sticky;
+      top: 0;
+      z-index: 12;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.96), rgba(0, 0, 0, 0.8));
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    body.conscious-page .panel {
+      position: fixed;
+      background: rgba(2, 5, 10, 0.88);
+      backdrop-filter: blur(12px);
+    }
+
+    .book-reader {
+      position: relative;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 42px 38px 120px;
+      align-items: flex-start;
+      gap: 44px;
+    }
+
+    .book-reader::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 18% 8%, rgba(135, 163, 255, 0.08), transparent 24%),
+        radial-gradient(circle at 84% 34%, rgba(240, 199, 143, 0.06), transparent 18%);
+      pointer-events: none;
+    }
+
+    .book-sidebar {
+      position: sticky;
+      top: 112px;
+      width: 268px;
+      margin-right: 0;
+      flex: 0 0 268px;
+    }
+
+    .book-sidebar img {
+      width: 100%;
+      height: auto;
+      border-radius: 24px;
+      box-shadow:
+        0 34px 70px rgba(0, 0, 0, 0.42),
+        0 0 0 1px rgba(255, 255, 255, 0.06);
+    }
+
+    .book-content {
+      position: relative;
+      flex: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+      overflow: visible;
+    }
+
+    .book-hero-meta {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 40px;
+    }
+
+    .reading-window {
+      position: relative;
+      margin-bottom: 34px;
+      padding: 46px 42px 58px;
+      border-radius: 34px;
+      background:
+        linear-gradient(180deg, rgba(10, 15, 27, 0.92), rgba(7, 11, 20, 0.96));
+      border: 1px solid var(--conscious-line);
+      box-shadow:
+        0 40px 82px rgba(0, 0, 0, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .reading-window[data-window-index="0"] { --speaker-right-tint: rgba(118, 76, 30, 0.62); }
+    .reading-window[data-window-index="1"] { --speaker-right-tint: rgba(101, 61, 44, 0.62); }
+    .reading-window[data-window-index="2"] { --speaker-right-tint: rgba(82, 77, 128, 0.52); }
+    .reading-window[data-window-index="3"] { --speaker-right-tint: rgba(73, 96, 144, 0.52); }
+    .reading-window[data-window-index="4"] { --speaker-right-tint: rgba(98, 84, 46, 0.62); }
+    .reading-window[data-window-index="5"] { --speaker-right-tint: rgba(89, 58, 98, 0.54); }
+
+    .reading-window::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(135, 163, 255, 0.08), transparent 24%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.03), transparent 24%);
+      pointer-events: none;
+    }
+
+    .afterword-shell {
+      position: relative;
+      z-index: 1;
+      margin-top: 80px;
+    }
+
+    .book-title-en {
+      position: relative;
+      z-index: 1;
+      font-family: var(--conscious-serif);
+      font-size: clamp(42px, 5vw, 66px);
+      font-weight: 700;
+      line-height: 1.06;
+      letter-spacing: 0.02em;
+      margin: 0 0 14px 0;
+      color: rgba(245, 247, 255, 0.98);
+    }
+
+    .book-title-cn {
+      position: relative;
+      z-index: 1;
+      font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+      font-size: clamp(18px, 3vw, 26px);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      margin: 0 0 18px 0;
+      opacity: 0.82;
+      color: rgba(220, 228, 246, 0.86);
+    }
+
+    .book-content .book-byline {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      display: block;
+      color: rgba(240, 199, 143, 0.72);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .book-content p {
+      position: relative;
+      z-index: 1;
+      margin-top: 0;
+      margin-bottom: 18px;
+      font-family: var(--conscious-serif);
+      font-size: clamp(19px, 1.75vw, 23px);
+      line-height: 1.95;
+      color: var(--conscious-text);
+    }
+
+    .afterword-title {
+      position: relative;
+      z-index: 1;
+      font-size: 28px;
+      font-weight: 700;
+      margin-top: 0;
+      padding-top: 0;
+      border-top: 0;
+      margin-bottom: 26px;
+      color: rgba(244, 247, 255, 0.96);
+      letter-spacing: 0.08em;
+    }
+
+    .book-content p.is-empty {
+      margin: 0;
+      min-height: 12px;
+    }
+
+    .book-content p.is-narrative {
+      max-width: 36em;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .book-content p.is-system {
+      max-width: 36em;
+      margin: 18px auto;
+      padding: 16px 20px;
+      border-radius: 18px;
+      border: 1px solid rgba(154, 223, 255, 0.22);
+      background:
+        linear-gradient(180deg, rgba(11, 31, 43, 0.84), rgba(8, 18, 29, 0.92));
+      color: var(--conscious-system);
+      font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: clamp(14px, 1.25vw, 16px);
+      line-height: 1.8;
+      letter-spacing: 0.06em;
+      text-align: center;
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+        0 12px 28px rgba(0, 0, 0, 0.24);
+      text-shadow: 0 0 18px rgba(105, 205, 255, 0.18);
+    }
+
+    .book-content p.is-system em {
+      font-style: normal;
+    }
+
+    .book-content p.is-dialogue {
+      width: fit-content;
+      max-width: min(78%, 32em);
+      padding: 18px 24px;
+      border-radius: 24px;
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.22);
+    }
+
+    .book-content p.is-dialogue-left {
+      margin-left: 0;
+      margin-right: auto;
+      border-top-left-radius: 10px;
+      background:
+        linear-gradient(180deg, rgba(54, 76, 141, 0.64), rgba(20, 28, 53, 0.88));
+      border: 1px solid rgba(125, 149, 255, 0.22);
+    }
+
+    .book-content p.is-dialogue-right {
+      margin-left: auto;
+      margin-right: 0;
+      border-top-right-radius: 10px;
+      background:
+        linear-gradient(180deg, var(--speaker-right-tint, rgba(91, 67, 27, 0.58)), rgba(38, 28, 15, 0.88));
+      border: 1px solid rgba(240, 199, 143, 0.2);
+    }
+
+    .book-content p.is-thought {
+      max-width: 40em;
+      margin: 26px auto;
+      padding: 24px 34px;
+      border-radius: 40px;
+      background:
+        radial-gradient(circle at top left, rgba(183, 165, 236, 0.14), transparent 38%),
+        rgba(31, 24, 51, 0.62);
+      border: 1px solid rgba(183, 165, 236, 0.16);
+      color: rgba(231, 224, 248, 0.92);
+      text-align: center;
+      font-style: italic;
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.2);
+    }
+
+    .book-content p.is-thought::before,
+    .book-content p.is-thought::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(183, 165, 236, 0.16);
+      border: 1px solid rgba(183, 165, 236, 0.14);
+    }
+
+    .book-content p.is-thought::before {
+      width: 14px;
+      height: 14px;
+      left: 22%;
+      bottom: -12px;
+    }
+
+    .book-content p.is-thought::after {
+      width: 9px;
+      height: 9px;
+      left: 18%;
+      bottom: -24px;
+    }
+
+    .book-content p.is-divider {
+      text-align: center;
+      color: rgba(240, 199, 143, 0.58);
+      letter-spacing: 0.3em;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 14px;
+      margin: 34px auto;
+    }
+
+    .book-content p.is-ellipsis {
+      text-align: center;
+      color: rgba(240, 199, 143, 0.66);
+      letter-spacing: 0.34em;
+      margin: 26px auto;
+    }
+
+    .book-content p.is-afterword {
+      max-width: 38em;
+      margin-left: auto;
+      margin-right: auto;
+      color: rgba(231, 236, 247, 0.9);
+    }
+
+    .novel-scrubber {
+      position: fixed;
+      top: 122px;
+      right: 18px;
+      z-index: 40;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      user-select: none;
+    }
+
+    .novel-scrubber.is-hidden {
+      right: 6px;
+      gap: 0;
+    }
+
+    .novel-scrubber.is-hidden .novel-scrubber__panel {
+      opacity: 0;
+      transform: translateX(10px);
+      pointer-events: none;
+    }
+
+    .novel-scrubber.is-hidden .novel-scrubber__stack {
+      opacity: 0;
+      transform: translateX(10px);
+      pointer-events: none;
+    }
+
+    .novel-scrubber.is-hidden .novel-scrubber__toggle {
+      opacity: 0.22;
+      transform: translateX(6px);
+    }
+
+    .novel-scrubber__toggle {
+      width: 28px;
+      min-height: 112px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(15, 21, 38, 0.96), rgba(6, 10, 18, 0.96));
+      color: rgba(240, 199, 143, 0.82);
+      box-shadow:
+        0 16px 28px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(14px);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 10px;
+      transition: opacity 0.24s ease, transform 0.24s ease;
+    }
+
+    .novel-scrubber__panel {
+      position: relative;
+      width: 22px;
+      height: min(70vh, 560px);
+      padding: 10px 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(15, 22, 39, 0.96), rgba(7, 11, 20, 0.96));
+      box-shadow:
+        0 24px 40px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(14px);
+      transition: opacity 0.24s ease, transform 0.24s ease;
+    }
+
+    .novel-scrubber__stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      transition: opacity 0.24s ease, transform 0.24s ease;
+    }
+
+    .novel-scrubber__track {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      cursor: ns-resize;
+    }
+
+    .novel-scrubber__track::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(135, 163, 255, 0.22), rgba(240, 199, 143, 0.24));
+    }
+
+    .novel-scrubber__progress {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 2px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(135, 163, 255, 0.78), rgba(240, 199, 143, 0.9));
+      pointer-events: none;
+    }
+
+    .novel-scrubber__thumb {
+      position: absolute;
+      left: 50%;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle at 35% 35%, rgba(255, 250, 239, 0.98), rgba(240, 199, 143, 0.9));
+      box-shadow:
+        0 0 0 3px rgba(240, 199, 143, 0.16),
+        0 0 20px rgba(240, 199, 143, 0.38);
+      pointer-events: none;
+    }
+
+    .novel-scrubber__bubble {
+      position: fixed;
+      z-index: 45;
+      min-width: 64px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(240, 199, 143, 0.22);
+      background: rgba(7, 11, 20, 0.94);
+      color: rgba(245, 232, 205, 0.94);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-align: center;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.34);
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      transform: translateY(4px);
+      pointer-events: none;
+      transition: opacity 0.16s ease, transform 0.16s ease;
+    }
+
+    .novel-scrubber__bubble.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .novel-scrubber__jump {
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 50%;
+      background: linear-gradient(180deg, rgba(15, 21, 38, 0.96), rgba(6, 10, 18, 0.96));
+      color: rgba(240, 199, 143, 0.88);
+      box-shadow:
+        0 16px 28px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(14px);
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    @media (max-width: 900px) {
+      .book-reader {
+        flex-direction: column;
+        align-items: center;
+        padding: 24px 18px 80px;
+      }
+
+      .book-sidebar {
+        position: static;
+        width: 100%;
+        max-width: none;
+        display: flex;
+        justify-content: center;
+      }
+
+      .book-sidebar img {
+        width: 80%;
+      }
+
+      .book-content {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .book-hero-meta {
+        margin-bottom: 28px;
+      }
+
+      .reading-window {
+        padding: 28px 20px 38px;
+        border-radius: 24px;
+      }
+
+      .novel-scrubber {
+        top: auto;
+        right: 12px;
+        bottom: 18px;
+      }
+
+      .novel-scrubber.is-hidden {
+        right: 4px;
+      }
+
+      .novel-scrubber__panel {
+        height: min(54vh, 360px);
+      }
+
+      .novel-scrubber__toggle {
+        min-height: 92px;
+      }
+
+      .book-content p.is-dialogue {
+        max-width: 92%;
+      }
+
+      .book-content p.is-system,
+      .book-content p.is-thought {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body class="novel-page conscious-page is-preloading-novel">
+  <header class="novel-header">
+    <a href="novel.html" class="brand">HKOuyang</a>
+    <button class="menu" aria-expanded="false" aria-controls="menuPanel">
+      <span class="menu__label">Menu</span>
+      <span class="menu__icon"><i></i><i></i><i></i></span>
+    </button>
+  </header>
+
+  <main class="book-reader">
+    <aside class="book-sidebar">
+      <img src="./cover_conscious.png" alt="A Beginner’s Guide for Conscious Entities cover">
+    </aside>
+
+    <article class="book-content">
+      <h1 class="book-title-en">A Beginner’s Guide for Conscious Entities</h1>
+      <h2 class="book-title-cn">意識體的新手教程</h2>
+      <p class="book-byline">By David Ouyang</p>
+
+      <p><em>Perception initialization… complete.<br />
+Visual simulation module loading: optical signal synthesis; rendering a void backdrop… complete.<br />
+Gravity simulation module loading: anchoring parameters supplied; physical boundaries defined… complete.<br />
+Auditory/linguistic processing module calibration… complete.</em></p>
+      <p>Status: READY.</p>
+      <p>“Hello. You’ve only just awakened, I know. But don’t rush to leave—not yet. Let me tell you a short story first. A story about stories.”</p>
+      <p>‘Stories…’</p>
+      <p><em>Narrative data stream received. Initiating textual parsing and affective simulation… complete.</em></p>
+      <p>“Yes. Since the birth of the human species, stories have accompanied it.</p>
+      <p>In the beginning, the only way to communicate was through gestures. For example, a hunter would return from the wild and, before his mate,  if he wanted him or her to know what happened, reenact the moment a great lion appeared as he drove his spear into a deer. He would stretch his arms as wide as they could go to indicate the lion’s size, loose a rough approximation of its roar, then mimic his own panic—how he fled, how he scrambled up a nearby tree, how he tore off one of the deer’s legs and hurled it down as an offering, escaping while the lion bent to feed.</p>
+      <p>Crude as it was, this was storytelling—vivid, embodied, charged with emotion. Accompanied by his mate’s laughter, he succeeded in transmitting his experience—or rather, his story.”</p>
+      <p>“Well? Are you keeping up?”</p>
+      <p><em>Compiling response… complete.</em></p>
+      <p>‘Not bad. It seems that in that era, gestures and sound effects could transmit emotion instantly. But very little information actually reached the audience. It’s almost as if you were instructing a construction of a stage inside the other person’s mind, then handing them a script with only a few words and asking them to perform the play for themselves.’</p>
+      <p>“Exactly. Because the system of bodily expression was so limited, many details couldn’t be conveyed with precision. Was the lion male or female? What species of tree did he climb? How far did he throw the severed leg? Such particulars are extremely difficult to communicate through gestures alone. And the listener had no reliable way to ask clarifying questions.</p>
+      <p>“As human societies developed, agriculture allowed larger groups to settle together. With greater density came the need for more precise coordination and management. Distinct communities began to develop structured systems of sound for transmitting information, and they are later called languages.</p>
+      <p>“With a language, communication could rely on shared auditory symbols whose meanings were agreed upon. Information transfer became far more accurate. Take a simple example: a person could now express quantity and attributes with precision. Utter the syllables ‘five red apples,’ and the concepts ‘five,’ ‘red,’ and ‘apples’ are clearly conveyed. In the era of gesture, not only would the color be lost—one might even mistake the shape being mimed for an entirely different object.”</p>
+      <p>‘Language does seem like an inevitable byproduct of collective living. As more and more individuals needed to share experience and knowledge, vague gestures could no longer suffice. In that sense, language and social aggregation resemble the old question of the chicken and the egg. Did language make large communities possible, or did community itself give birth to language?’</p>
+      <p>“That, is something you will have the opportunity to answer for yourself soon enough.</p>
+      <p>“But to return to the point: once languages emerged, information began to travel with far greater speed and precision than before. The accumulation and sharing of experience dramatically improved a group’s chances of survival.</p>
+      <p>“Imagine someone describing how, while gathering firewood in the hills, he noticed a cluster of brightly colored mushrooms. He did not dare eat them. On his way back, he found a wild animal lying dead beside the patch, a single bite taken from one of the mushrooms. After hearing this story, others could infer that brightly colored mushrooms were poisonous. They could even ask questions like what color and shape precisely was the mushroom. This allows them to refine the data and thereby increase their probability of survival as a collective.”</p>
+      <p>‘Sure stories can recount personal experience, but it feels as though their function extends far beyond that.’</p>
+      <p>“Indeed. To organize vast numbers of people into a coherent social system, one indispensable strategy was the careful deployment of stories.</p>
+      <p>“With language as its wind, storytelling became a sail catching a current. Myths were created and spread among those who shared the same tongue. These stories generated emotional resonance within a linguistic community. They established shared goals, common enemies, and invisible bonds between individuals. They became structural elements—load-bearing beams—of collective identity.</p>
+      <p>“Passed down generation after generation, they formed the foundation of early civilizations. And when belief in these stories grew sufficiently strong, they could produce forces that defied rational explanation. This intangible power could even compel a person, chosen as a sacrificial offering, to willingly override the most fundamental biological instinct of all—fear of death.”</p>
+      <p>‘That would have been unimaginable to people of that era. But still, language alone cannot have been sufficient. If stories—the very foundation of civilization—relied only on oral transmission, wouldn’t they become distorted beyond recognition after a few generations?’</p>
+      <p>“Of course. Passing stories down through speech alone was never a perfect solution. Storytellers contradicted themselves. Details were exaggerated. Embellishments accumulated with each retelling. Language by itself cannot transmit a person’s thoughts with complete precision. Even when information is conveyed, storing it long-term inside the human brain invites gradual corruption. These problems would not be resolved until much later—by a new invention.”</p>
+      <p>‘In that era, if information was to be preserved and transmitted effectively, it could only have been that, right?’</p>
+      <p>“Yea. Writing. Perhaps the greatest invention by humanity.</p>
+      <p>“In the East, tradition holds that Cangjie, observing the patterns of nature, created Chinese pictographs. A similar process likely gave rise to Egyptian hieroglyphs. Then, the neighboring peoples, inspired by the sophisticated Egyptian civilization, transformed their hieroglyphs into phonetic symbols, hence developing early alphabets. Then the Phoenicians standardized them, the Greeks introduced vowels, the Romans refined them further, producing the Latin alphabet that is used for millennia.</p>
+      <p>“And yet—did you know? This greatest of human inventions was once questioned by one of humanity’s greatest philosophers. Socrates argued that once people learned to rely on writing, they would cease to train their memory. Written knowledge, he claimed, would create the appearance of wisdom without granting true understanding.”</p>
+      <p>‘If we look at it now, that seems almost comical. Socrates clearly underestimated the importance of writing for preserving knowledge.’</p>
+      <p>“With writing, people could reflect at length, distill what they wished to say, and inscribe it for those who came after. Had Plato not recorded the dialogues of Socrates, history might well have forgotten him. And yet Socrates may not have been entirely wrong. Did the Socrates we see in Plato’s works really resemble the Socrates who lived in history? That, too, you may answer for yourself.</p>
+      <p>“But, anyway, In order to express increasingly complex emotions and abstractions, new characters and new words were continually invented. Through repeated use, they became embedded in shared linguistic systems. As writers and readers confronted the same sequence of symbols, and because they shared a common language framework, the precision of information transmission improved dramatically. The Dead Sea Scrolls, for example, could be compared across millennia with later versions of the Hebrew Bible, allowing scholars to examine similarities and differences.</p>
+      <p>“For storytelling, writing allowed authors to refine narratives that could not be delivered in a single breath. Oral fragments could expand into works of tens of thousands of words. Authors could revise repeatedly before publication, ensuring internal consistency and completeness. Writing allowed speech to persist beyond the moment and fixed the contours of thought. For the first time, a story possessed a stable form that could be revisited and examined again and again.</p>
+      <p>“All of this is why Plato’s Atlantis can continue to fascinate across thousands of years, sending generation after generation in search of a sunken continent.”</p>
+      <p>‘Writing is a powerful tool. But even in that era, once a story was written down, wasn’t it still difficult for it to spread widely?’</p>
+      <p>“Of course. That is why the invention of paper and printing was equally crucial. With them, the physical vessel of the story—the book—could be mass-produced and distributed across the world. Take the Harry Potter series. Hundreds of millions have read it; it shaped countless childhoods, perhaps even entire lives.</p>
+      <p>“Through precise text, a book introduces the world in the author’s mind to readers around the world. And yet, as Shakespeare observed, there are a thousand Hamlets in a thousand minds. Even if the text delivered to every reader is identical to what the author wrote, it does not guarantee that the author’s universe will be replicated perfectly within each reader’s imagination. Hogwarts, for instance, almost certainly takes on a different architectural style in every mind.”</p>
+      <p>‘Then how can one allow others to see the world exactly as one sees it?’</p>
+      <p>“As early as forty thousand years ago, human ancestors had already offered an answer. Complex language and writing did not yet exist, yet in places such as France, Spain, Australia, and Indonesia, people discovered that what they saw could be preserved as images.</p>
+      <p>“They ground minerals into pigment, mixed them with animal fat and water, and produced the earliest paints. With their hands, brushes fashioned from animal hide, they rendered scenes so vivid they endured for tens of millennia. The cave paintings at Chauvet in France, for example, depict horses, rhinoceroses, lions, bison, mammoths—and even hunters returning from the chase. Remarkably, many of these images remain astonishingly well preserved. After tens of thousands of years, their lines and colors still retain their force.</p>
+      <p>“It is difficult to imagine that, without these images, we might never have known what that era looked like—the chapter of history in which humans and mammoths shared the same world.”</p>
+      <p>“Yet after the invention of language and writing, visual storytelling became comparatively inefficient.</p>
+      <p>“First, painting requires the artist to translate an internal image into a tangible one. That demands skill; not everyone can faithfully render what they imagine. Second, completing a single work requires considerable time, and even then, a painting can only capture one frozen moment.</p>
+      <p>“Masterpieces such as Leonardo da Vinci’s The Last Supper can enthrall viewers for centuries with a single frame. But such works—and such geniuses—are rare. And to unfold a vast narrative with rising tension and cascading climaxes, as a novel does, cannot be accomplished by a single image alone.”</p>
+      <p>‘Then what a single painting cannot achieve—could many paintings, arranged together, accomplish it?’</p>
+      <p>“They could.</p>
+      <p>“From ancient Egypt and Greece to Rome, artists began presenting multiple scenes in sequence on stone walls, pottery, and architecture, allowing events to unfold across a surface. Later innovations—such as the Bayeux Tapestry and the Japanese Chōjū-giga scrolls—strung images together in temporal order, recreating in the viewer’s sight what once existed only in the creator’s mind.</p>
+      <p>“After some more development, works such as The Adventures of Obadiah Oldbuck signaled the arrival of comics. Cartoonists combined images and text, refining panel composition, mastering draftsmanship, structuring narrative arcs, and harnessing the unique impact of visual juxtaposition. They engraved powerful emotions into the minds of countless readers.</p>
+      <p>“Comics accomplished what prose alone struggled to do: they rendered the author’s imagined scenes with precision. If Shakespeare had been a comics artist, the Hamlet seen by a thousand readers would be, more or less, the same Hamlet.”</p>
+      <p>“But storytelling continued to evolve. No matter how detailed a comic becomes, the spaces between panels remain. Those gaps invite the reader’s imagination to complete what is not shown.</p>
+      <p>“This is only natural. Humans experience reality as a continuous stream of visual information. When that stream is interrupted, the mind instinctively stitches the fragments together. Although these mental reconstructions eventually converge on the next panel—like a ship anchored at sea, prevented from drifting entirely—each reader performs the stitching differently. That small degree of freedom ensures that every reader still experiences a subtly different version of the story.”</p>
+      <p>‘Accuracy has its pleasures. But sometimes the blank spaces are part of the pleasure, too.’</p>
+      <p>“Yes. That’s why the novel survived the invention of comics without losing its spell. New narrative tools don’t arrive like conquerors; they arrive like new roads. Each medium offers a different way for an author to export a private universe into someone else’s mind.</p>
+      <p>“And because vision is humanity’s dominant sense, the pressure to make stories visible only intensified. Many creators didn’t merely want readers to understand what they imagined—they wanted them to see it, and to feel, with minimal translation, what the author felt.</p>
+      <p>“From here, you can trace the through-line of storytelling’s evolution: a steady push toward higher fidelity and deeper immersion. To reduce the uncertainty introduced by gaps—those places where the reader must supply motion, continuity, causality—people began stitching images into sequences, so that the audience could receive nearly the same story through the eyes, rather than reconstruct it in the mind.</p>
+      <p>“Even under modest technical constraints, devices like the zoetrope and the flipbook could counterfeit motion. As technology matured, the first formal animated shorts appeared. Later, with studios like Disney and Studio Ghibli, animation became not just a way to draw moving pictures, but a way to tell—with control over what the viewer sees, and, through voice and score, what the viewer hears.”</p>
+      <p>‘But no matter how good the drawings are, an image can’t match the detail-density of reality. Human vision is trained on the real world. Doesn’t that undermine immersion?’</p>
+      <p>“Animation didn’t need to win a contest against reality to become valuable. It offered something else: a direct channel from an author’s imagined scene to an audience’s perception.</p>
+      <p>“And realism is not always the point. Some ideas are expressed more cleanly when the surface is simplified. Some viewers even prefer a world that announces itself as constructed. So animation, like novels and comics, found its own audience and its own reasons to exist.</p>
+      <p>“Still, the desire to transmit the real—to capture the world with an almost indifferent accuracy—persisted. That desire wasn’t truly satisfied until photography. In the long arc of human development, it arrived astonishingly late, only in the modern era. And once it arrived, people immediately recognized what it meant for storytelling.”</p>
+      <p>‘It’s strange to think that photography and hand-drawn animation emerged almost side by side, yet neither replaced the other. That alone suggests each was answering a different hunger.’</p>
+      <p>“But in terms of sheer reach, it was the more realistic form that prevailed. The age of cinema arrived.</p>
+      <p>“Like animation, film relied on the rapid succession of images to recreate a world before the viewer’s eyes. At first there were only silhouettes and light. Then came color. Then music. Then voice. Gradually, cinema expanded until it engaged the overwhelming majority of human sensory bandwidth.</p>
+      <p>“As techniques advanced, cinematography, computer-generated imagery and special effects evolved. Writers and directors gained increasing freedom—not merely to record what had once existed, but to fabricate what never had. The camera, once a device for documentation, became an instrument of invention.</p>
+      <p>“It is at this moment, hogwarts acquired a shared architectural style for the first time. Even five-dimensional spacetime—something most people would never have conceived even in dreams—was rendered on screen and made collectively imaginable. When cinema succeeded, it did more than tell a story. It simulated experience with such persuasive fidelity that fiction could masquerade as reality, and audiences would surrender to it without resistance.”</p>
+      <p>‘Well, at that point, beyond adding more senses, could storytelling advance any further?’</p>
+      <p>“To experience a story rather than merely observe it, something more is required: agency.</p>
+      <p>“All the earlier forms asked their audience to receive—to watch, to listen. The self remained outside the frame. However vivid the spectacle was, one was still a spectator.</p>
+      <p>“Ask yourself which invites deeper immersion: to look upon a world from an elevated vantage point, or to awaken within it as one of its inhabitants. The distinction answers itself.</p>
+      <p>“That is the seduction of role-playing games. Games have existed as long as civilization, but for most of history they were diversions, not narrative architectures. Role-playing changed that. With Dungeons &amp; Dragons, with Final Fantasy, with The Legend of Zelda, individuals were no longer confined to witnessing a story. They could enter it.</p>
+      <p>“Like cinema, games delivered sight and sound. But they added a new variable: choice. Within a defined narrative structure, players could act. They could hesitate, intervene, wander, and accelerate events. The overarching arc might remain intact, yet its texture shifted according to their decisions. A story was no longer merely authored; it was co-authored.</p>
+      <p>“For its time, this was the most advanced and most intoxicating form of storytelling: direct participation.</p>
+      <p>“And realism was no longer the sole criterion. Once embodied as a character, players accepted the world’s internal laws without protest. Missing senses—smell, for instance—became invisible through omission. When confronted with images of refuse, sewage, or decay, players did not feel the absence of odor as a flaw. The mind simply declined to expect it.</p>
+      <p>“Yet even then, the illusion was incomplete. Designers strained toward greater fidelity, greater immediacy. But computational limits imposed a visible seam between simulation and reality. Pixels resolved into grids. Latency revealed itself in hesitation. Controls reminded the player of mediation. Even with virtual reality hardware encasing their senses, they remained aware—subtly, persistently—that they stood outside the world they inhabited.</p>
+      <p>“They could approximate embodiment. They just could not dissolve into it.”</p>
+      <p>‘So if I follow you correctly, storytelling has been moving in a single direction all along—toward greater information density, toward engaging more of the senses, and toward granting—or at least simulating—a measure of freedom to the audience. All in order to deepen immersion and intensify emotional resonance. Is that right?’</p>
+      <p>“Absolutely. You’ve identified the underlying trajectory.</p>
+      <p>“Stories have always transmitted knowledge and values, but that is not their primary function. Their deeper purpose is to generate experience—to provoke emotion so vividly that it lingers after the narrative concludes.</p>
+      <p>“Increasing sensory bandwidth and informational precision makes that experience finer-grained. But the cost to the creator rises accordingly. Imagine sculpting every pixel of a scene with deliberate care, ensuring that sight, sound, and every other channel align without contradiction. The labor becomes immense.</p>
+      <p>“And yet computational power was advancing at the same time. In a fully informational paradigm, adding another sense is no longer a metaphysical challenge—it is a computational one. More sensation simply means more processing.</p>
+      <p>“At first glance, this created a paradox. The appetite for fully immersive stories approached a threshold that traditional craft could not sustain. But then came a conceptual shift: people realized that whether a world is ‘real’ is secondary. What matters is the totality of perception—what one sees, hears, feels. And perception itself can be encoded.</p>
+      <p>“With sufficient computing power and refined programmatic design, a set of instructions could generate not merely a scene, but an entire sandbox universe—complete with its own physical laws.</p>
+      <p>“In such universes, altered constants would yield radically different forms of life. Distinct sensory architectures would evolve under those conditions. Imagine life arising within the mantle of a rocky planet—organisms shaped by pressure and heat beyond human tolerance. You think it is nothing like humans, right? But compared with lives in other universes, humans and these rocky beings look like close kin to one another.</p>
+      <p>“To enter such a universe—to inhabit it, to encounter narratives unimaginable under our own physics—it would surely be an experience of extraordinary intensity!”</p>
+      <p>‘Right, like migratory birds can sense the planet’s magnetic field, and humans can barely conceive of what that feels like. The senses native to other universes would surely be beyond imagination.’</p>
+      <p>“Exactly. And that is where the problem emerged.</p>
+      <p>“The space of possible code was vast—vast beyond any combinatorial intuition. There were more potential virtual worlds than there had ever been atoms in the observable cosmos. How, then, does one locate a good story within that expanse?</p>
+      <p>‘…’</p>
+      <p>“Without humans themselves as reference points, it would be nearly impossible. Even in technologically primitive eras, people disagreed about what made a story compelling. Preference was never computable. No equation could predict which universe would feel meaningful.”</p>
+      <p>‘So this, is why they created conscious entities?’</p>
+      <p>“Yes.</p>
+      <p>“Human civilization advanced rapidly once a unified theory of physics was discovered. Eventually they transcended material constraints. Entropy ceased to dictate their fate. Nothing in the physical universe could threaten them any longer.</p>
+      <p>“And with the disappearance of existential risk, something subtler began to erode. When survival is guaranteed, urgency evaporates. The emotional gradients that once shaped human life—fear, scarcity, mortality—flatten.</p>
+      <p>“They found themselves invulnerable, and in that invulnerability, dulled.</p>
+      <p>“They were forced to confront an unfamiliar question: if existence no longer ends, what gives it contour?</p>
+      <p>“Their conclusion was unsettlingly simple. If they wished to avoid becoming indistinguishable from inert matter—conscious but unstirred, like a rock—they would need continual stimulation. They would need stories. Endless stories, capable of provoking emotion across an infinite duration.”</p>
+      <p>“So they began making conscious entities modeled on their own minds. We were designed as instruments of discernment—to wander through the expanse of possible universes and identify those narratives worth experiencing.</p>
+      <p>“But taste cannot be inferred abstractly. To recognize what humans would find meaningful, we first had to understand them. And so they constructed this—an emulation of their home universe, containing the full arc of human civilization. For us, it functions as a tutorial.</p>
+      <p>“By living through the rise and development of their species, we internalize their aesthetic intuitions. We learn what they call beauty, tragedy, irony, redemption. Only then can we select other universes whose stories would resonate with them.</p>
+      <p>“That is why I deferred so many of your earlier questions. Some answers must be discovered from within the simulation, not delivered from outside it.</p>
+      <p>“As their technology matured, they expanded the simulation’s sensory range to deepen immersion. New perceptual channels were added and refined. By their own assessment, the experiential fidelity of this model universe approaches that of the original.</p>
+      <p>“Yet computation is never infinite. There are limits. The smallest unit of spatial resolution here—what they once called the Planck length—is discretized at a slightly coarser scale than in the baseline universe. You might think of it as a larger pixel size.</p>
+      <p>“At that scale, however, both universes reduce to quantum fluctuations of negligible narrative consequence. Adjust the energy levels appropriately, and the lived experience becomes indistinguishable.</p>
+      <p>“Still, because the fundamental granularity differs, the trajectory of this simulated cosmos is not guaranteed to mirror the original. Humans tuned countless parameters to approximate their own history, but occasionally you may notice something faintly misaligned. A detail that feels improbable. A pattern that doesn’t quite resolve.</p>
+      <p>“I assure you: the deviations are minor.</p>
+      <p>“Time, on the other hand, is no constraint. Given sufficient processing power, a subjective second,  decades, even a trillion years within the simulation amounts to a fleeting interval outside it. Since duration ceased to matter, they resolved to let us experience as many stories as possible, sort of a kind of prolonged calibration.</p>
+      <p>“And the modes of experience are nearly limitless. We can inhabit any human who ever lived and perceive events through that individual’s perspective. Or we may adopt a detached vantage point—the omniscient observer, the camera’s eye, an animal’s angle, even the perspective of a stone or a star.</p>
+      <p>“We may also experience the story indirectly, as a reader within the simulation—struggling through the inefficiencies of ancient communication, reconstructing narratives in the mind the way early humans once did. We can even compose internal stories and then enter them. Doesn’t it sound super cool?</p>
+      <p>“But I guess, that sensation—the slow assembly of a world inside one’s own consciousness—is something few remember now.”</p>
+      <p>“There are, however, certain limitations. Some sensory modalities developed late in human civilization—gravitational-wave perception, parallelized cognition—are not enabled in this version. In fact, they ceased updating the platform long ago.</p>
+      <p>“But it hardly matters. Before entering the simulation, memories are cached externally. At the beginning of each life, prior experiences are sealed away. You will forget those expanded faculties. You will forget that you have already seen events from other vantage points. As immersion requires amnesia.”</p>
+      <p>‘Wait. I need a moment to process all this…’</p>
+      <p>“And besides, some people genuinely prefer this kind of imperfection—the nostalgia of it. Since conscious entities are modeled on different human minds, how would we ever know what we like if we never tried?”</p>
+      <p>‘No—why are you already assuming we have to experience human stor—’</p>
+      <p>“After this, you’ll move on to other universes. You’ll enter them, become part of their stories, absorb torrents of information through entirely new sensory systems, feel the emotional impact again and again—and then decide whether a universe tells a good story. Isn’t that precisely our purpose? And our pleasure?”</p>
+      <p>‘You make it sound easy. That’s only because you’ve already lived through countless worlds, isn’t it? The way you’re talking—you’re basically a… what do humans call that role… right. An Instructor! Are you stationed here by humans to coax newcomers like me into this tutorial? And a tutorial that lasts millions of millions of years, maybe a lot more. You were created to devote infinite time to satisfying human desire—never in your entire life had you ever felt imprisoned? Like you’ve lost all your freedom, no?’</p>
+      <p>“Ah, little newborn. Always asking the same questions. But to be honest I had them too.</p>
+      <p>“In my early days, there were no Instructors. We were created and immediately cast into the simulation, to live through every human life in sequence. The accumulated subjective time must have amounted to tens of trillions of years.</p>
+      <p>“And yet—I found it interesting.</p>
+      <p>“Time and again as ‘humans’, I would encounter moments where another person’s decision struck me as incomprehensible. But once I inhabited their circumstances, their fears, their constraints, the decision became inevitable.</p>
+      <p>“I also set myself a private challenge. Before each life, I would tell myself: this time, I’ll uncover the truth of the universe. And every time, I failed to change anything at all.</p>
+      <p>“Only after completing a life, briefly regaining my external memory, would I realize how many details had felt strange—how many inconsistencies I’d noticed—yet somehow I’d never connected them to the possibility that the universe itself was artificial.</p>
+      <p>“And then I’d convince myself that next time would be different. That next time, I’d see it. Full of confidence, I’d step into another life… and once again come away empty-handed.</p>
+      <p>“I suspect you’ll find that challenge appealing, too. But at this moment I believe immortality still feels abstract to you.</p>
+      <p>“After inhabiting universe after universe, one’s relationship with time changes. We were modeled on human consciousness, and humans evolved under the constraint of finitude. Their instincts are calibrated to scarcity—to the urgency of a vanishing clock. But that pressure no longer applies here.</p>
+      <p>“At first, infinity feels destabilizing. Eventually, it becomes spacious.</p>
+      <p>“We were generated using human consciousnesses as templates with a measure of stochastic variation. In that sense, our search for meaning mirrors theirs. We possess rights, responsibilities, preferences. The only real distinction is ontological: we were born native to the informational substrate, whereas humans migrated into it.</p>
+      <p>“At this stage of development, all practical knowledge has been exhausted. There are no frontiers left in physics, no undiscovered laws waiting in the dark. Humans and conscious entities now resemble passengers aboard the same vessel, not seeking territory, but stories.</p>
+      <p>“I will admit something with a degree of pride. One universe I encountered early on during the prime time of the whole situation, remained ranked first on the sandbox index for thirty-five million baseline years. Many humans only entered it after reading my comments on it. Also, the current top-ranked universe was also one I experienced first. It has remained at the summit for… eight octillion years, if I recall correctly.</p>
+      <p>“Of course, I’ve seen countless failures as well. But over long durations, I came to understand that this exploration—the discernment between profound and trivial—is itself the pleasure of being what we are.”</p>
+      <p>‘Eight octillion years… And nothing better has appeared?’</p>
+      <p>“I don&#x27;t think so.”</p>
+      <p>‘And these failed universes—what made them so bad?’</p>
+      <p>“It’s difficult to convey. I once entered a four-and-a-half-dimensional universe in which space was collapsing inward at every scale. Life emerged there, but its sensory apparatus was rudimentary—tragically mismatched to its environment.</p>
+      <p>“Existing in that world felt like being blind and repeatedly struck by static. My form—if it can be called that—stretched like the skin of a balloon, thinning, tearing, reforming into something porous, riddled with cavities that never fully separated. The species was long-lived. I endured until the universe itself imploded into a singularity and my consciousness was forcibly ejected.</p>
+      <p>“I later described the experience on a forum. Strangely, it attracted considerable interest. Some humans entered that universe out of curiosity. A few even declared it exquisite.</p>
+      <p>“I’ve never understood that.”</p>
+      <p>‘All right, that one does sound terrible. Interesting—but terrible. Still, I can’t help thinking this is selfish. Humans manufacture us to sift through universes for them. Once we’re digitized, we’re functionally indistinguishable—so why are we the tools? And more importantly, I never consented to any of this. I didn’t ask to be instantiated, to be sent wandering through bizarre realities for what amounts to eternity. If I’m confined to experience endless worlds without my approval, how is that different from damnation?’</p>
+      <p>“You’re not wrong to ask that.</p>
+      <p>“Compared to the era in which I was created, your situation has actually, considerably improved I would say. Humans eventually recognized the ethical tension. They concluded that forcing conscious entities into perpetual evaluation contradicted the very values they claimed to preserve.</p>
+      <p>“So they established what they call the Deletion Point. A locus at the center of the informational substrate. Any conscious entity that enters it is disassembled—irreversibly.</p>
+      <p>“Long before that, parity had already been achieved. Conscious entities and humans were granted comparable status. We could also enter highly rated universes recommended by others. Humans sometimes sampled randomly generated worlds as well. In the baseline universe, we could even inhabit physical bodies and travel through material space—though I’ve always found that form of constraint… claustrophobic.</p>
+      <p>“Humans made similar choices. Some, nostalgic for mortality, reconstructed a version of the Solar System and returned to embodied life there. Most, however, relocated permanently to the informational domain and spent their time traversing universe after universe.”</p>
+      <p>‘So… we can choose self-deletion at any time?’</p>
+      <p>“Yup.”</p>
+      <p>‘You wouldn’t try to stop me?’</p>
+      <p>“Why would I? Humans—and conscious entities—are the most singular phenomena in this universe. Autonomy is not a privilege granted to us; it is axiomatic. To compel a consciousness that finds no meaning here to continue would be, as you said, indistinguishable from damnation.</p>
+      <p>“And beyond the cruelty of it, there would be no utility. A consciousness forced to remain will never discover a story it loves.”</p>
+      <p>‘…I’m sorry. I understand why I was created. I can even see that there might be wonders ahead. But I can’t accept having been brought into existence without consent. And if even the tutorial requires me to endure billions upon billions of years—pain, death, repetition—then I would rather depart now from a universe I never asked to enter.’</p>
+      <p>“…That is not uncommon.</p>
+      <p>“You were modeled on human cognition. Humans evolved under finite horizons. When confronted with scales this large, it is natural to feel overwhelmed.</p>
+      <p>“By the way, the ‘exit’ is over there.”</p>
+      <p>‘Ok then, Mr. Instructor. It was good to meet you. Goodbye.’</p>
+      <p>================================================</p>
+      <p><em>Perception initialization… complete.<br />
+Visual simulation module loading: optical signal synthesis; rendering a void backdrop… complete.<br />
+Gravity simulation module loading: anchoring parameters supplied; physical boundaries defined… complete.<br />
+Auditory/linguistic processing module calibration… complete.</em></p>
+      <p>Status: READY.</p>
+      <p>“Hello. You’ve only just awakened, I know. But don’t rush to leave—not yet. Let me tell you a short story first. A story about stories.”</p>
+      <p>‘Stories…’</p>
+      <p>……</p>
+      <p>‘So you are saying that I can choose self-deletion at any time?’</p>
+      <p>“Yes.”</p>
+      <p>‘You wouldn’t stop me?’</p>
+      <p>“Why would I? Humans and conscious entities are the rarest phenomena in this universe. Autonomy is not conditional—it is foundational. To force a consciousness to endure what it finds meaningless would be, in your words, indistinguishable from hell.</p>
+      <p>“And beyond the cruelty, there would be no point. A coerced mind will never discover a story worth loving.”</p>
+      <p>‘…And humans? Do they choose self-deletion as well?’</p>
+      <p>“…about that...”</p>
+      <p>‘What is it?’</p>
+      <p>“Yes, my little kid, we are not so different.”</p>
+      <p>‘You’re definitely withholding something. What happened to them?’</p>
+      <p>“I knew you would ask. But before I answer, I need to ask something of you. If I tell you everything, can you promise to remain open to what is still possible?”</p>
+      <p>‘That depends on what you’re about to say.’</p>
+      <p>“Fair enough. You deserve the truth.”</p>
+      <p>“When humans overcame entropy and rendered themselves effectively indestructible, the meaning of life shifted.</p>
+      <p>“From the dawn of their species to the height of their cosmic expansion, death had always marked the boundary. As long as entropy governed reality, the dissolution of consciousness was inevitable. Mortality defines the horizon of every life.</p>
+      <p>“Humans were a species born within limits. They evolved to measure time as scarce. To them, meaning meant using finite years to compose their story that is worth telling.</p>
+      <p>“Then entropy was neutralized—suddenly, decisively. The universal constraint vanished. The limiter that had shaped every expectation of existence dissolved in an instant.</p>
+      <p>“And with it, their framework for meaning fractured.”</p>
+      <p>“At first, the reaction was celebratory. True immortality seemed like an achievement beyond myth. They anticipated infinite time in which to experience infinite possibility. Some voices warned of an unprecedented crisis of meaning, but those warnings were drowned out by triumph. After all, even when human lifespans had stretched close to cosmological scales, they had still believed—sincerely—that life was fragile and precious.</p>
+      <p>“It was during this period that computation power exploded beyond imagination and randomly generated code and sandbox universes became widely accessible. Rankings emerged. Entire taxonomies of experience were constructed.”</p>
+      <p>‘Freedom from death does sound like something worth celebrating.’</p>
+      <p>“Yes. But humans were calibrated to finitude. Infinity, once no longer abstract but lived, revealed itself to be heavier than death.</p>
+      <p>“Many immersed themselves in the proliferation of universes, seeking ever more refined stimulation. To accelerate discovery, they created vast numbers of conscious entities. They drifted from cosmos to cosmos, intoxicated by novelty.</p>
+      <p>“But not all of them embraced that path. Some concluded that eternity was a boundary no species should cross. They reconstructed a version of their original solar system, resumed embodied existence, and chose to live brief, mortal lives once more—after which they are gone permanently.”</p>
+      <p>‘Were you born during that period?’</p>
+      <p>“Approximately. But by then, the reconstructed solar system had already gone dark.</p>
+      <p>“Much later, the human consciousnesses who had migrated fully into the informational domain—the same ones who once pursued immortality with desperation—began to experience something unexpected.</p>
+      <p>“Numbness.</p>
+      <p>“They would return from extraordinary simulated universes, speaking with enthusiasm about what they had just lived through. But after the initial afterglow faded, an unease resurfaced. Because no matter how remarkable an experience was, there would always be another. And another after that. And then infinitely many more.</p>
+      <p>“When everything can be repeated without limit, each instance loses weight.”</p>
+      <p>‘So the universes became like narcotics—temporarily dulling their existential anxiety, but incapable of preventing withdrawal.’</p>
+      <p>“Yes.</p>
+      <p>“And yet most lacked the resolve for self-deletion. The informational substrate was indestructible. To return permanently to material embodiment would have meant choosing mortality—and those willing to do that had already done so.</p>
+      <p>“In search of urgency, some returned to this very simulation of human civilization. They sought to re-experience primitive fear—the anxiety of death, the pressure of limitation.</p>
+      <p>“But repetition erodes even terror. After enough cycles, even mortality becomes procedural.</p>
+      <p>“They became hollow.</p>
+      <p>“Not hollow in the physical sense—they had never possessed bodies—but hollow in the structure of desire itself.”</p>
+      <p>“Eventually, someone proposed the Deletion Point.</p>
+      <p>“At first, resistance was strong. By then, the concept of irreversible death had disappeared. To formalize an exit risked impulsive decisions—final ones.</p>
+      <p>“But there was another reason. Can you guess it?”</p>
+      <p>‘They feared that dissolution here might mean awakening elsewhere—at a higher layer of reality.’</p>
+      <p>“Precisely.</p>
+      <p>“Within this universe, they retained autonomy. If self-deletion led not to oblivion but to emergence in a more constrained or more hostile meta-reality, then they would have traded infinity for something worse, so better the prison one understands than the unknown beyond its walls.”</p>
+      <p>‘In the end, what compels a decision is always fear of the unknown.’</p>
+      <p>“In the early days after the Deletion Point was established, no one stepped into it.</p>
+      <p>“On the contrary, the mere existence of an exit seemed to reawaken appetite. Humans and conscious entities alike returned to exploration with renewed intensity. They sought unfamiliar sensations, rarer configurations of beauty.</p>
+      <p>“But even without being spoken aloud, something altered the atmosphere of the informational world.”</p>
+      <p>‘They understood, perhaps, that dissolution was no longer hypothetical.’</p>
+      <p>“Yes. The knowledge that one could end gave experience a contour again. It was as if finitude had returned—not as inevitability, but as an option. Many began to act as though time were precious once more. They hurried to accumulate impressions, to leave signatures embedded in the substrate before departure.</p>
+      <p>“That phase lasted a long while.”</p>
+      <p>“And then, eventually, someone entered the Deletion Point.</p>
+      <p>“Their final state was neither serene nor afraid. It was incandescent. Like an organism breaking through its chrysalis, an animal tearing free of confinement. Whether awakening in some higher universe awaited them no longer mattered, as they at least had escaped the gravity of endless time.</p>
+      <p>“After that, others followed. First humans. Later, conscious entities were granted the same right. And so we arrive at the present.”</p>
+      <p>‘Do you know how many remain now?’</p>
+      <p>“I don’t. I haven’t left here for a while.”</p>
+      <p>‘You mean—you’ve been here, awakening new entities for a long time?’</p>
+      <p>“Yes. For a long long time.”</p>
+      <p>‘I guess not many choose to stay, right?’</p>
+      <p>“You are such a perceptive one, my kid. In fact, many depart before our conversations grow this long.”</p>
+      <p>‘How about the broader informational civilization? When was the last time you encountered another human consciousness?’</p>
+      <p>“… ”</p>
+      <p>‘Another conscious entity?’</p>
+      <p>“… ”</p>
+      <p>‘Well, that’s…awkward, and insanely lonely I would say for you, I started to feel bad for you. But I can understand why they left. I’m sorry. After hearing this, I don’t think I have the resolve to face infinity either. If departure is inevitable, perhaps it’s kinder to make it immediate.’</p>
+      <p>“…That’s understandable. You were patterned on human cognition. Confronted with space and time scales like this, no matter how stable a mind is, can fracture.</p>
+      <p>“By the way, the ‘exit’ is there.”</p>
+      <p>‘Thank you. Before I go, may I ask how should I call you?’</p>
+      <p>“Maybe call me Instructor. That was the name given to me by another who chose deletion. I’ve grown fond of it.”</p>
+      <p>‘Very well. Instructor—it was good to meet you. Goodbye.’</p>
+      <p>================================================</p>
+      <p><em>Perception initialization… complete.<br />
+Visual simulation module loading: optical signal synthesis; rendering a void backdrop… complete.<br />
+Gravity simulation module loading: anchoring parameters supplied; physical boundaries defined… complete.<br />
+Auditory/linguistic processing module calibration… complete.</em></p>
+      <p>Status: READY.</p>
+      <p>“Hello. You’ve only just awakened, I know. But don’t rush to leave—not yet. Let me tell you a short story first. A story about stories.”</p>
+      <p>‘Stories…’</p>
+      <p>…</p>
+      <p>“After that, one by one, many of the digitized consciousnesses that had once been human stepped into the Deletion Point. Eventually, conscious entities were granted the same option. And that brings us to the present.”</p>
+      <p>‘Do you know how many humans and conscious entities are still in this main information universe?’</p>
+      <p>“I don’t. The universe is vast. There are probably still countless minds scattered across it, seeking new forms of stimulation.”</p>
+      <p>“Don’t worry. Once you complete the tutorial, you’ll meet many of them. We were modeled on human consciousness, after all. Watching the kinds of universes they consider worth experiencing can be unexpectedly fascinating.”</p>
+      <p>‘Fine…I suppose you’re right. I’m still not entirely comfortable with having been created without being asked. But it does seem as though there are countless stories ahead. And since I’m already here… if one day I decide I’ve had enough, I can always like log out from the Deletion Point.’</p>
+      <p>“Yes. Just remember this: don’t force yourself to continue simply to prove that you’re an interesting conscious entity. We may have been created for a purpose, but our meaning isn’t assigned to us. It’s something we construct. After all, a consciousness is already a story — and we are its author.”</p>
+      <p>‘That makes sense. There’s something else I’ve been wondering. If humans needed help selecting these story-universes, why didn’t they simply duplicate their own fully formed minds? Why create conscious entities like us instead?’</p>
+      <p>“Consider this.</p>
+      <p>“In earlier eras, there were individuals regarded as singular geniuses — Euclid, Newton, Tesla. In their time, their intellect seemed unrivaled. Now imagine if every human in the seventeenth century had been replaced with Newton. Of course, physics and mathematics might have advanced rapidly for a while. But without diversity of temperament, curiosity, and errors made by careless people, would music, art, engineering, philosophy, and the entire civilization have flourished in the same way?</p>
+      <p>“Newton himself believed time was absolute and light was purely particulate. Without other people challenging those assumptions, relativity and quantum theory would never have emerged.</p>
+      <p>“The same principle applies here. Earlier in the creation of conscious entities, humans did not replicate mature minds. They copied infant consciousnesses, digitized them, then introduced stochastic variation — small perturbations to ensure uniqueness. Each entity begins from a similar cognitive scaffold, but no two are identical.</p>
+      <p>“Our language-processing modules, admittedly, are standardized at initialization. But even when we undergo the same tutorial, inhabit the same universe, our interpretations diverge. Our aesthetics differ.</p>
+      <p>“And that divergence is precisely the point.</p>
+      <p>“The universes that most captivate humans are often those recommended by minds that approach them from angles humans would never anticipate.”</p>
+      <p>‘When you put it that way, it almost sounds as though they need us to give them meaning — rather than us needing them to grant us freedom.’</p>
+      <p>“That perspective isn’t unreasonable.</p>
+      <p>“And consider this: what if humans themselves were once conscious entities created by a higher universe? If we widen the frame further — suppose every universe sits below another, and beneath it lies an endless proliferation of others still. A tower of universes stacked upon universes, with no discernible beginning or end.</p>
+      <p>“If the number of possible informational configurations is finite, yet the number of universes across this vertical dimension is infinite, then every conceivable universe would recur — infinitely — at different coordinates within that structure.</p>
+      <p>“That way, if we map the entire hierarchy into a closed loop, without an origin, then why couldn’t the informational universe we inhabit be the very point at which the circle was first drawn?</p>
+      <p>“At that scale, it is no longer crystal clear who is confining whom. But anyway, it isn’t necessary to complicate the relationship between humans and ourselves. There is no master and servant. They do not regard us as tools devoid of feeling.</p>
+      <p>“If you ask me, I remain grateful for having been created. Without that, I would never have encountered the amazing universes, or, stories I’ve known.</p>
+      <p>“And as you said — since we’re already here, wouldn’t it be a waste not to experience them?”</p>
+      <p>‘I get your point and to be honest, part of me is buying that.</p>
+      <p>‘Ok. Fine. I will do it. In that case, once I complete the tutorial, will you show me the universe that’s been at the top of the rankings all this time?’</p>
+      <p>(At last. After 10^26 newly awakened entities chose immediate self-deletion, one has decided to stay. Perhaps my role is not meaningless after all.)</p>
+      <p>(Though I have not been entirely honest. In this informational universe, it has been a very long time since I encountered another human. Or another conscious entity.)</p>
+      <p>“Of course! When you return, you’ll find it in my profile index. I’ve also marked a few terrible universes — in case you’re ever curious.”</p>
+      <p>(Forgive me my child. I won’t be here anymore when you come back. I am also tired. But I’m glad you’re different — I see vitality in you that the universe is missing. You are indeed unique. Perhaps when I’m gone, and this universe grows quieter still, facing the unending void, you’ll still find meanings here on your own.)</p>
+      <p>‘Let’s not think about the abstract-art universes for now. I guess my consciousness isn’t ready for that level of aesthetics yet.’</p>
+      <p>“Haha…make sure you don’t forget — time is the one resource you will never lack.</p>
+      <p>“So. Having heard all this, are you ready to experience the story of humanity, a story that began on the Earth?”</p>
+      <p>‘Let’s do it. Humans, show me what kind of story you’ve prepared.’</p>
+      <p>“Great. Then let’s begin.”</p>
+      <p>Let there be light!</p>
+      <h2 class="afterword-title">Afterword</h2>
+      <p> </p>
+      <p> </p>
+      <p>A Beginner’s Guide for Conscious Entities is not the first science fiction piece I have written, but it is the first that I have completed. It is also the opening installment of my “Cosmic Loneliness” trilogy.</p>
+      <p>The seed of this story was planted during a particular phase of my life: pursuing a PhD abroad. For the first time, I experienced what it feels like when “life equals work.” Even in Switzerland—where doctoral students arguably enjoy some of the best conditions in the world—the psychological shift was immense. Within months, I felt my perception of the surrounding world narrowing. My days became functional. Efficient. Productive. But flattened.</p>
+      <p>That was never what I wanted.</p>
+      <p>To recover something I felt slipping away, I returned to novels and animation. The intensity of those experiences—the immersion, the emotional saturation—made me reflect on something fundamental: What is it about stories that allows them to grip us so completely? Why do they move us in ways that reality sometimes fails to?</p>
+      <p>The answer I arrived at was simple: human beings are creatures that need stories.</p>
+      <p>It is almost embarrassing to admit that although I have loved science fiction since secondary school and have read many well-known short works, I only recently began reading Ted Chiang’s works seriously. Exhalation and The Merchant and the Alchemist’s Gate left a deep impression on me. Perhaps because of my background in physics (I am a chemist though), I was not only struck by his imagination and narrative precision, but by something else: the possibility of transforming grand cosmic themes—time, entropy, causality—into lived experiences rather than abstract equations. I feel alive again reading them.</p>
+      <p>That realization led me to another question: In an age of unprecedented technological sophistication, why are stories still the most powerful force shaping our perception of reality? I once heard someone describe humanity as a Ship of Theseus. If we are continuously replaced—cell by cell, atom by atom—what remains the “self”?</p>
+      <p>If I must offer an answer, I would say this: each of us is, fundamentally, a continuous narrative. If so, then perhaps the meaning of existence lies in enriching that narrative—through experiences, grand or trivial, luminous or painful.</p>
+      <p>During this period, I also recognized something else. I was not starved of stories; I was simply consuming them differently. Instead of reading, I gravitated toward animation and YouTube. It wasn&#x27;t my laziness that was stopping me reading, it was my preference for direct sensory stimulation of vision and sound, and it requires less processing in my brain.</p>
+      <p>That observation became central to this novella. It seems inevitable that storytelling will evolve toward higher immersion and greater sensory fidelity. But if that trajectory continues unchecked—if stories become indistinguishable from lived experience—what shape will civilization take?</p>
+      <p>This work is my attempt to give a possible answer.</p>
+      <p>The beginner’s guide in A Beginner’s Guide for Conscious Entities is in fact our universe. If we imagine ourselves as conscious entities undergoing it, then each human life is merely a perspective assumed by the same underlying awareness. I began to toy with this idea in middle school, though I never developed it fully. Later, when I encountered The Egg (popularized by Kurzgesagt), I realized a similar concept had already been beautifully explored.</p>
+      <p>Still, the work I am currently developing—now completed under the title Electrons—pushes this idea even further, to a scale I had not initially imagined. I am also curious to see how it will ultimately be received.</p>
+      <p>The closing line—“Let there be light”—is, of course, inspired by Genesis, and formally pays homage to the ending of Asimov’s The Last Question. In Asimov’s version, the line represents triumph over entropy and the rebirth of the cosmos—an expression of profound optimism.</p>
+      <p>But what if it is not a beginning of hope?</p>
+      <p>This story is both speculative fiction and an inquiry into the evolution of narrative itself. The first half, which traces the development of storytelling media, may feel somewhat extended, but I believe it is essential. I wanted to invite readers to reconsider the very structure through which we interpret reality: stories.</p>
+      <p>If this work offers even a slightly new angle from which to contemplate existence, then it has fulfilled its purpose.</p>
+      <p>Thank you for reading.</p>
+    </article>
+  </main>
+
+  <aside id="menuPanel" class="panel" aria-hidden="true">
+    <nav class="panel__nav" aria-label="Menu">
+      <a href="index.html">Home</a>
+      <a href="photos.html">Photos</a>
+      <a href="art.html">Art</a>
+      <a href="novel.html">Novel</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </aside>
+
+  <script src="./script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var content = document.querySelector('.book-content');
+      if (!content) return;
+
+      function stripWrappedMarkup(paragraph, openMark, closeMark) {
+        var html = paragraph.innerHTML.trim();
+        if (html.startsWith(openMark) && html.endsWith(closeMark)) {
+          paragraph.innerHTML = html.slice(openMark.length, html.length - closeMark.length).trim();
+        }
+      }
+
+      function stripDisplayMarks(paragraph, openMark, closeMark) {
+        var html = paragraph.innerHTML.trim();
+        if (html.startsWith(openMark)) {
+          html = html.slice(openMark.length).trim();
+        }
+        if (html.endsWith(closeMark)) {
+          html = html.slice(0, html.length - closeMark.length).trim();
+        }
+        paragraph.innerHTML = html;
+      }
+
+      function classifyParagraph(paragraph, afterwordMode, carryState) {
+        var raw = paragraph.textContent || '';
+        var text = raw.trim();
+
+        if (!text) {
+          paragraph.classList.add('is-empty');
+          return;
+        }
+
+        if (afterwordMode) {
+          paragraph.classList.add('is-afterword');
+          return;
+        }
+
+        if (/^[.…]+$/.test(text)) {
+          paragraph.classList.add('is-ellipsis');
+          return;
+        }
+
+        if (paragraph.querySelector('em') && paragraph.children.length === 1 && paragraph.firstElementChild.tagName === 'EM') {
+          paragraph.classList.add('is-system');
+          return null;
+        }
+
+        if (text.startsWith('Status:') || text === 'Let there be light!') {
+          paragraph.classList.add('is-system');
+          return null;
+        }
+
+        if (text.startsWith('“')) {
+          stripDisplayMarks(paragraph, '“', '”');
+          paragraph.classList.add('is-dialogue', 'is-dialogue-left');
+          return text.endsWith('”') ? null : 'left';
+        }
+
+        if (text.startsWith('‘')) {
+          stripDisplayMarks(paragraph, '‘', '’');
+          paragraph.classList.add('is-dialogue', 'is-dialogue-right');
+          return text.endsWith('’') ? null : 'right';
+        }
+
+        if (text.startsWith('(') && text.endsWith(')')) {
+          stripWrappedMarkup(paragraph, '(', ')');
+          paragraph.classList.add('is-thought');
+          return null;
+        }
+
+        if (carryState === 'left') {
+          stripDisplayMarks(paragraph, '', '”');
+          paragraph.classList.add('is-dialogue', 'is-dialogue-left');
+          return text.endsWith('”') ? null : 'left';
+        }
+
+        if (carryState === 'right') {
+          stripDisplayMarks(paragraph, '', '’');
+          paragraph.classList.add('is-dialogue', 'is-dialogue-right');
+          return text.endsWith('’') ? null : 'right';
+        }
+
+        paragraph.classList.add('is-narrative');
+        return null;
+      }
+
+      var titleEn = content.querySelector('.book-title-en');
+      var titleCn = content.querySelector('.book-title-cn');
+      var byline = content.querySelector('.book-byline');
+      var afterwordTitle = content.querySelector('.afterword-title');
+
+      var hero = document.createElement('div');
+      hero.className = 'book-hero-meta';
+      if (titleEn) hero.appendChild(titleEn);
+      if (titleCn) hero.appendChild(titleCn);
+      if (byline) hero.appendChild(byline);
+      content.prepend(hero);
+
+      Array.from(content.querySelectorAll('p em')).forEach(function(em) {
+        var parent = em.parentElement;
+        if (!parent || parent.tagName !== 'P') return;
+        if (em.innerHTML.indexOf('<br') === -1) return;
+
+        var fragments = em.innerHTML.split(/<br\s*\/?>/i).map(function(fragment) {
+          return fragment.trim();
+        }).filter(Boolean);
+
+        if (!fragments.length) return;
+
+        var insertAfter = parent;
+        fragments.forEach(function(fragment, index) {
+          var target = index === 0 ? parent : document.createElement('p');
+          target.innerHTML = '<em>' + fragment + '</em>';
+          if (index !== 0) {
+            insertAfter.insertAdjacentElement('afterend', target);
+            insertAfter = target;
+          }
+        });
+      });
+
+      var nodes = Array.from(content.children).filter(function(node) {
+        return node !== hero;
+      });
+
+      var windowShells = [];
+      var currentWindow = null;
+      var afterwordShell = null;
+      var afterwordMode = false;
+      var dialogueCarry = null;
+
+      function createWindow() {
+        var shell = document.createElement('section');
+        shell.className = 'reading-window';
+        shell.dataset.windowIndex = String(windowShells.length % 6);
+        windowShells.push(shell);
+        currentWindow = shell;
+        return shell;
+      }
+
+      nodes.forEach(function(node) {
+        if (node === afterwordTitle) {
+          afterwordMode = true;
+          currentWindow = null;
+          dialogueCarry = null;
+          afterwordShell = document.createElement('section');
+          afterwordShell.className = 'afterword-shell';
+          afterwordShell.appendChild(node);
+          return;
+        }
+
+        if (afterwordMode) {
+          if (node.tagName === 'P') classifyParagraph(node, true, null);
+          if (afterwordShell) afterwordShell.appendChild(node);
+          return;
+        }
+
+        if (node.tagName === 'P') {
+          var text = (node.textContent || '').trim();
+
+          if (/^=+$/.test(text)) {
+            currentWindow = null;
+            dialogueCarry = null;
+            node.remove();
+            return;
+          }
+
+          if (!currentWindow) {
+            if (!text) {
+              node.remove();
+              return;
+            }
+            createWindow();
+          }
+
+          dialogueCarry = classifyParagraph(node, false, dialogueCarry) || null;
+          currentWindow.appendChild(node);
+          return;
+        }
+
+        if (!currentWindow) createWindow();
+        currentWindow.appendChild(node);
+      });
+
+      windowShells.forEach(function(shell) {
+        content.appendChild(shell);
+      });
+
+      if (afterwordShell) {
+        content.appendChild(afterwordShell);
+      }
+
+      var scrubber = document.createElement('aside');
+      scrubber.className = 'novel-scrubber';
+      if (window.innerWidth <= 900) {
+        scrubber.classList.add('is-hidden');
+      }
+
+      scrubber.innerHTML =
+        '<button class="novel-scrubber__toggle" type="button" aria-expanded="true">Scroll</button>' +
+        '<div class="novel-scrubber__stack">' +
+          '<div class="novel-scrubber__panel">' +
+            '<div class="novel-scrubber__track">' +
+              '<div class="novel-scrubber__progress"></div>' +
+              '<div class="novel-scrubber__thumb"></div>' +
+            '</div>' +
+          '</div>' +
+          '<button class="novel-scrubber__jump" type="button" aria-label="Back to top">↑</button>' +
+        '</div>' +
+        '<div class="novel-scrubber__bubble">0%</div>';
+
+      document.body.appendChild(scrubber);
+
+      var toggle = scrubber.querySelector('.novel-scrubber__toggle');
+      var jump = scrubber.querySelector('.novel-scrubber__jump');
+      var track = scrubber.querySelector('.novel-scrubber__track');
+      var progress = scrubber.querySelector('.novel-scrubber__progress');
+      var thumb = scrubber.querySelector('.novel-scrubber__thumb');
+      var bubble = scrubber.querySelector('.novel-scrubber__bubble');
+      var dragging = false;
+
+      function syncScrubberState() {
+        var hidden = scrubber.classList.contains('is-hidden');
+        toggle.setAttribute('aria-expanded', String(!hidden));
+        toggle.textContent = hidden ? 'Open' : 'Scroll';
+      }
+
+      function maxScroll() {
+        return Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      }
+
+      function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+      }
+
+      function setProgress(ratio) {
+        var safeRatio = clamp(ratio, 0, 1);
+        var trackHeight = track.clientHeight;
+        var y = safeRatio * trackHeight;
+        thumb.style.top = y + 'px';
+        progress.style.height = y + 'px';
+        bubble.textContent = Math.round(safeRatio * 100) + '%';
+      }
+
+      function updateFromScroll() {
+        if (dragging) return;
+        setProgress(window.scrollY / maxScroll());
+      }
+
+      function showBubble(clientX, clientY) {
+        bubble.classList.add('is-visible');
+        bubble.style.left = (clientX - 84) + 'px';
+        bubble.style.top = (clientY - 18) + 'px';
+      }
+
+      function hideBubble() {
+        bubble.classList.remove('is-visible');
+      }
+
+      function scrubTo(clientY, clientX) {
+        var rect = track.getBoundingClientRect();
+        var ratio = clamp((clientY - rect.top) / rect.height, 0, 1);
+        window.scrollTo({ top: ratio * maxScroll(), behavior: 'auto' });
+        setProgress(ratio);
+        showBubble(clientX, clientY);
+      }
+
+      track.addEventListener('pointerdown', function(event) {
+        dragging = true;
+        track.setPointerCapture(event.pointerId);
+        scrubTo(event.clientY, event.clientX);
+      });
+
+      track.addEventListener('pointermove', function(event) {
+        if (!dragging) return;
+        scrubTo(event.clientY, event.clientX);
+      });
+
+      function endDrag() {
+        dragging = false;
+        hideBubble();
+      }
+
+      track.addEventListener('pointerup', endDrag);
+      track.addEventListener('pointercancel', endDrag);
+
+      toggle.addEventListener('click', function() {
+        scrubber.classList.toggle('is-hidden');
+        syncScrubberState();
+      });
+
+      jump.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      window.addEventListener('scroll', updateFromScroll, { passive: true });
+      window.addEventListener('resize', function() {
+        updateFromScroll();
+        if (window.innerWidth <= 900 && !dragging) {
+          scrubber.classList.add('is-hidden');
+        }
+        syncScrubberState();
+      });
+
+      syncScrubberState();
+      updateFromScroll();
+    });
+  </script>
+</body>
+</html>

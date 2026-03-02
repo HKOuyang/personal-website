@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact - HKOuyang</title>
+  <meta name="description" content="Contact HKOuyang for photography, writing, and creative collaborations." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:wght@500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body class="contact-page contact-panel is-preloading-contact">
+  <div class="contact-intro" aria-hidden="true">
+    <img src="./contact-hero.jpeg" alt="">
+  </div>
+
+  <header class="novel-header">
+    <a href="index.html" class="brand contact-reveal">HKOuyang</a>
+    <button class="menu contact-reveal" type="button" aria-expanded="false" aria-controls="menuPanel">
+      <span class="menu__label">Menu</span>
+      <span class="menu__icon" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+  </header>
+
+  <main class="contact-main">
+    <section class="contact-shell" aria-label="Contact information">
+      <div class="contact-copy">
+        <div>
+          <span class="contact-kicker contact-reveal">Direct</span>
+          <h1 class="contact-heading contact-reveal">Contact</h1>
+        </div>
+
+        <div>
+          <div class="contact-meta">
+            <div class="contact-card contact-reveal">
+              <div class="contact-label">Email</div>
+              <div class="contact-value">
+                <a href="mailto:boyuouyang001@gmail.com">boyuouyang001@gmail.com</a>
+              </div>
+            </div>
+
+            <div class="contact-card contact-reveal">
+              <div class="contact-label">Phone</div>
+              <div class="contact-value">
+                <a href="tel:+41762444801">+41 076 244 4801</a>
+              </div>
+            </div>
+
+            <div class="contact-card contact-reveal">
+              <div class="contact-label">Instagram</div>
+              <div class="contact-value">
+                <a href="https://www.instagram.com/wilderness_beyond_photography/" target="_blank" rel="noreferrer">wilderness_beyond_photography</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <figure class="contact-visual">
+        <img src="./contact-hero.jpeg" alt="Photographer standing beside an alpine lake beneath snowy mountains">
+        <figcaption class="contact-caption contact-reveal">
+          <div>
+            <strong>HKOuyang</strong>
+            <span>Photography, writing, and ideas</span>
+          </div>
+        </figcaption>
+      </figure>
+    </section>
+  </main>
+
+  <aside id="menuPanel" class="panel" aria-hidden="true">
+    <nav class="panel__nav" aria-label="Menu">
+      <a href="index.html">Home</a>
+      <a href="photos.html">Photos</a>
+      <a href="art.html">Art</a>
+      <a href="novel.html">Novel</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </aside>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const body = document.body;
+      const menuBtn = document.querySelector('.menu');
+      const menuPanel = document.getElementById('menuPanel');
+      const intro = document.querySelector('.contact-intro');
+      const visual = document.querySelector('.contact-visual');
+      const revealItems = document.querySelectorAll('.contact-reveal');
+
+      function setOpen(isOpen) {
+        menuBtn.setAttribute('aria-expanded', String(isOpen));
+        menuPanel.classList.toggle('is-open', isOpen);
+        menuPanel.setAttribute('aria-hidden', String(!isOpen));
+      }
+
+      function playIntro() {
+        window.setTimeout(function() {
+          intro.classList.add('is-settling');
+        }, 80);
+
+        window.setTimeout(function() {
+          const rect = visual.getBoundingClientRect();
+          intro.style.setProperty('--target-x', rect.left + 'px');
+          intro.style.setProperty('--target-y', rect.top + 'px');
+          intro.style.setProperty('--target-width', rect.width + 'px');
+          intro.style.setProperty('--target-height', rect.height + 'px');
+          intro.classList.add('is-moving');
+        }, 1350);
+
+        window.setTimeout(function() {
+          body.classList.remove('is-preloading-contact');
+          body.classList.add('contact-ready');
+          intro.classList.add('is-hidden');
+
+          revealItems.forEach(function(item, index) {
+            window.setTimeout(function() {
+              item.classList.add('animate-in');
+            }, index * 140);
+          });
+        }, 2250);
+      }
+
+      menuBtn.addEventListener('click', function() {
+        setOpen(menuBtn.getAttribute('aria-expanded') !== 'true');
+      });
+
+      menuPanel.addEventListener('click', function(event) {
+        if (event.target === menuPanel) {
+          setOpen(false);
+        }
+      });
+
+      window.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          setOpen(false);
+        }
+      });
+
+      playIntro();
+    });
+  </script>
+</body>
+</html>

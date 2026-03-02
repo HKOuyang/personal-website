@@ -1,0 +1,1146 @@
+/*
+  Base styles for the minimalist portfolio homepage inspired by a professional photographer's site.
+  Most of the work happens in the CSS variables at the top and in the layout rules below.
+*/
+
+:root {
+  /* Set the background image via a CSS custom property. The default is none, but you can
+     override this in your own deployment. For now, we point to the user‑provided URL. */
+  /* Use the locally hosted hero image to avoid expired external links. */
+  /* Point the hero background to the new locally downloaded mountain photo. */
+  /* Use the locally hosted hero image to avoid external expirations. */
+  --bg-image: url('./hero_home.jpg');
+  /* Dark base colour behind the image to ensure readability. */
+  --bg: #000;
+  /* Foreground colours for text and lines with varying opacity. */
+  --fg: rgba(255, 255, 255, 0.92);
+  --fg-muted: rgba(255, 255, 255, 0.75);
+  --line: rgba(255, 255, 255, 0.16);
+  --line-soft: rgba(255, 255, 255, 0.10);
+  /* Typography. */
+  --ui-font: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --display-font: "Bebas Neue", system-ui, sans-serif;
+  /* Maximum width for the inner layout on large screens. */
+  --maxw: 1440px;
+}
+
+
+
+/* ================================
+   Global brand styling (site-wide)
+   ================================ */
+.brand {
+  font-family: var(--display-font);
+  font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+}
+/* Reset and base rules */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  height: 100%;
+}
+body {
+  font-family: var(--ui-font);
+  background: var(--bg);
+  color: var(--fg);
+  overflow-x: hidden;
+}
+
+.hero {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+}
+
+/* Background layer: includes the image and soft overlays to ensure contrast. */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  /*
+     We rebuild the background layering so that the photograph is much
+     brighter overall. A bespoke linear gradient darkens just the very top
+     of the page (for the navigation) and gradually darkens again near the
+     bottom to ensure the white titles remain legible. The middle portion
+     remains bright, letting your image shine through.
+  */
+  background-image:
+    linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.6) 0%,      /* darken the very top bar */
+      rgba(0, 0, 0, 0.2) 10%,     /* ease into brightness after the header */
+      rgba(0, 0, 0, 0.0) 25%,     /* fully transparent through the main content */
+      rgba(0, 0, 0, 0.0) 65%,     /* stay clear until lower third */
+      rgba(0, 0, 0, 0.35) 80%,    /* start dimming just above the titles */
+      rgba(0, 0, 0, 0.55) 100%    /* darkest at the bottom to support legible text */
+    ),
+    var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  /* Prevent the gradient from repeating horizontally or vertically. Without this,
+     some browsers repeat the gradient across the width, which manifests as
+     faint vertical lines. */
+  background-repeat: no-repeat;
+  /* Smoothly transition filter and scale when toggling the preloading state. */
+  transition: filter 1.5s ease, transform 1.5s ease;
+  z-index: 0;
+}
+
+/*
+  Decorative guide lines and corner ticks have been removed.
+  The original design included semi‑transparent vertical and horizontal lines and corner ticks that
+  spanned the entire viewport. These have been excised to achieve a cleaner presentation.
+*/
+
+/* Top bar layout. */
+.hero__header {
+  position: relative;
+  z-index: 2;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 28px 38px 0 38px;
+  /*
+     The header originally used a three‑column grid to accommodate a logo in the middle.
+     Since the logo has been removed, we switch to a two‑column grid where the
+     contact link sits on the left and the menu button on the right. This keeps
+     the layout balanced without leaving an empty middle column.
+  */
+  display: grid;
+  /* Three columns: left contact, center brand, right menu. The center column uses
+     auto width so the brand text fits naturally. */
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+.navlink {
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 13px;
+  color: var(--fg);
+  text-decoration: none;
+  opacity: 0.95;
+  transition: opacity 0.2s;
+}
+.navlink:hover { opacity: 1; }
+.navlink--left {
+  justify-self: start;
+  position: relative;
+  padding-left: 62px;
+}
+.navlink--left::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 46px;
+  height: 1px;
+  background: var(--line);
+  transform: translateY(-50%);
+}
+/*
+  The placeholder mark (logo) styles are no longer needed because the header only
+  contains the contact link and menu button. If you choose to reintroduce a logo
+  later, you can add similar styles back in or replace them with your own.
+*/
+/* Menu button on the right. */
+.menu {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: transparent;
+  border: none;
+  color: var(--fg);
+  cursor: pointer;
+  padding: 8px 0;
+}
+.menu__label {
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+.menu__icon {
+  width: 34px;
+  height: 18px;
+  position: relative;
+  display: inline-block;
+}
+.menu__icon i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.menu__icon i:nth-child(1) { top: 0; }
+.menu__icon i:nth-child(2) { top: 8px; opacity: 0.9; }
+.menu__icon i:nth-child(3) { top: 16px; opacity: 0.8; }
+/*
+  Enhance interactive elements with transform transitions so that they can
+  animate into view and respond smoothly to hover effects. These rules add
+  transform to the list of properties that will animate when changed.
+*/
+.navlink,
+.menu,
+.title {
+  transition: opacity 0.2s ease, transform 0.2s ease, text-shadow 0.2s ease;
+}
+
+/* Style for the brand link in the homepage header. It shares the same
+   condensed display font and sizing as the portfolio page brand. */
+.hero__header .brand {  /* Responsive sizing similar to the portfolio page branding */
+  color: var(--fg);
+  justify-self: center;
+  /* Enable smooth opacity and translation transitions. */
+  transition: opacity 0.2s ease, transform 0.2s ease;
+
+  /* Make the brand behave like a link visually and prevent default link
+     colours from overriding our palette. The pointer cursor improves
+     discoverability while retaining the same dark foreground colour in
+     both visited and unvisited states. */
+}
+
+/* Ensure the brand retains the same colour after it has been visited.
+   Without this rule, browsers may apply a default purple colour to
+   visited links, which clashes with the minimalist design. */
+.hero__header .brand:visited {
+  color: var(--fg);
+}
+
+/* During preloading, hide and offset the brand link just like the contact
+   and menu items. */
+.is-preloading .hero__header .brand {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+/* When animated in, return the brand to its final position. */
+.hero__header .brand.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Big section titles across the bottom. */
+.hero__titles {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 84px;
+  z-index: 2;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 38px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: end;
+}
+.title {
+  font-family: var(--display-font);
+  /* Make the title link behave like a block element so CSS transforms
+     (translation and scaling) take effect on hover. Inline elements do not
+     respond to transform properties in many browsers. */
+  display: inline-block;
+  color: var(--fg);
+  text-decoration: none;
+  font-size: clamp(48px, 6.2vw, 104px);
+  line-height: 0.9;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  opacity: 0.96;
+  /* The transition for opacity and transform is handled globally above. */
+  /* Indicate interactivity with a pointer cursor. The will-change hint helps browsers
+     prepare for the upcoming transform and shadow on hover, resulting in smoother animations. */
+  cursor: pointer;
+  will-change: transform, text-shadow;
+}
+.title:hover {
+  /* On hover the title brightens fully, scales up slightly and casts
+     a soft shadow. The large blur on the shadow creates a diffused effect
+     that darkens the underlying image without making it opaque. */
+  opacity: 1;
+  /* Combine translation and scaling so that the hover effect doesn't
+     override the translateY used during the reveal animation. */
+  transform: translateY(-4px) scale(1.12);
+  text-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
+}
+.title--left { justify-self: start; }
+.title--center { justify-self: center; }
+.title--right { justify-self: end; }
+
+/* Slide‑in menu panel. */
+.panel {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.panel.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.panel__nav {
+  position: absolute;
+  top: 110px;
+  right: 38px;
+  display: grid;
+  gap: 18px;
+  text-align: right;
+}
+.panel__nav a {
+  color: var(--fg);
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 13px;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+.panel__nav a:hover { opacity: 1; }
+
+/*
+  Preloading state
+  ---------------------------------------------------------------------------
+  When the page first loads, we darken, blur and slightly scale up the hero
+  background image to create a cinematic intro. At the same time, all
+  navigational and title elements are hidden and offset vertically. After
+  the preloading class is removed via JavaScript, the transitions defined
+  earlier animate the elements back into view.
+*/
+.is-preloading .hero__bg {
+  filter: blur(12px) brightness(0.5);
+  transform: scale(1.1);
+}
+
+.is-preloading .title,
+.is-preloading .navlink,
+.is-preloading .menu {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+/*
+  Animated in state
+  ---------------------------------------------------------------------------
+  Elements tagged with the .animate-in class will transition back to full
+  opacity and their original position. Timing of the animations is
+  controlled via JavaScript by adding this class with delays.
+*/
+.title.animate-in,
+.navlink.animate-in,
+.menu.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/*
+  Hover effect on titles once they have animated in
+  ---------------------------------------------------------------------------
+  The `.title.animate-in` rule above resets the transform to `translateY(0)` to
+  slide the titles into place when the page loads. However, because this
+  selector appears after `.title:hover`, it overrides any transform applied
+  on hover. To ensure the scaling effect still applies when hovering over
+  a title, define a more specific selector that targets titles which have
+  already animated in and are being hovered. This rule comes after the
+  `.title.animate-in` declaration so it takes precedence and restores the
+  scale and shadow on hover.
+*/
+.title.animate-in:hover {
+  /* Keep the title in its final position and scale it up slightly */
+  transform: translateY(-4px) scale(1.12);
+  /* Apply the same soft shadow used in the basic hover rule to subtly
+     darken the area beneath the text without fully obscuring the image. */
+  text-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
+}
+
+/*
+  Portfolio page preload and lazy loading
+  ---------------------------------------------------------------------------
+  When entering the photos page, we darken and blur the cover image and slide
+  it up into place. Header elements and hero text start off hidden and
+  translated downward. JavaScript toggles classes to animate them into view.
+  The grid and play button are hidden with the `is-hidden` utility until the
+  user scrolls down.
+*/
+.is-preloading-portfolio .portfolio-hero img {
+  /* Enlarge and blur the hero image so it fills the viewport during the intro.
+     We avoid vertical translation here; scaling alone gives the effect of
+     zooming out to the final size when the animation ends. */
+  /* Enlarge and blur the hero image so it fills the viewport during the intro.
+     A larger scale and stronger blur create a smoother zoom‑out effect. */
+  filter: blur(16px) brightness(0.6);
+  transform: scale(1.25);
+  transition: filter 1s ease, transform 1s ease;
+}
+
+/* Enlarge the hero section itself during preload so that it fills the entire viewport. */
+.is-preloading-portfolio .portfolio-hero {
+  height: 100vh;
+}
+
+/* During the preload, hide and slide the brand and menu below the viewport. */
+/* During the preload, hide and slide the brand and menu below the viewport.
+   Both the site title (brand) and the hamburger menu start off invisible,
+   shifted downward and blurred. They animate into place once the preload
+   completes. */
+.is-preloading-portfolio .portfolio-header .brand,
+.is-preloading-portfolio .portfolio-header .menu {
+  opacity: 0;
+  transform: translateY(40px);
+  filter: blur(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Hide, blur and slide the hero title and byline so they can diffuse into view. */
+.is-preloading-portfolio .portfolio-hero-text h1,
+.is-preloading-portfolio .portfolio-hero-text p {
+  opacity: 0;
+  transform: translateY(40px);
+  filter: blur(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease;
+}
+.portfolio-hero.animate-in img {
+  filter: blur(0) brightness(1);
+  transform: scale(1);
+}
+.portfolio-header .brand.animate-in,
+.portfolio-header .menu.animate-in,
+.portfolio-hero-text h1.animate-in,
+.portfolio-hero-text p.animate-in {
+  opacity: 1;
+  /* When animating in, remove any blur from header and hero text. */
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+/* Remove the blur once the hero text has animated into place. */
+.portfolio-hero-text h1.animate-in,
+.portfolio-hero-text p.animate-in {
+  filter: blur(0);
+}
+/* Utility class to hide elements until they are ready to reveal. Elements
+   assigned this class will be invisible, slightly shifted down, and blurred.
+   When the class is removed, they smoothly fade in, move into place and
+   sharpen. */
+.is-hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease, filter 0.5s ease;
+}
+
+/* Responsive adjustments for small screens. */
+@media (max-width: 720px) {
+  .hero__header {
+    padding: 18px 18px 0 18px;
+  }
+  .navlink--left {
+    padding-left: 50px;
+  }
+  .navlink--left::before {
+    width: 36px;
+  }
+  .hero__titles {
+    padding: 0 18px;
+    bottom: 70px;
+    gap: 12px;
+  }
+  .title {
+    letter-spacing: 0.18em;
+    font-size: clamp(32px, 8.6vw, 64px);
+  }
+  .corner--tl, .corner--tr { top: 18px; }
+  .corner--bl, .corner--br { bottom: 18px; }
+  .corner--tl, .corner--bl { left: 18px; }
+  .corner--tr, .corner--br { right: 18px; }
+  .panel__nav { right: 18px; }
+}
+
+/* ---------------------------------------------------------------------------
+   Novel pages
+   ---------------------------------------------------------------------------
+   The novel listing page and individual book pages use a light palette in
+   contrast to the dark homepage. These styles introduce a dedicated header,
+   grid and reader layout. They also include preloading rules so that the
+   content fades and slides into place after the initial blur/zoom intro.
+*/
+
+/* Light background and dark text for novel and book pages. */
+.novel-page {
+  background: #f8f5f0;
+  color: #333;
+  min-height: 100vh;
+}
+
+/* Header shared by novel listing and book reading pages. */
+.novel-header {
+  background: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Stretch the header across the entire viewport on novel pages */
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 20px 38px;
+  position: relative;
+  z-index: 2;
+}
+.novel-header .brand {  color: var(--fg);
+  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+}
+.novel-header .brand:visited {
+  color: var(--fg);
+}
+.novel-header .menu {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: transparent;
+  border: none;
+  color: var(--fg);
+  cursor: pointer;
+  padding: 8px 0;
+  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+}
+.novel-header .menu__label {
+  font-family: var(--ui-font);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+.novel-header .menu__icon {
+  width: 34px;
+  height: 18px;
+  position: relative;
+  display: inline-block;
+}
+.novel-header .menu__icon i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 2px;
+}
+.novel-header .menu__icon i:nth-child(1) { top: 0; }
+.novel-header .menu__icon i:nth-child(2) { top: 8px; opacity: 0.9; }
+.novel-header .menu__icon i:nth-child(3) { top: 16px; opacity: 0.8; }
+
+/* Container for the novel listing content. */
+.novel-main {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 60px 38px 80px;
+}
+.novel-heading {
+  font-family: var(--display-font);
+  color: #d6a397;
+  font-size: clamp(48px, 8vw, 120px);
+  letter-spacing: 0.05em;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Hide the novel page heading during the preload and animate it into view */
+.is-preloading-novel .novel-heading {
+  opacity: 0;
+  transform: translateY(40px);
+  filter: blur(8px);
+  pointer-events: none;
+}
+.novel-heading.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+.novel-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+.novel-card {
+  display: block;
+  max-width: 300px;
+  text-decoration: none;
+  color: #333;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+}
+.novel-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.novel-card:hover img {
+  transform: scale(1.05);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+}
+.novel-card .title-cn {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 12px;
+  display: block;
+}
+.novel-card .title-en {
+  font-size: 16px;
+  opacity: 0.75;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Reader layout for individual book pages */
+.book-reader {
+  display: flex;
+  max-width: var(--maxw);
+  margin: 40px auto;
+  padding: 0 38px 60px;
+}
+.book-sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  margin-right: 40px;
+}
+.book-sidebar img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+}
+.book-content {
+  flex: 1;
+  max-width: 100%;
+  transition: opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease;
+}
+.book-title-cn {
+  font-family: var(--display-font);
+  font-size: clamp(32px, 5vw, 64px);
+  margin-bottom: 16px;
+  color: #111;
+}
+.book-title-en {
+  font-family: var(--ui-font);
+  font-size: clamp(18px, 3.5vw, 26px);
+  margin-bottom: 32px;
+  color: #555;
+}
+.book-content p {
+  font-family: var(--ui-font);
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Preloading behaviour for novel pages. Hide and blur elements until JavaScript removes the class. */
+.is-preloading-novel .novel-header .brand,
+.is-preloading-novel .novel-header .menu,
+.is-preloading-novel .novel-card,
+.is-preloading-novel .book-content {
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+/* When animated in, bring elements into view with no blur. */
+.novel-header .brand.animate-in,
+.novel-header .menu.animate-in,
+.novel-card.animate-in,
+.book-content.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* ---------------------------------------------------------------------------
+   Portfolio page styles
+   ---------------------------------------------------------------------------
+   The photos/portfolio interior page uses a different layout from the homepage.
+   It features a header with the photographer's name on the left and a menu
+   button on the right, a large cover image with overlay text, an optional play
+   button row, and a responsive grid of images. These rules are kept outside of
+   the media query so they apply at all sizes, with some values using clamps for
+   responsive typography.
+*/
+
+.portfolio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 20px 38px;
+  position: relative;
+  z-index: 2;
+}
+.portfolio-header .brand {  color: var(--fg);
+  /* Indicate that the brand text is clickable and prevent default visited
+     colours from showing through. */
+}
+
+/* Maintain the same colour for the portfolio brand link after it has been
+   visited. Some browsers apply a default purple visited colour, which
+   clashes with the minimalist aesthetic. */
+.portfolio-header .brand:visited {
+  color: var(--fg);
+}
+.portfolio-header .menu {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: transparent;
+  border: none;
+  color: var(--fg);
+  cursor: pointer;
+  padding: 8px 0;
+}
+.portfolio-header .menu__label {
+  font-family: var(--ui-font);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+.portfolio-header .menu__icon {
+  width: 34px;
+  height: 18px;
+  position: relative;
+  display: inline-block;
+}
+.portfolio-header .menu__icon i {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 2px;
+}
+.portfolio-header .menu__icon i:nth-child(1) { top: 0; }
+.portfolio-header .menu__icon i:nth-child(2) { top: 8px; opacity: 0.9; }
+.portfolio-header .menu__icon i:nth-child(3) { top: 16px; opacity: 0.8; }
+
+.portfolio-hero {
+  position: relative;
+  width: 100%;
+  /* Set an explicit height so it can animate smoothly from full viewport to its final size. */
+  height: 60vh;
+  overflow: hidden;
+  /* Allow the height to animate when toggling the preloading class. */
+  transition: height 1s ease;
+}
+.portfolio-hero img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.portfolio-hero-text {
+  position: absolute;
+  left: 38px;
+  bottom: 38px;
+  color: var(--fg);
+}
+.portfolio-hero-text h1 {
+  font-family: var(--display-font);
+  letter-spacing: 0.05em;
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: 1;
+}
+.portfolio-hero-text p {
+  font-family: var(--ui-font);
+  font-size: clamp(16px, 2vw, 22px);
+  margin-top: 8px;
+}
+
+.portfolio-play {
+  max-width: var(--maxw);
+  margin: 20px auto 0 auto;
+  padding: 0 38px;
+}
+.play-button {
+  /* Strip the play button down to just a triangle icon. Remove the rectangular
+     background, border and text for a minimal look. */
+  background: none;
+  border: none;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.play-button svg {
+  /* Enlarge the triangle slightly and fill it with white. */
+  width: 20px;
+  height: 20px;
+  fill: rgba(255, 255, 255, 0.9);
+}
+
+/* Display the portfolio thumbnails in a flexible row that wraps. Each image
+   keeps its original aspect ratio while sharing a consistent height. When
+   there is not enough horizontal space, images wrap to the next row. The
+   row is centred so that partial rows are balanced. */
+.portfolio-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  max-width: var(--maxw);
+  margin: 20px auto 40px auto;
+  padding: 0 38px;
+}
+.portfolio-grid div {
+  flex: 0 0 auto;
+}
+.portfolio-grid img {
+  height: 240px;
+  width: auto;
+  object-fit: cover;
+  display: block;
+  /* Allow the blur on .is-hidden to animate smoothly when the class is removed. */
+  transition: filter 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* ---------------------------------------------------------------------------
+   Contact page
+   --------------------------------------------------------------------------- */
+
+.contact-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(214, 163, 151, 0.12), transparent 34%),
+    linear-gradient(180deg, #f5f1ea 0%, #efe8de 100%);
+  color: #161616;
+}
+
+.is-preloading-contact {
+  overflow: hidden;
+}
+
+.contact-page .brand,
+.contact-page .brand:visited,
+.contact-page .menu,
+.contact-page .menu__label {
+  color: var(--fg);
+}
+
+.contact-page .menu__icon i {
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.contact-main {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 52px 38px 80px;
+}
+
+.contact-intro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 20;
+  overflow: hidden;
+  background: #000;
+  transition:
+    opacity 0.45s ease,
+    transform 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+    height 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+    clip-path 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+    border-radius 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: top left;
+  clip-path: inset(0 round 0);
+}
+
+.contact-intro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.18) 100%);
+  transition: opacity 0.9s ease;
+}
+
+.contact-intro img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.72) saturate(0.94);
+  transform: scale(1.08);
+  transition: filter 1.15s ease, transform 1.15s ease;
+}
+
+.contact-intro.is-settling img {
+  filter: brightness(0.72) saturate(0.94);
+  transform: scale(1.01);
+}
+
+.contact-intro.is-settling::after {
+  opacity: 1;
+}
+
+.contact-intro.is-moving {
+  transform: translate(var(--target-x), var(--target-y));
+  width: var(--target-width);
+  height: var(--target-height);
+  clip-path: inset(0 round 26px);
+}
+
+.contact-intro.is-moving img {
+  transform: scale(1);
+  filter: brightness(1) saturate(1);
+}
+
+.contact-intro.is-moving::after {
+  opacity: 0;
+}
+
+.contact-intro.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact-shell {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.95fr) minmax(360px, 1.05fr);
+  gap: 44px;
+  align-items: stretch;
+}
+
+.contact-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 620px;
+  padding: 48px 0 20px;
+}
+
+.contact-kicker {
+  display: inline-block;
+  margin-bottom: 14px;
+  font-size: 10px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(22, 22, 22, 0.5);
+}
+
+.contact-heading {
+  max-width: 560px;
+  font-family: var(--display-font);
+  font-size: clamp(42px, 6vw, 88px);
+  line-height: 0.92;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #111;
+}
+
+.contact-lead {
+  max-width: 520px;
+  margin-top: 22px;
+  font-size: 17px;
+  line-height: 1.8;
+  color: rgba(22, 22, 22, 0.78);
+}
+
+.contact-meta {
+  display: grid;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.contact-card {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 18px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(22, 22, 22, 0.08);
+}
+
+.contact-card:last-child {
+  border-bottom: 1px solid rgba(22, 22, 22, 0.08);
+}
+
+.contact-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(22, 22, 22, 0.42);
+}
+
+.contact-value {
+  min-width: 0;
+}
+
+.contact-value a,
+.contact-value span {
+  color: #121212;
+  text-decoration: none;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(13px, 1.1vw, 17px);
+  line-height: 1.3;
+  letter-spacing: 0.03em;
+  font-weight: 600;
+}
+
+.contact-value a {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.contact-value a:hover {
+  opacity: 0.68;
+  transform: translateX(4px);
+}
+
+.contact-note {
+  margin-top: 18px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: rgba(22, 22, 22, 0.54);
+}
+
+.contact-visual {
+  position: relative;
+  min-height: 620px;
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.14);
+  background: #111;
+}
+
+.is-preloading-contact .contact-visual {
+  visibility: hidden;
+}
+
+.contact-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.contact-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: none;
+}
+
+.contact-caption {
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  bottom: 28px;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: end;
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.contact-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  filter: blur(8px);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease,
+    filter 0.55s ease;
+}
+
+.contact-reveal.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.contact-caption strong {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.contact-caption span {
+  display: block;
+  margin-top: 7px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.72);
+  letter-spacing: 0.04em;
+}
+
+.contact-panel .panel {
+  position: fixed;
+}
+
+@media (max-width: 980px) {
+  .contact-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-copy,
+  .contact-visual {
+    min-height: auto;
+  }
+
+  .contact-visual {
+    order: -1;
+    height: 52vh;
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-main {
+    padding: 34px 18px 56px;
+  }
+
+  .contact-copy {
+    padding-top: 10px;
+  }
+
+  .contact-card {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .contact-visual {
+    border-radius: 18px;
+    height: 40vh;
+    min-height: 280px;
+  }
+
+  .contact-caption {
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+    flex-direction: column;
+    align-items: start;
+  }
+}

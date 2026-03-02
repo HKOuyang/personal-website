@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Condensed display type for big section labels and a clean UI font for the rest. -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body class="is-preloading">
+  <main class="hero" aria-label="Homepage hero">
+    <!-- Background layer: we set the background using a CSS variable for easy swapping later. -->
+    <div class="hero__bg" aria-hidden="true"></div>
+
+    <!-- Decorative guides removed per updated design -->
+
+    <!-- Top bar with contact link and menu button. The center mark has been removed to simplify the header. -->
+    <header class="hero__header">
+      <a class="navlink navlink--left" href="contact.html">CONTACT</a>
+      <!-- Add a centered brand link that matches the portfolio page branding. -->
+      <a href="index.html" class="brand" aria-label="Homepage">HKOuyang</a>
+      <button class="menu" type="button" aria-expanded="false" aria-controls="menuPanel">
+        <span class="menu__label">MENU</span>
+        <span class="menu__icon" aria-hidden="true">
+          <i></i><i></i><i></i>
+        </span>
+      </button>
+    </header>
+
+    <!-- Large section links along the bottom. -->
+    <section class="hero__titles" aria-label="Primary sections">
+      <!-- Update left section label from Photography to Photos as requested -->
+      <a class="title title--left" href="photos.html">PHOTOS</a>
+      <a class="title title--center" href="art.html">ART</a>
+      <!-- Link to the novel listing page instead of a placeholder. -->
+      <a class="title title--right" href="novel.html">NOVEL</a>
+    </section>
+
+    <!-- Slide in menu panel. Hidden by default; toggled via JS. -->
+    <aside id="menuPanel" class="panel" aria-hidden="true">
+      <nav class="panel__nav" aria-label="Menu">
+        <a href="photos.html">Photos</a>
+        <a href="art.html">Art</a>
+        <a href="novel.html">Novel</a>
+        <a href="#">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </aside>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>

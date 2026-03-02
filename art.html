@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Art - HKOuyang</title>
+  <meta name="description" content="Combinatorialism: a conceptual archive of possible art forms, drawn from a hypothetical finite database." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    :root {
+      --art-ink: #121826;
+      --art-muted: rgba(18, 24, 38, 0.68);
+      --art-line: rgba(18, 24, 38, 0.12);
+      --art-paper: #f4f0e8;
+      --art-paper-deep: #ece5da;
+      --art-panel: rgba(255, 255, 255, 0.74);
+      --art-accent: #1f2d4d;
+      --art-serif: "Cormorant Garamond", Georgia, serif;
+    }
+
+    body.art-page {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(31, 45, 77, 0.12), transparent 30%),
+        linear-gradient(180deg, var(--art-paper) 0%, var(--art-paper-deep) 100%);
+      color: var(--art-ink);
+      overflow-x: hidden;
+    }
+
+    .art-page .novel-header {
+      position: relative;
+      background: rgba(0, 0, 0, 0.96);
+      backdrop-filter: blur(10px);
+      z-index: 6;
+    }
+
+    .art-page .brand,
+    .art-page .brand:visited,
+    .art-page .menu,
+    .art-page .menu__label {
+      color: var(--fg);
+    }
+
+    .art-page .menu__icon i {
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .art-intro {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      background: #000;
+      overflow: hidden;
+      pointer-events: none;
+      transition: opacity 1s ease;
+    }
+
+    .art-intro.is-fading {
+      opacity: 0;
+    }
+
+    .art-word {
+      position: absolute;
+      top: 0;
+      left: 0;
+      white-space: nowrap;
+      color: rgba(255, 255, 255, 0.96);
+      font-family: var(--display-font);
+      line-height: 0.86;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      opacity: 0.9;
+      user-select: none;
+      will-change: transform;
+    }
+
+    .art-main {
+      max-width: 1460px;
+      margin: 0 auto;
+      padding: 52px 38px 92px;
+      perspective: 1400px;
+    }
+
+    .art-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(340px, 0.88fr);
+      gap: 34px;
+      align-items: start;
+    }
+
+    .art-essay,
+    .art-profile,
+    .art-rules,
+    .art-card,
+    .art-generator {
+      background: var(--art-panel);
+      border: 1px solid rgba(255, 255, 255, 0.44);
+      box-shadow: 0 24px 44px rgba(21, 28, 44, 0.08);
+      backdrop-filter: blur(18px);
+      transform-origin: center center;
+      will-change: transform, box-shadow;
+      transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.28s ease;
+    }
+
+    .art-essay:hover,
+    .art-profile:hover,
+    .art-rules:hover,
+    .art-card:hover,
+    .art-generator:hover {
+      transform: translateY(-12px) scale(1.045);
+      box-shadow:
+        0 48px 88px rgba(12, 18, 30, 0.18),
+        0 24px 38px rgba(0, 0, 0, 0.16);
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .art-profile:hover {
+      background:
+        linear-gradient(180deg, #192233 0%, #101725 100%);
+      transform: translateY(-12px) scale(1.045);
+      box-shadow:
+        0 48px 88px rgba(12, 18, 30, 0.24),
+        0 24px 38px rgba(0, 0, 0, 0.22);
+    }
+
+    .art-essay {
+      padding: 34px 34px 36px;
+      border-radius: 26px;
+    }
+
+    .art-tabs {
+      display: flex;
+      gap: 26px;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--art-line);
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .art-tabs span:first-child {
+      font-weight: 600;
+      color: var(--art-ink);
+    }
+
+    .art-tabs span:last-child {
+      color: rgba(18, 24, 38, 0.34);
+    }
+
+    .art-title {
+      margin: 0;
+      font-family: var(--art-serif);
+      font-size: clamp(46px, 6.2vw, 92px);
+      line-height: 0.94;
+      letter-spacing: -0.035em;
+      color: #111827;
+      overflow-wrap: anywhere;
+    }
+
+    .art-definition {
+      margin-top: 22px;
+      font-size: clamp(18px, 1.7vw, 24px);
+      line-height: 1.62;
+      letter-spacing: -0.02em;
+      max-width: 22em;
+    }
+
+    .art-definition strong {
+      font-weight: 600;
+    }
+
+    .art-stack {
+      display: grid;
+      gap: 22px;
+    }
+
+    .art-profile {
+      border-radius: 24px;
+      padding: 26px;
+      background:
+        linear-gradient(180deg, #192233 0%, #101725 100%);
+      color: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.18);
+    }
+
+    .art-profile__head {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .art-profile__icon {
+      width: 82px;
+      height: 82px;
+      flex: 0 0 82px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      display: block;
+      object-fit: cover;
+      background: #fff;
+      overflow: hidden;
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    .art-profile__meta strong {
+      display: block;
+      font-size: clamp(28px, 3.4vw, 42px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .art-profile__meta span {
+      display: block;
+      margin-top: 10px;
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.84);
+    }
+
+    .art-profile__stats {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+      font-size: 15px;
+    }
+
+    .art-profile__stats strong {
+      font-weight: 600;
+      margin-right: 5px;
+    }
+
+    .art-profile p {
+      margin: 24px 0 0;
+      font-size: 21px;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .art-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 24px;
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .art-button:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.28);
+    }
+
+    .art-rules {
+      border-radius: 22px;
+      padding: 26px;
+    }
+
+    .art-generator {
+      border-radius: 22px;
+      padding: 26px;
+    }
+
+    .art-rules__kicker {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--art-muted);
+    }
+
+    .art-rules h2,
+    .art-archive h2,
+    .art-generator h2 {
+      margin: 0 0 14px;
+      font-family: var(--art-serif);
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+    }
+
+    .art-rules ol {
+      margin: 0;
+      padding-left: 20px;
+      display: grid;
+      gap: 10px;
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--art-muted);
+    }
+
+    .art-generator p {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--art-muted);
+    }
+
+    .art-generator .art-button {
+      margin-top: 18px;
+      background: rgba(18, 24, 38, 0.08);
+      border-color: rgba(18, 24, 38, 0.12);
+      color: var(--art-ink);
+    }
+
+    .art-generator .art-button:hover {
+      background: rgba(18, 24, 38, 0.12);
+      border-color: rgba(18, 24, 38, 0.2);
+    }
+
+    .art-archive {
+      margin-top: 34px;
+    }
+
+    .art-archive__lead {
+      max-width: 760px;
+      margin: 0 0 20px;
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--art-muted);
+    }
+
+    .art-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .art-card {
+      padding: 20px 20px 18px;
+      border-radius: 22px;
+    }
+
+    .art-card__index {
+      display: inline-block;
+      margin-bottom: 16px;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--art-muted);
+    }
+
+    .art-card h3 {
+      margin: 0;
+      font-family: var(--art-serif);
+      font-size: clamp(34px, 4vw, 46px);
+      line-height: 0.94;
+      letter-spacing: -0.03em;
+      color: #111827;
+    }
+
+    .art-card p {
+      margin: 14px 0 0;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--art-muted);
+    }
+
+    .art-reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      filter: blur(8px);
+      transition: opacity 0.72s ease, transform 0.72s ease, filter 0.72s ease;
+    }
+
+    .art-reveal.animate-in {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    @media (max-width: 1100px) {
+      .art-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .art-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .art-main {
+        padding: 30px 18px 68px;
+      }
+
+      .art-essay,
+      .art-profile,
+      .art-rules,
+      .art-card,
+      .art-generator {
+        border-radius: 18px;
+      }
+
+      .art-title {
+        font-size: clamp(42px, 13vw, 70px);
+      }
+
+      .art-definition {
+        font-size: 18px;
+      }
+
+      .art-profile p {
+        font-size: 18px;
+      }
+
+      .art-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="art-page is-preloading-art">
+  <div class="art-intro" id="artIntro" aria-hidden="true"></div>
+
+  <header class="novel-header">
+    <a href="index.html" class="brand art-reveal">HKOuyang</a>
+    <button class="menu art-reveal" type="button" aria-expanded="false" aria-controls="menuPanel">
+      <span class="menu__label">Menu</span>
+      <span class="menu__icon" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+  </header>
+
+  <main class="art-main">
+    <div class="art-grid">
+      <section class="art-essay art-reveal" aria-labelledby="art-title">
+        <div class="art-tabs">
+          <span>Article</span>
+          <span>Archive</span>
+        </div>
+        <h1 id="art-title" class="art-title">Combinatorialism</h1>
+        <p class="art-definition">
+          <strong>Combinatorialism</strong> is a conceptual approach to art and literature that treats combination as the medium of creation, permuting basic elements such as words, lines, or forms to explore all possible works. Originating in Ramon Llull's Ars Magna and Leibniz's De Arte Combinatoria, it reappears in Oulipo, serial art, and Borges's Library of Babel, emphasizing structure and constraint as sources of meaning.
+        </p>
+      </section>
+
+      <div class="art-stack">
+        <section class="art-profile art-reveal" aria-label="Project profile">
+          <div class="art-profile__head">
+            <img class="art-profile__icon" src="./art-archive-icon.jpeg" alt="every.art.archive icon">
+            <div class="art-profile__meta">
+              <strong>every.art.archive</strong>
+              <span>Archive of all Art forms</span>
+            </div>
+          </div>
+
+
+
+          <p>
+            There is a hypothetical database of every kinds of art form that existed and can ever exist. Here are some of them taken out from it, displayed in wikipedia page format
+          </p>
+
+          <a class="art-button" href="https://www.instagram.com/every.art.archive" target="_blank" rel="noreferrer">
+            Visit Instagram Archive
+          </a>
+        </section>
+
+        <section class="art-rules art-reveal" aria-labelledby="art-rules-title">
+          <span class="art-rules__kicker">Generation rules</span>
+          <h2 id="art-rules-title">Every entry obeys the following constraints</h2>
+          <ol>
+            <li>The style name must be pronounceable.</li>
+            <li>The description must be grammatically correct.</li>
+            <li>The paragraph must remain within fifty words.</li>
+            <li>The sentences are allowed to resist conventional meaning.</li>
+          </ol>
+        </section>
+
+        <section class="art-generator art-reveal" aria-labelledby="art-generator-title">
+          <span class="art-rules__kicker">Try it yourself</span>
+          <h2 id="art-generator-title">Generate entries from the archive.</h2>
+          <p>
+            A separate generator lets you produce batches of archive-style imagines.
+          </p>
+          <a class="art-button" href="https://hkouyang.github.io/-/batch.html" target="_blank" rel="noreferrer">
+            Open Generator
+          </a>
+        </section>
+      </div>
+    </div>
+
+    <section class="art-archive">
+      <h2 class="art-reveal">Selected fragments from the archive</h2>
+      <p class="art-archive__lead art-reveal">
+        There is a hypothetical database of every kind of art form that existed and can ever exist.
+        These entries are not illustrations of a style outside the archive. They are the archive, surfaced one name at a time.
+      </p>
+
+      <div class="art-cards">
+        <article class="art-card art-reveal">
+          <span class="art-card__index">Entry 001</span>
+          <h3>Thryven</h3>
+          <p>Thryven fractures measured cadence into suspended pauses, transforming directional motion into a chain of unresolved hesitations.</p>
+        </article>
+
+        <article class="art-card art-reveal">
+          <span class="art-card__index">Entry 014</span>
+          <h3>Velnora</h3>
+          <p>Velnora arranges ceremonial surfaces around a missing event, allowing ornament to behave as if memory were a navigational instrument.</p>
+        </article>
+
+        <article class="art-card art-reveal">
+          <span class="art-card__index">Entry 023</span>
+          <h3>Caelith</h3>
+          <p>Caelith lowers radiant structure into almost-architectural weather, where every contour appears complete yet remains politely unfinished.</p>
+        </article>
+
+        <article class="art-card art-reveal">
+          <span class="art-card__index">Entry 041</span>
+          <h3>Solivane</h3>
+          <p>Solivane treats illumination as a grammatical delay, letting brightness arrive one clause too late for certainty.</p>
+        </article>
+
+        <article class="art-card art-reveal">
+          <span class="art-card__index">Entry 067</span>
+          <h3>Mernaxis</h3>
+          <p>Mernaxis converts stable proportion into persuasive drift, so that each composition appears to revise the law that generated it.</p>
+        </article>
+
+        <article class="art-card art-reveal">
+          <span class="art-card__index">Entry 102</span>
+          <h3>Orithane</h3>
+          <p>Orithane repeats symbolic edges until they resemble evidence from a discipline that has not yet been named.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <aside id="menuPanel" class="panel" aria-hidden="true">
+    <nav class="panel__nav" aria-label="Menu">
+      <a href="index.html">Home</a>
+      <a href="photos.html">Photos</a>
+      <a href="art.html">Art</a>
+      <a href="novel.html">Novel</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </aside>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const body = document.body;
+      const intro = document.getElementById('artIntro');
+      const revealItems = Array.from(document.querySelectorAll('.art-reveal'));
+      const menuBtn = document.querySelector('.menu');
+      const menuPanel = document.getElementById('menuPanel');
+      const words = [
+        'Impressionism', 'Surrealism', 'Cubism', 'Dada', 'Futurism', 'Minimalism',
+        'Baroque', 'Rococo', 'Expressionism', 'Constructivism', 'Suprematism', 'Brutalism',
+        'Deconstructivism', 'Art Nouveau', 'Op Art', 'Pop Art', 'Arte Povera', 'Mannerism',
+        'Bauhaus', 'Symbolism', 'Romanticism', 'Conceptual Art', 'Fluxus', 'Realism',
+        'Postmodernism', 'Neoclassicism', 'Abstract Expressionism', 'Pointillism', 'Fauvism', 'Vorticism',
+        'Metaphysical Art', 'Concrete Poetry', 'Land Art', 'Assemblage', 'Hard-edge Painting', 'Tachisme',
+        'Color Field Painting', 'Performance Art', 'Photorealism', 'Photo Secession', 'Precisionism', 'Purism',
+        'Social Realism', 'Street Photography', 'Der Blaue Reiter', 'Die Brucke', 'Orphism', 'Neue Sachlichkeit',
+        'Harlem Renaissance', 'Neo-Expressionism', 'Art Deco', 'Arts and Crafts', 'Aestheticism', 'Art Informel',
+        'Lyrical Abstraction', 'Post-painterly Abstraction', 'Shaped Canvas', 'Neo-Dada', 'Kinetic Art', 'Installation Art',
+        'Neo-Classicism', 'Proto-Renaissance', 'High Renaissance', 'Post-Impressionism', 'Neo-Impressionism', 'Stuckism',
+        'Transavantgarde', 'Figuration Libre', 'Ashcan School', 'American Realism', 'Chicago Imagism', 'Group f.64',
+        'New Objectivity', 'Precision Art', 'Synthetism', 'Divisionism', 'Macchiaioli', 'Academic Art'
+      ];
+
+      function setOpen(isOpen) {
+        menuBtn.setAttribute('aria-expanded', String(isOpen));
+        menuPanel.classList.toggle('is-open', isOpen);
+        menuPanel.setAttribute('aria-hidden', String(!isOpen));
+      }
+
+      menuBtn.addEventListener('click', function() {
+        setOpen(menuBtn.getAttribute('aria-expanded') !== 'true');
+      });
+
+      menuPanel.addEventListener('click', function(event) {
+        if (event.target === menuPanel) {
+          setOpen(false);
+        }
+      });
+
+      window.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+          setOpen(false);
+        }
+      });
+
+      const sprites = words.map(function(word, index) {
+        const el = document.createElement('span');
+        const huge = index < 2;
+        const giant = index >= 2 && index < 6;
+        const medium = index >= 6 && index < 16;
+        const size = huge
+          ? 820 + Math.random() * 320
+          : giant
+            ? 240 + Math.random() * 220
+            : medium
+              ? 44 + Math.random() * 110
+              : 24 + Math.random() * 28;
+        const speed = huge
+          ? 10 + Math.random() * 8
+          : giant
+            ? 16 + Math.random() * 14
+            : 24 + Math.random() * 48;
+        const angle = Math.random() * Math.PI * 2;
+        const widthEstimate = size * word.length * 0.5;
+        const heightEstimate = size * 0.9;
+
+        el.className = 'art-word';
+        el.textContent = word;
+        el.style.fontSize = size + 'px';
+        el.style.fontFamily = '"Bebas Neue", system-ui, sans-serif';
+        el.style.fontStyle = 'normal';
+        el.style.fontWeight = huge ? '700' : '400';
+        el.style.letterSpacing = '0.06em';
+        el.style.opacity = huge ? String(0.07 + Math.random() * 0.06) : giant ? String(0.12 + Math.random() * 0.12) : String(0.22 + Math.random() * 0.5);
+        intro.appendChild(el);
+
+        return {
+          el: el,
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          width: widthEstimate,
+          height: heightEstimate
+        };
+      });
+
+      let lastTime = performance.now();
+      let running = true;
+
+      function step(now) {
+        if (!running) return;
+        const dt = Math.min((now - lastTime) / 1000, 0.05);
+        lastTime = now;
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+
+        sprites.forEach(function(sprite) {
+          sprite.x += sprite.vx * dt;
+          sprite.y += sprite.vy * dt;
+
+          if (sprite.x > w + sprite.width) sprite.x = -sprite.width;
+          if (sprite.x < -sprite.width) sprite.x = w + sprite.width * 0.2;
+          if (sprite.y > h + sprite.height) sprite.y = -sprite.height;
+          if (sprite.y < -sprite.height) sprite.y = h + sprite.height * 0.2;
+
+          sprite.el.style.transform = 'translate(' + sprite.x + 'px,' + sprite.y + 'px)';
+        });
+
+        requestAnimationFrame(step);
+      }
+
+      requestAnimationFrame(step);
+
+      window.setTimeout(function() {
+        intro.classList.add('is-fading');
+      }, 3000);
+
+      window.setTimeout(function() {
+        running = false;
+        intro.remove();
+        body.classList.remove('is-preloading-art');
+        revealItems.forEach(function(item, index) {
+          window.setTimeout(function() {
+            item.classList.add('animate-in');
+          }, index * 130);
+        });
+      }, 4050);
+    });
+  </script>
+</body>
+</html>

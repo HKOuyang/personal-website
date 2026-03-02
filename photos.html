@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Photos • HKOuyang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <!-- Inherit base styles from the site -->
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    /* Page specific styles for the photos/portfolio page */
+    body.photos-page {
+      background: var(--bg);
+      color: var(--fg);
+      margin: 0;
+    }
+    /* Header reused from novel page */
+    .portfolio-header {
+      width: 100%;
+      padding: 20px 38px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg);
+    }
+    .portfolio-header .brand {
+      color: var(--fg);
+      text-decoration: none;
+    }
+    .portfolio-header .brand:visited {
+      color: var(--fg);
+    }
+    .portfolio-header .menu {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: transparent;
+      border: 0;
+      color: var(--fg);
+      cursor: pointer;
+      font-family: var(--ui-font);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+    .menu__icon {
+      display: inline-block;
+      width: 34px;
+      height: 18px;
+      position: relative;
+    }
+    .menu__icon i {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 2px;
+    }
+    .menu__icon i:nth-child(1) { top: 0; }
+    .menu__icon i:nth-child(2) { top: 8px; opacity: 0.9; }
+    .menu__icon i:nth-child(3) { top: 16px; opacity: 0.8; }
+    /* Hero section */
+    .portfolio-hero {
+      position: relative;
+      width: 100%;
+      height: 60vh;
+      overflow: hidden;
+    }
+    .portfolio-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.25);
+      filter: blur(12px) brightness(0.7);
+      transition: transform 1s ease, filter 1s ease;
+    }
+    .photos-loaded .portfolio-hero img {
+      transform: scale(1);
+      filter: blur(0) brightness(1);
+    }
+    .portfolio-hero-text {
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      color: var(--fg);
+      pointer-events: none;
+    }
+    .portfolio-hero-text h1,
+    .portfolio-hero-text p {
+      margin: 0;
+      opacity: 0;
+      transform: translateY(40px);
+      filter: blur(8px);
+      transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s, filter 0.6s ease 0.4s;
+    }
+    .portfolio-hero-text h1 {
+      font-family: var(--display-font);
+      font-size: clamp(32px, 6vw, 96px);
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+    }
+    .portfolio-hero-text p {
+      font-family: var(--ui-font);
+      font-size: 14px;
+      letter-spacing: 0.2em;
+      margin-top: 10px;
+      text-transform: uppercase;
+    }
+    .photos-loaded .portfolio-hero-text h1,
+    .photos-loaded .portfolio-hero-text p {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+    /* Gallery grid */
+    .portfolio-grid {
+      /* Use flex to wrap images but centre each row */
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      padding: 40px 20px 60px;
+      /* initially hidden until scrolled */
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    /* When the page has scrolled past the hero we reveal the grid */
+    .grid-visible .portfolio-grid {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .portfolio-grid .photo-item {
+      flex: 0 0 auto;
+      display: flex;
+      justify-content: center;
+    }
+    .portfolio-grid .photo-item button {
+      background: none;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      display: block;
+      border-radius: 8px;
+    }
+    .portfolio-grid img {
+      /* Fixed height for uniform rows while preserving aspect ratio */
+      height: 200px;
+      width: auto;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+    .portfolio-grid img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.5);
+    }
+    .gallery-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.38s ease;
+    }
+    .gallery-lightbox.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .gallery-lightbox__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.56);
+      backdrop-filter: blur(14px) brightness(0.58);
+    }
+    .gallery-lightbox__viewport {
+      position: relative;
+      width: min(92vw, 1480px);
+      height: 100vh;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 72px 86px;
+    }
+    .gallery-lightbox__frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gallery-lightbox__stage {
+      position: relative;
+      max-width: 100%;
+      max-height: 100%;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .gallery-lightbox__image {
+      position: absolute;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+      opacity: 0;
+      transform: translateX(0) scale(0.985);
+      transition:
+        transform 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.48s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform, opacity;
+      user-select: none;
+    }
+    .gallery-lightbox__image.is-active {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+    .gallery-lightbox__image.from-right {
+      opacity: 0;
+      transform: translateX(13%) scale(0.985);
+    }
+    .gallery-lightbox__image.from-left {
+      opacity: 0;
+      transform: translateX(-13%) scale(0.985);
+    }
+    .gallery-lightbox__image.to-left {
+      opacity: 0;
+      transform: translateX(-13%) scale(0.985);
+    }
+    .gallery-lightbox__image.to-right {
+      opacity: 0;
+      transform: translateX(13%) scale(0.985);
+    }
+    .gallery-lightbox__close,
+    .gallery-lightbox__nav {
+      position: absolute;
+      border: 0;
+      background: none;
+      color: rgba(255,255,255,0.92);
+      cursor: pointer;
+      z-index: 2;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .gallery-lightbox__close:hover,
+    .gallery-lightbox__nav:hover {
+      opacity: 0.72;
+      transform: scale(1.04);
+    }
+    .gallery-lightbox__close {
+      top: 26px;
+      right: 28px;
+      font-size: 42px;
+      line-height: 1;
+      padding: 8px;
+    }
+    .gallery-lightbox__nav {
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 54px;
+      padding: 18px 16px;
+      line-height: 1;
+    }
+    .gallery-lightbox__nav:hover {
+      transform: translateY(-50%) scale(1.04);
+    }
+    .gallery-lightbox__nav--prev {
+      left: 24px;
+    }
+    .gallery-lightbox__nav--next {
+      right: 24px;
+    }
+    .gallery-lightbox__counter {
+      position: absolute;
+      left: 28px;
+      top: 28px;
+      color: rgba(255,255,255,0.86);
+      font-family: var(--ui-font);
+      font-size: 12px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+    .lightbox-clone {
+      position: fixed;
+      z-index: 1250;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+      transition:
+        top 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+        left 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+        width 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+        height 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.25s ease,
+        border-radius 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      pointer-events: none;
+    }
+    body.lightbox-active {
+      overflow: hidden;
+    }
+    /* Mobile adjustments */
+    @media (max-width: 900px) {
+      .portfolio-hero { height: 50vh; }
+      .portfolio-grid .photo-item { flex: 0 1 calc(50% - 20px); }
+      .gallery-lightbox__viewport {
+        padding: 88px 54px;
+      }
+    }
+    @media (max-width: 600px) {
+      .portfolio-grid .photo-item { flex: 0 1 calc(100% - 20px); }
+      .portfolio-hero { height: 45vh; }
+      .gallery-lightbox__viewport {
+        width: 100vw;
+        padding: 82px 20px 28px;
+      }
+      .gallery-lightbox__nav {
+        font-size: 40px;
+        padding: 10px;
+      }
+      .gallery-lightbox__nav--prev { left: 6px; }
+      .gallery-lightbox__nav--next { right: 6px; }
+      .gallery-lightbox__close {
+        top: 16px;
+        right: 14px;
+        font-size: 36px;
+      }
+      .gallery-lightbox__counter {
+        top: 20px;
+        left: 18px;
+        font-size: 10px;
+      }
+    }
+    /* Menu panel overlay reused from existing site */
+    .panel {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0,0,0,0.82);
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease;
+    }
+    .panel.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .panel__nav {
+      position: absolute;
+      top: 110px;
+      right: 38px;
+      display: grid;
+      gap: 18px;
+      text-align: right;
+    }
+    .panel__nav a {
+      color: var(--fg);
+      text-decoration: none;
+      font-family: var(--ui-font);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+    .panel__nav a:hover { opacity: 1; }
+  </style>
+</head>
+<body class="photos-page">
+  <header class="portfolio-header">
+    <a href="index.html" class="brand">HKOuyang</a>
+    <button class="menu" type="button" aria-expanded="false" aria-controls="menuPanel">
+      <span class="menu__label">Menu</span>
+      <span class="menu__icon" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+  </header>
+  <main>
+    <section class="portfolio-hero">
+      <img src="./hero_photos.png" alt="Portfolio hero image">
+      <div class="portfolio-hero-text">
+        <h1>Portfolio</h1>
+        <p>By HKOuyang</p>
+      </div>
+    </section>
+    <section class="portfolio-grid">
+      <!-- Dynamically show all uploaded portfolio photos.  Each row is centered and
+           all images share a fixed height with auto width to preserve aspect ratio. -->
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-28%20at%2022.48.18.jpeg" alt="Portfolio photograph 1"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.42%20(1).jpeg" alt="Portfolio photograph 1"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.42%20(2).jpeg" alt="Portfolio photograph 3"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.42.jpeg" alt="Portfolio photograph 4"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.43%20(1).jpeg" alt="Portfolio photograph 5"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.43%20(2).jpeg" alt="Portfolio photograph 6"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.43%20(3).jpeg" alt="Portfolio photograph 7"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.43.jpeg" alt="Portfolio photograph 8"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.44%20(1).jpeg" alt="Portfolio photograph 9"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.44%20(2).jpeg" alt="Portfolio photograph 10"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.44%20(3).jpeg" alt="Portfolio photograph 11"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.44%20(4).jpeg" alt="Portfolio photograph 12"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.44%20(5).jpeg" alt="Portfolio photograph 13"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.44.jpeg" alt="Portfolio photograph 14"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.45%20(1).jpeg" alt="Portfolio photograph 15"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.45%20(2).jpeg" alt="Portfolio photograph 16"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.45%20(3).jpeg" alt="Portfolio photograph 17"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.45.jpeg" alt="Portfolio photograph 18"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.46%20(1).jpeg" alt="Portfolio photograph 19"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.46%20(2).jpeg" alt="Portfolio photograph 20"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.46%20(3).jpeg" alt="Portfolio photograph 21"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.46%20(4).jpeg" alt="Portfolio photograph 22"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.46.jpeg" alt="Portfolio photograph 23"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.47%20(1).jpeg" alt="Portfolio photograph 24"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.47%20(2).jpeg" alt="Portfolio photograph 25"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.47%20(3).jpeg" alt="Portfolio photograph 26"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.47%20(4).jpeg" alt="Portfolio photograph 27"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.47.jpeg" alt="Portfolio photograph 28"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.48%20(1).jpeg" alt="Portfolio photograph 29"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.48%20(2).jpeg" alt="Portfolio photograph 30"></button></div>
+      <div class="photo-item"><button type="button" class="gallery-trigger"><img src="./photos/WhatsApp%20Image%202026-02-23%20at%2023.20.48.jpeg" alt="Portfolio photograph 31"></button></div>
+    </section>
+  </main>
+  <div class="gallery-lightbox" id="galleryLightbox" aria-hidden="true">
+    <div class="gallery-lightbox__backdrop"></div>
+    <div class="gallery-lightbox__viewport">
+      <button class="gallery-lightbox__close" type="button" aria-label="Close preview">&times;</button>
+      <div class="gallery-lightbox__counter" aria-live="polite"></div>
+      <button class="gallery-lightbox__nav gallery-lightbox__nav--prev" type="button" aria-label="Previous photo">&#8249;</button>
+      <div class="gallery-lightbox__frame">
+        <div class="gallery-lightbox__stage"></div>
+      </div>
+      <button class="gallery-lightbox__nav gallery-lightbox__nav--next" type="button" aria-label="Next photo">&#8250;</button>
+    </div>
+  </div>
+  <aside id="menuPanel" class="panel" aria-hidden="true">
+    <nav class="panel__nav" aria-label="Menu">
+      <a href="index.html#photos">Photos</a>
+      <a href="art.html">Art</a>
+      <a href="novel.html">Novel</a>
+      <a href="index.html#about">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </aside>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const body = document.body;
+    // Delay reveal for hero and grid
+    setTimeout(() => {
+      body.classList.add('photos-loaded');
+    }, 800);
+    const menuBtn = document.querySelector('.menu');
+    const menuPanel = document.getElementById('menuPanel');
+    const lightbox = document.getElementById('galleryLightbox');
+    const lightboxStage = lightbox.querySelector('.gallery-lightbox__stage');
+    const lightboxCounter = lightbox.querySelector('.gallery-lightbox__counter');
+    const closeButton = lightbox.querySelector('.gallery-lightbox__close');
+    const prevButton = lightbox.querySelector('.gallery-lightbox__nav--prev');
+    const nextButton = lightbox.querySelector('.gallery-lightbox__nav--next');
+    const galleryImages = Array.from(document.querySelectorAll('.gallery-trigger img'));
+    let currentIndex = 0;
+    let activeImage = null;
+    let activeThumb = null;
+    let isLightboxOpen = false;
+    let isAnimating = false;
+
+    function updateCounter() {
+      lightboxCounter.textContent = String(currentIndex + 1).padStart(2, '0') + ' / ' + String(galleryImages.length).padStart(2, '0');
+    }
+
+    function createStageImage(src, alt, extraClass) {
+      const img = document.createElement('img');
+      img.className = 'gallery-lightbox__image' + (extraClass ? ' ' + extraClass : '');
+      img.src = src;
+      img.alt = alt;
+      return img;
+    }
+
+    function whenImageReady(img, callback) {
+      if (img.complete) {
+        callback();
+        return;
+      }
+      img.addEventListener('load', callback, { once: true });
+    }
+
+    function getContainRect(source) {
+      const maxWidth = window.innerWidth * 0.92 - (window.innerWidth <= 600 ? 40 : window.innerWidth <= 900 ? 108 : 172);
+      const maxHeight = window.innerHeight - (window.innerWidth <= 600 ? 110 : 144);
+      const naturalWidth = source.naturalWidth || source.width || 1;
+      const naturalHeight = source.naturalHeight || source.height || 1;
+      const ratio = Math.min(maxWidth / naturalWidth, maxHeight / naturalHeight);
+      const width = naturalWidth * ratio;
+      const height = naturalHeight * ratio;
+      return {
+        width: width,
+        height: height,
+        left: (window.innerWidth - width) / 2,
+        top: (window.innerHeight - height) / 2
+      };
+    }
+
+    function animateOpen(index) {
+      if (isAnimating) return;
+      isAnimating = true;
+      currentIndex = index;
+      activeThumb = galleryImages[index];
+      updateCounter();
+
+      const thumbRect = activeThumb.getBoundingClientRect();
+      const clone = document.createElement('img');
+      clone.src = activeThumb.currentSrc || activeThumb.src;
+      clone.alt = activeThumb.alt;
+      clone.className = 'lightbox-clone';
+      clone.style.left = thumbRect.left + 'px';
+      clone.style.top = thumbRect.top + 'px';
+      clone.style.width = thumbRect.width + 'px';
+      clone.style.height = thumbRect.height + 'px';
+      document.body.appendChild(clone);
+
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      body.classList.add('lightbox-active');
+
+      const target = getContainRect(activeThumb);
+      requestAnimationFrame(() => {
+        clone.style.left = target.left + 'px';
+        clone.style.top = target.top + 'px';
+        clone.style.width = target.width + 'px';
+        clone.style.height = target.height + 'px';
+        clone.style.borderRadius = '0';
+      });
+
+      const stageImage = createStageImage(activeThumb.currentSrc || activeThumb.src, activeThumb.alt, '');
+      whenImageReady(stageImage, function() {
+        window.setTimeout(() => {
+          lightboxStage.innerHTML = '';
+          lightboxStage.appendChild(stageImage);
+          activeImage = stageImage;
+          requestAnimationFrame(() => {
+            stageImage.classList.add('is-active');
+          });
+          clone.style.opacity = '0';
+          window.setTimeout(() => {
+            clone.remove();
+            isAnimating = false;
+            isLightboxOpen = true;
+          }, 220);
+        }, 360);
+      });
+    }
+
+    function animateClose() {
+      if (!isLightboxOpen || isAnimating || !activeImage) return;
+      isAnimating = true;
+      const targetThumb = galleryImages[currentIndex];
+      const targetRect = targetThumb.getBoundingClientRect();
+      const stageRect = activeImage.getBoundingClientRect();
+      const clone = document.createElement('img');
+      clone.src = activeImage.currentSrc || activeImage.src;
+      clone.alt = activeImage.alt;
+      clone.className = 'lightbox-clone';
+      clone.style.left = stageRect.left + 'px';
+      clone.style.top = stageRect.top + 'px';
+      clone.style.width = stageRect.width + 'px';
+      clone.style.height = stageRect.height + 'px';
+      clone.style.borderRadius = '0';
+      document.body.appendChild(clone);
+
+      activeImage.style.opacity = '0';
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      body.classList.remove('lightbox-active');
+
+      requestAnimationFrame(() => {
+        clone.style.left = targetRect.left + 'px';
+        clone.style.top = targetRect.top + 'px';
+        clone.style.width = targetRect.width + 'px';
+        clone.style.height = targetRect.height + 'px';
+        clone.style.borderRadius = '8px';
+      });
+
+      window.setTimeout(() => {
+        clone.style.opacity = '0';
+        window.setTimeout(() => {
+          clone.remove();
+          lightboxStage.innerHTML = '';
+          activeImage = null;
+          activeThumb = null;
+          isLightboxOpen = false;
+          isAnimating = false;
+        }, 180);
+      }, 420);
+    }
+
+    function showImage(nextIndex, direction) {
+      if (!isLightboxOpen || isAnimating || !activeImage) return;
+      isAnimating = true;
+      currentIndex = (nextIndex + galleryImages.length) % galleryImages.length;
+      updateCounter();
+
+      const nextThumb = galleryImages[currentIndex];
+      const incoming = createStageImage(nextThumb.currentSrc || nextThumb.src, nextThumb.alt, direction > 0 ? 'from-right' : 'from-left');
+      lightboxStage.appendChild(incoming);
+
+      requestAnimationFrame(() => {
+        void incoming.offsetWidth;
+        incoming.classList.add('is-active');
+        activeImage.classList.add(direction > 0 ? 'to-left' : 'to-right');
+      });
+
+      window.setTimeout(() => {
+        if (activeImage && activeImage.parentNode) {
+          activeImage.parentNode.removeChild(activeImage);
+        }
+        incoming.classList.remove('from-right', 'from-left');
+        activeImage = incoming;
+        activeThumb = nextThumb;
+        isAnimating = false;
+      }, 500);
+    }
+
+    galleryImages.forEach((img, index) => {
+      img.parentElement.addEventListener('click', () => {
+        animateOpen(index);
+      });
+    });
+
+    closeButton.addEventListener('click', animateClose);
+    prevButton.addEventListener('click', () => showImage(currentIndex - 1, -1));
+    nextButton.addEventListener('click', () => showImage(currentIndex + 1, 1));
+
+    menuBtn.addEventListener('click', () => {
+      const isOpen = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', String(!isOpen));
+      menuPanel.classList.toggle('is-open', !isOpen);
+      menuPanel.setAttribute('aria-hidden', String(isOpen));
+    });
+    menuPanel.addEventListener('click', (e) => {
+      if (e.target === menuPanel) {
+        menuBtn.setAttribute('aria-expanded','false');
+        menuPanel.classList.remove('is-open');
+        menuPanel.setAttribute('aria-hidden','true');
+      }
+    });
+    window.addEventListener('keydown', (e) => {
+      if (isLightboxOpen && e.key === 'Escape') {
+        animateClose();
+        return;
+      }
+      if (isLightboxOpen && e.key === 'ArrowLeft') {
+        showImage(currentIndex - 1, -1);
+        return;
+      }
+      if (isLightboxOpen && e.key === 'ArrowRight') {
+        showImage(currentIndex + 1, 1);
+        return;
+      }
+      if (e.key === 'Escape') {
+        menuBtn.setAttribute('aria-expanded','false');
+        menuPanel.classList.remove('is-open');
+        menuPanel.setAttribute('aria-hidden','true');
+      }
+    });
+
+    // Show the gallery when the user scrolls past the hero
+    let gridShown = false;
+    const hero = document.querySelector('.portfolio-hero');
+    function checkGridReveal() {
+      if (gridShown) return;
+      const heroBottom = hero.getBoundingClientRect().bottom;
+      // when the hero is mostly out of view
+      if (heroBottom < window.innerHeight * 0.8) {
+        document.body.classList.add('grid-visible');
+        gridShown = true;
+        window.removeEventListener('scroll', checkGridReveal);
+      }
+    }
+    window.addEventListener('scroll', checkGridReveal);
+  });
+  </script>
+</body>
+</html>
