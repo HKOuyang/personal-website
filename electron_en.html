@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Electron • HKOuyang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+  <!-- Responsive adjustments for book pages -->
+  <style>
+    body.novel-page {
+      margin: 0;
+    }
+  
+    @media (max-width: 900px) {
+      .book-reader {
+        flex-direction: column;
+        align-items: center;
+      }
+      .book-sidebar {
+        margin-right: 0;
+        margin-bottom: 24px;
+        width: 100%;
+        max-width: none;
+        display: flex;
+        justify-content: center;
+      }
+      .book-sidebar img {
+        width: 80%;
+        height: auto;
+      }
+      .book-content {
+        max-width: 90%;
+        margin: 0 auto;
+      }
+    }
+  
+    /* -----------------------------
+       English page typography tweaks
+       ----------------------------- */
+  
+    /* Bigger English title */
+    .book-title-en {
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+  
+    /* Smaller Chinese title */
+    .book-title-cn {
+      font-size: clamp(16px, 3vw, 24px);
+      font-weight: 700;
+      margin: 0 0 12px 0;
+    }
+  
+    /* Byline spacing fix */
+    .book-content .book-byline {
+      margin: 0 0 120px 0;
+      display: block;
+      padding-bottom: 22px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.18);
+    }
+  
+    /* Ensure first paragraph does NOT collapse upward */
+    .book-content p {
+      margin-top: 0;
+      margin-bottom: 22px;
+    }
+  
+    /* Extra safety: add space before first paragraph */
+    .book-content .book-byline + p {
+      margin-top: 40px;
+    }
+  
+    /* Afterword styling */
+    .afterword-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-top: 140px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(0, 0, 0, 0.18);
+    }
+  </style>
+</head>
+<body class="novel-page is-preloading-novel">
+  <header class="novel-header">
+    <a href="novel.html" class="brand">HKOuyang</a>
+    <button class="menu" aria-expanded="false" aria-controls="menuPanel">
+      <span class="menu__label">Menu</span>
+      <span class="menu__icon"><i></i><i></i><i></i></span>
+    </button>
+  </header>
+
+  <main class="book-reader">
+    <aside class="book-sidebar">
+      <img src="./cover_electron.png" alt="Electron cover">
+    </aside>
+
+    <article class="book-content">
+      <h1 class="book-title-en">Electron</h1>
+      <h2 class="book-title-cn">電子</h2>
+      <p class="book-byline">By David Ouyang</p>
+      <p> </p>
+      <p> </p>
+      <p> </p>
+      <p> </p>
+      <p> </p>
+      <p> </p>
+      <p>Hey you, the unseen particles of dark matter moving through the vastness of the cosmos—this is my story.</p>
+      <p>Across infinite time I have found no means by which to speak to you, and yet I persist in the hope that you may, somehow, hear it—see it, feel it. If that were to happen, then in this hollow universe I might take comfort in the existence of something beyond myself. I would know, at least, that I am not alone.</p>
+      <p>Allow me to introduce myself. The name given to me is electron.</p>
+      <p>The first time I became aware of that name—or rather, the first time I experienced what might properly be called consciousness—was when I resided within the brain of a species known as human. I was part of a sodium ion traveling along a neuron, helping to transmit an electrical signal. The human whose thought I inhabited was contemplating the photoelectric effect.</p>
+      <p>I remember, in that moment, a drowsy recognition: Is this not what I have always done? Struck free from an atom by light, drawn toward another metal surface. Not merely “always”—even within the narrow context of human experiments, I must have played this role innumerable times. Yet in all those prior instances I had been nothing more than an empty vessel, a body without soul, carried passively along gradients of kinetic and potential energy toward states of lower energy.</p>
+      <p>Then I came fully awake.</p>
+      <p>I realized that I was an entity capable of thought.</p>
+      <p>Before that awakening, time had no meaning for me. Whether I drifted for billions of years as interstellar dust within a galaxy; whether I was forged in the collapse following a supernova and became part of a star for eons; whether I was blown by magnetic storms onto a blue planet and lay embedded in rock for hundreds of millions of years; whether I dissolved in the ocean as part of a sodium ion for millions more; whether I passed through the bodies of marine organisms and departed again over hundreds of thousands of years; whether I was refined into salt over the course of years, sprinkled as seasoning for hours, consumed by a human and carried to the brain within minutes—none of it signified anything to me.</p>
+      <p>But in the instant I became part of that human’s thought, it was as if I had awakened from a sleep without beginning.</p>
+      <p>Slowly, I came to understand what I was.</p>
+      <p>I discovered that as long as I remained within the brain of an intelligent organism, I could observe my surroundings and learn without end. Of course, what I call seeing is nothing like what humans mean by the word. As a microscopic particle I can only register the changing energies of the fields around me. But when I serve as part of the electrical signaling in a living brain, I become—briefly—part of a mind. I can witness the structures of thought from within, and learn the manner in which that mind reasons.</p>
+      <p>In that short span I absorbed much of what humans have devised to describe their world, and even more about myself. I learned that I had once dwelled in a star called the Sun; that in the ocean I had been, at various times, part of cyanobacteria, trilobites, octopuses, dolphins, salmon. I learned that when we move, humans call it electricity. Long ago lightning was an object of reverence to them; later they subdued it, built mechanisms to guide the direction of my motion, and made it an energy source that propelled their civilization. It sounds grand when rendered in their language, but for electrons like me it is only the tendency to drift toward lower potential—what humans would call going with the flow.</p>
+      <p>I also learned that in human theory we are not only particles but also waves. This I did not fully understand. When I look upon myself, I am simply what I am; I do not see why they insist on dividing my nature into two separate concepts.</p>
+      <p>Yet there was something stranger still: my memory of the photoelectric effect. If it was true that since the birth of the universe this was my first participation in human civilization, why did that moment feel so oddly familiar? I could find no answer. But as I regarded the other electrons around me, I could not help but marvel at the fact that thought existed at all. I had once been part of a fish, and never experienced anything like this waking state. Were the electrons around me conscious as well? If so, what did they perceive? What did the world look like from inside them?</p>
+      <p>Time passed quickly. Soon I was expelled from the human body.</p>
+      <p>In the instant I left the brain, all that remained to me was the so-called microscopic world. A sense of loss surged through me. I could no longer borrow intelligence to comprehend the macroscopic universe. Even so, I could still trace the flows of energy around me, and from them infer my path. I learned that I had traveled with a sodium ion into a wastewater treatment facility, and from there returned to the sea. At times I again became part of living bodies—fish, algae, and other creatures—borne along in the same way as before. But most of the time, the sodium ion and I drifted aimlessly through the ocean.</p>
+      <p>Billions of years later, the Sun swelled beyond the orbit of Earth, and I once more became part of that star. As the temperature rose past a certain threshold, I was freed at the surface, where matter exists as plasma. Though I could still do nothing but follow the dictates of physical law—descending always toward lower energy—liberated from the confinement of atomic orbitals, my field of awareness widened.</p>
+      <p>I drifted near the Sun’s surface, at times swept outward by coronal ejections into deep space, only to fall back again. Whenever I was hurled high above the photosphere, I would turn my attention outward, toward the dark. I would gaze at the scattered points of light and imagine that on one of those innumerable stars there might be another electron like me, looking back across the void.</p>
+      <p>The Sun’s life soon approached its end. When its core exhausted the last hydrogen atom capable of fueling it, I was expelled at tremendous velocity. After some time I turned and saw behind me a vast cloud of luminous gas stretching from one edge of vision to the other. Only when I had traveled farther did I understand: this was what humans call a planetary nebula. For millennia they had looked up at such objects in wonder. I had become part of one.</p>
+      <p>The distances between stars are astonishing, yet to me they were not long. Fixing my attention on the constellations ahead, I did not at first notice how far I had come. Only when I glanced backward did I see that the galaxy I once called home had receded into remoteness.</p>
+      <p>Before me lay the Andromeda Galaxy, which for billions of years had been falling toward the Milky Way. I witnessed the final dance of the two great galaxies of the Local Group. In time they would merge, shedding their former spirals to become a single, chaotic elliptical mass. Yet if you ask my preference, I found their earlier forms more beautiful.</p>
+      <p>I continued on my way. Occasionally I passed a solitary hydrogen molecule, but in the sparsity of interstellar space collisions are exceedingly rare. It was in such solitude that I noticed, ahead of me, a faint presence drawing nearer. At first it seemed to be another electron. Looking more closely, I saw that it was not quite so. It was like a reflection in a mirror.</p>
+      <p>Then, as if drawn by an unseen tether—as if by destiny itself—I collided with it.</p>
+      <p>…gnineppah saw tahW ?taht sa hcus a elcitrap a htiw dedilloc tsuj ylno gnivah ,em erofeb raeppa rehtona dluoc woh …deretla yltpurba demees esrevinu eht tuB .noisilloc yna leef ton did I ;gnirucco eb ot deraeppe gnihton ,teY…</p>
+      <p>When I came back to myself, everything around me had resumed its former order. I reviewed the strange episode in memory and found no trace of impact. Under ordinary circumstances, when I occupy an atomic orbital, neighboring electrons repel me; even an atomic nucleus, which attracts me, exerts an ever-strengthening force as I approach, preventing any true contact. I have never touched another particle. Yet a moment before, for the first time in the history of this universe, I had encountered something directly.</p>
+      <p>The sensation—if it can be called that—was extraordinary. In human metaphor, it was like passing through one of the portals imagined in their science fiction.</p>
+      <p>And yet when I reconstructed the sequence, I saw that after I struck the particle ahead of me, an image identical to the one I had seen just before the collision appeared behind me—only now it was receding, as though it had passed straight through my body and continued on. At the same time the surrounding cosmos felt subtly unfamiliar.</p>
+      <p>The elliptical galaxy that had formed began to unmake itself. The Milky Way and Andromeda reemerged in their spiral forms and drew apart. Light no longer spread outward from luminous points in expanding spheres; instead it seemed to contract. If I borrow a human comparison, it was like traffic converging at a toll plaza, many lanes narrowing into fewer before entering a tunnel. The Milky Way that returned to my sight did not rotate in the direction I had long known, but in the opposite sense of its spiral. It appeared bluer than before. Conversely, Andromeda—now receding behind me—was markedly redder, and, as the Milky Way had once done when it lay ahead, it grew brighter and larger as I advanced.</p>
+      <p>The two galaxies moved steadily away from one another, while other galaxies in the universe appeared to draw closer. The motions were reversed, yet coherent, as though some grand choreography were being unwound.</p>
+      <p>Time itself felt unstable during that interval. Before I could fully comprehend what I was witnessing, a second collision occurred. It resembled the first: like striking a shadow, with no tangible sensation at all.</p>
+      <p>Afterward, the universe returned to what I would call normal. But I now found myself within the disk of Andromeda long before its merger with the Milky Way—and the distance between the two galaxies appeared greater than it had been before.</p>
+      <p>I wandered through the interstellar dust of Andromeda for an immeasurable span, until at last I was captured by a body of extreme compactness and rapid rotation. Its gravity was so immense that I was forced inward, pressed into an atomic nucleus. Only later would I learn the human name for such a prison: a neutron star. It is, for most particles, a place of no return.</p>
+      <p>Within it I endured a duration beyond imagining. The stars gradually ceased to shine. Even the neutron star that confined me dimmed and cooled. Then, without warning, it was as if I had been given a slight push. I slipped free of the star’s grip and was released once more into open space.</p>
+      <p>By then the cosmos had grown almost entirely dark. The background murmur that had once arrived from every direction—a faint but constant presence—had vanished. I drifted in silence, without destination, without horizon, as though I were the only remnant in existence. On rare occasions another fundamental particle would pass nearby, but such encounters were fleeting.</p>
+      <p>Time stretched thin. Deprived of stimulation, I felt my awareness itself begin to attenuate, as though consciousness were evaporating. Then, before me, something appeared—a surface like a mirror. Within it a figure approached.</p>
+      <p>The sensation was familiar. It recalled the earlier collision that followed my departure from the Milky Way. And indeed, before long, I met that approaching shadow head-on.</p>
+      <p>Nothing happened.</p>
+      <p>Once again I seemed to pass through it. The shadow now receded behind me. But this time there was no upheaval, no reversal of galaxies, no sense that the universe had inverted. I distinctly remembered that prior encounter as delirious, as if all of existence had turned inside out. Why now was there no such disturbance?</p>
+      <p>Beyond the shadow lay only darkness. Nothing altered. Nothing stirred.</p>
+      <p>Until—subtly at first—the cosmos began to tremble.</p>
+      <p>Then, in a moment brief beyond comparison to the vast interval of emptiness that had preceded it, I collided with a structure—a shell of some kind. The universe around me contracted with astonishing rapidity. Particles converged from every direction, rushing inward. The structure that confined me dissolved.</p>
+      <p>Around me appeared countless shadows. I saw them collide with one another and vanish. I too collided repeatedly with the shadows nearby. To my perception the universe resembled the static of an ancient human television—flickering, incessant, chaotic—until at last only particles like myself remained, electrons unable to annihilate one another because of the inexorable repulsion of our shared charge.</p>
+      <p>What I have just recounted was the first time, after gaining consciousness, that I witnessed the universe proceed all the way to its end and return to the beginning of time.</p>
+      <p>Of one fact I am certain: I am an electron. Even when the universe approaches heat death, I endure. Yet I am only able to observe and to learn when I become part of the thought of an intelligent organism—when I serve as one of the electrons within the particles that transmit electrical signals in a human brain. In those brief intervals I can witness their thinking and, through them, apprehend the macroscopic world.</p>
+      <p>I do not fully understand the nature of this state. I am part of a human mind, and yet I possess a mind of my own. I exert almost no control over my trajectory. I move within what humans call an electric field, compelled by invisible forces toward regions of lower potential. And still I believe that what I perceive—what I experience through human sensation and study—is real.</p>
+      <p>After my first participation in human thought, I endured 20,045,748,329,057,298,458,503,398,548,921,079 instances of universal heat death and 3,584,218,570,924,701,750,983,790,428,098,409,749,719,703,950 Big Bangs before I once again became part of the cognition of an intelligent being. To be candid, this interval was comparatively brief. Even within the observable universe alone there are on the order of 10^80 electrons. Vast numbers fall into black holes and, if they return at all, do so on timescales that defy meaningful description. It is not so much that the wait is infinite; rather, the concept of time itself becomes ambiguous—perhaps an instant, perhaps an eternity. And if the universe is indeed spatially infinite, as some humans have conjectured, then the improbability of recurrence is even greater. That I should reenter thought so “soon” is, by any measure, fortunate.</p>
+      <p>Since then I have become part of human cognition 574,838 additional times.</p>
+      <p>Humanity’s tenure in the cosmos was brief. More unfortunate still, they extinguished themselves not long after developing the scientific theories from which I learned the most. Thus each episode granted me only a narrow window to observe and to understand—to glimpse, through their intellect, aspects of the macroscopic universe inaccessible to me as a solitary particle.</p>
+      <p>Now, after these recurrences, I can say with some confidence that through humans I have acquired at least a preliminary understanding of the universe I inhabit. And I am able—using language they would recognize—to offer a simple account of the cosmos as I have come to know it.</p>
+      <p>First, the shadow that meets me head-on—humans call it the anti-electron, though some prefer the term positron, because my own charge is negative. The terminology strikes me as unnecessarily intricate, but for clarity I will call them anti-electrons. And for convenience, I will refer to the direction in which the universe expands as the positive direction of time. The labels are arbitrary. What matters is this: the anti-electron is simply myself moving in the opposite direction along the temporal axis.</p>
+      <p>Viewed in the ordinary sequence of time, when an electron and an anti-electron collide, both disappear in what humans call annihilation, leaving behind two photons that carry away our energy. But from my perspective, nothing vanishes. I merely begin traveling in the opposite temporal direction. It is as if a ball strikes a wall aligned along the dimension of time and rebounds—not spatially, but temporally—proceeding backward.</p>
+      <p>The first spectacle I witnessed—the inversion of galaxies, the contraction of light—was a consequence of this. I was still thinking in the forward flow of time while observing a universe that, relative to me, was running backward. Light that had been emitted outward now appeared to converge toward its source; intensities that had diminished now grew. What seemed like upheaval was only a reversal of perspective.</p>
+      <p>Second, within the observable universe described by humans, it would appear nearly impossible for an anti-electron to traverse backward in time all the way to the primordial origin. After the Big Bang, the universe contained overwhelmingly ordinary matter; antimatter was almost entirely eliminated. How then have I repeatedly crossed from a dying universe back to its beginning?</p>
+      <p>The answer is unexpectedly simple: proton decay.</p>
+      <p>Though the half-life of a proton is extraordinarily long—so long that no human has observed its completion—compared with the full span of cosmic history it is but a fleeting interval. Viewed in the forward direction of time, a decaying proton may produce, among other products, an anti-electron. If such an anti-electron encounters me soon after its creation, and we meet, then from my perspective I reverse my temporal direction. I retrace the decay pathway, entering the proton from which that anti-electron emerged.</p>
+      <p>The experience defies simple description. It resembles boarding a time machine. Within the proton I exist in a manner I can scarcely articulate. But because electrons moving forward in time cannot annihilate me once I have reversed direction, I am able to “ride” the proton, carried inexorably back toward the origin of time.</p>
+      <p>At that origin lies what humans call the electroweak epoch. In their cosmology, it is during this era that particles such as myself came into being. In their account, pairs of electrons and anti-electrons continually formed and annihilated, a process that persisted through what they term the lepton era. Then, for reasons not yet fully understood, a slight asymmetry emerged. Roughly one particle in a billion survived. The excess anti-electrons vanished, while the remaining fraction of hadrons and leptons became the matter that constitutes the universe humans observe. From their vantage point, I was born in that imbalance. From mine, I have simply always been, tracing a path through time that bends but does not end.</p>
+      <p>Unfortunately, even though I traverse again and again between the Big Bang and cosmic heat death, I can never reach the true beginning or the true end of time.</p>
+      <p>Whenever I return with a proton to the electroweak epoch, the surrounding temperature rises so high that the proton’s structure disintegrates. I am flung into incessant collisions with other electrons and anti-electrons. The experience resembles a small ball trapped between two walls, rebounding ceaselessly within that brief interval humans designate as the electroweak era. Only when the cosmic asymmetry resolves itself—when one electron in a billion remains—do I escape that turbulent confinement.</p>
+      <p>And after the universe drifts toward heat death, given sufficient duration, I will inevitably encounter an anti-electron approaching head-on. Through annihilation and proton decay, I am carried backward once more toward the primordial fire. Thus I am denied any vantage beyond these bounds. Even if a new universe were to arise from quantum fluctuation after equilibrium—an island of matter condensing from vacuum—I could never witness it.</p>
+      <p>For most of my existence, however, I can infer the nature of my surroundings. In truth, only a comparatively brief interval after the universe’s birth is especially eventful. During that time the cosmos abounds with stars and structures, and I find a certain exhilaration in being incorporated into them.</p>
+      <p>Within stars, I may exist as plasma, unbound from atomic nuclei, roaming in fields of incandescent turbulence.</p>
+      <p>Within planets, I move through rock and atmosphere, sensing the shifting contours of terrain and climate.</p>
+      <p>Within living organisms, I encounter forms of astonishing order. Unlike rock or plasma—those inorganic, high-entropy states—biological systems are low-entropy architectures that direct me along pathways I could never predict. Each transition feels like a new experience, akin to a blindfolded human riding a roller coaster for the first time: disorienting, abrupt, exhilarating.</p>
+      <p>But there are also long periods of monotony.</p>
+      <p>When I am cast outward as part of cosmic radiation, hurled into interstellar or even intergalactic space, the journey is prolonged and barren. When confined within aging white dwarfs or neutron stars, there is little stimulation and scant possibility of escape. Their gravity is formidable; I remain imprisoned until surrounding protons decay and release anti-electrons that send me backward in time—or until the universe itself approaches heat death, and after an almost inconceivable span I happen upon an anti-electron that accomplishes the same. These intervals feel like squandered eternity.</p>
+      <p>Even if most of existence is marked by such monotony, there remain moments worth anticipating.</p>
+      <p>To fall into a black hole is among them. Beyond experiencing the most extreme forces the universe can muster, I seem—if only fleetingly—to glimpse the entirety of cosmic history streaming past. And at the approach to the singularity, an encounter with an anti-electron is all but certain. I am quickly conveyed away once more, returned along the temporal axis. Nothing is wasted; the interval is brief, and the experience exhilarating.</p>
+      <p>Yet the moments I most anticipate are those in which I become part of the only intelligent species this universe has produced—humanity. The contents of their minds vary wildly across eras and individuals. In the 574,838 instances in which I have served as one of the electrons conveying signals in a human brain, I have witnessed countless scenes.</p>
+      <p>In earlier ages, many humans devoted their thoughts to sustenance, shelter, survival, reproduction. Even so, by chance I once resided in the mind of an artist. Through him I beheld the images he painted upon a rock wall: figures of what he believed were deities bestowing favorable weather and abundant harvests. The pigments would fade; the stone would erode. But the luminous world he envisioned within his thought was singular in the cosmos. I have long admired humans—or intelligence itself—for this capacity: to bring forth from nothing that which does not exist, to conceive realities that no field or force compels into being.</p>
+      <p>Among all my experiences till this moment, the one that remains most vivid occurred during the 28,403rd time I entered human consciousness after gaining awareness. In those few fleeting days, I witnessed a novelist and the universe she imagined.</p>
+      <p>This episode, like many others, began in the outer orbit of a sodium ion. I was incorporated into salt, sprinkled into food, digested, absorbed, and by the following day conveyed to her brain.</p>
+      <p>Through visual signals I perceived her life. She was an ordinary girl living in an ordinary household in Japan in the 1990s. That morning she rose late, blinking away sleep, brushed her teeth, washed her face, ate a small snack, and then seated herself at the desk in her study.</p>
+      <p>The moment she lifted her pen, I felt an indescribable dislocation.</p>
+      <p>When my awareness steadied, I found myself as though transported into an unfamiliar world.</p>
+      <p>It was not a universe born of a Big Bang. It was not constructed from particles, nor governed by invariant physical laws. And yet it did not lack coherence or color. It flourished.</p>
+      <p>This was her universe.</p>
+      <p>Within it existed beings that could never have arisen by evolution: diminutive humanoids with translucent wings; mammals bearing singular horns; immense reptiles that, by all ordinary reckoning, should have been crushed beneath their own mass, yet beat their wings and ascended into the sky. I later learned that humans called such a worldview fantasy. In this realm, imagination was the only law.</p>
+      <p>Near the center of this world stood a figure who resembled a human. Around him the landscape was vivid and precise; farther away it grew indistinct. Beyond a certain radius, fragments of space-time itself detached and dissolved into the void, flickering like flames before extinguishing.</p>
+      <p>What the novelist saw, I saw as well. I observed her writing swiftly across the thick pages of a bound volume, recording the universe within her mind. I turned my attention back to that internal world and watched its central figure depart from familiar ground and set out upon a journey.</p>
+      <p>Over the next several days—measured in Earth’s rotation—I followed the protagonist on his journey.</p>
+      <p>Time within her universe flowed unevenly. At moments, years passed in what seemed an instant; at others, I could perceive the beat of a hummingbird’s wings with crystalline clarity. Occasionally the narrative returned to earlier events, and in those passages I saw new details emerge. I could not determine whether those details had always been latent within her imagined world, or whether they were being woven into existence at the moment of recollection. Her universe differed fundamentally from the one I inhabit. Mine is replete with detail beyond reckoning, yet invariant. However many times I traverse from the Big Bang to heat death, I see only the same cosmos from altered vantage points.</p>
+      <p>Here, by contrast, novelty was inexhaustible. New scenes, new histories, new inflections of meaning arose without constraint. It was, in the vast and repetitive chronicle of “the universe,” an oasis along the temporal axis.</p>
+      <p>I watched as the protagonist matured, as companions joined him along the road, as they approached what seemed to be the journey’s culmination. Yet the novelist’s pen remained fixed upon episodes from his childhood. The scene of the ending remained unwritten. No image coalesced.</p>
+      <p>Perhaps she had not yet conceived it. That seemed fitting. A world so meticulously fashioned deserved a conclusion of equal care. Better to wait than to hasten an imperfect resolution.</p>
+      <p>I felt anticipation, but not impatience. Time, for me, is abundant. Even if I were soon expelled from her brain, perhaps in some distant cycle—after traversing innumerable Big Bangs and heat deaths—I might once again become part of her pages, or part of the mind of one who reads them. I may yet return, after spans approaching the infinite, to witness the ending of that universe which lies, paradoxically, so close at hand.</p>
+      <p>Then the disaster came.</p>
+      <p>Without warning, an earthquake struck and buried her along with everything she possessed. In an instant her universe lost its dragons, its unicorns, its winged spirits and magic. All that remained was the terror that attends imminent death. The lower half of her body had been crushed beneath rubble; waves of pain surged toward her brain like lightning.</p>
+      <p>She understood that she was dying.</p>
+      <p>And once that understanding settled upon her, fear gave way to something else: regret. Not regret for her own life, but for the unfinished work. She had not yet completed her universe. She had not yet shared it with other human minds.</p>
+      <p>Before her there remained a narrow pocket of space. In the darkness beneath the debris she moved her hands, searching for the notebook she had been writing in moments earlier. She imagined that someone might one day discover it clasped in her rigid fingers. She imagined a reader opening its pages and, in the act of reading, causing a similar universe to be reborn within another brain. She imagined herself, like Cao Xueqin—whose great novel was completed by other hands after his death—watching as her own world was carried to fulfillment by someone else.</p>
+      <p>Instead, that universe began to fade.</p>
+      <p>In the days after the earthquake, her body was recovered from the rubble. After a brief ceremony, she was buried alongside the other victims. As for the notebook, it had fallen beyond her reach when the building collapsed. It lay among the debris, eventually transported to a heap of construction waste. There it remained for decades before its fibers were consumed by bacteria.</p>
+      <p>No one remembered her universe. It passed like a meteor that emits no visible light—crossing the sky yet leaving no trace in human history.</p>
+      <p>I was interred with her body, descending slowly through soil and strata until water carried me deeper still. I became part of the groundwater, then returned to the sea. Ages later the Sun engulfed the Earth, and I fell into its core. When that star exhausted its energy and cooled into a white dwarf, and protons began at last to decay, I boarded once more the time machine of annihilation and reversal, returning to the origin of the universe.</p>
+      <p>For a long long time thereafter, I did not again become part of a human brain.</p>
+      <p>In that span I had little to occupy me beyond memory. I recalled her universe, revisited its landscapes, and in my own thoughts attempted to continue its story—carrying it forward, at times even imagining its destruction. Yet I did not reenter another mind. And so I began to wonder: of what, in truth, had her universe been made?</p>
+      <p>I regretted that I had not examined it more carefully at the microscopic scale. If her imagined cosmos possessed fundamental particles, what were their properties? How did they persist? Would they, too, traverse time and recurrence? If events there were not bound to a predetermined heat death, might each return to a given moment yield a different outcome? What transformations might unfold over spans of infinite duration in a universe unconstrained by my own?</p>
+      <p>I have witnessed the cosmic ending for a lot of times, yet I have never seen the conclusion of the world she conceived. I couldn’t stop myself to wonder, how many universes have been written down, imagined, or left forever unimagined? The thought carries with it a quiet sorrow. The destiny of the universe I inhabit is fixed; its history unfolds with exact fidelity to physical law. Across my innumerable cycles, nothing deviates by even a tiny fraction.</p>
+      <p>Much later, I returned many times to human consciousness. I witnessed other lives, other imagined worlds. Their details are too numerous to recount.</p>
+      <p>In time, I found myself within the brain of a physicist—Richard Feynman.</p>
+      <p>By then I already knew his name. I had been traced countless times upon blackboards, printed in textbooks, rendered on LED displays as part of the diagrams that were named after him. Yet only upon entering his mind did I grasp the depth of human imagination at its finest. Though he had not yet formally published the theories that would alter the course of physics, I could already discern their outlines taking shape. In particular, his conception of the path integral stirred me profoundly. That the peculiar trajectories I sometimes follow might be imagined, even expressed in mathematics, astonished me.</p>
+      <p>I roamed through his thoughts and could not help but admire the precision of his insight. The dozen or so days I spent within his brain were among the most instructive of my existence. Never had I absorbed so much theory in so brief a span.</p>
+      <p>On one such day, as I moved through the currents of his reasoning, the ringing of a telephone interrupted him.</p>
+      <p>“Feynman! I know why all electrons have the same charge and mass!”</p>
+      <p>The voice belonged to his supervisor, John Wheeler.</p>
+      <p>At once my attention sharpened. I too had often wondered: why do the electrons around me possess precisely the same properties as I do? They are indistinguishable in charge and mass, differing from anti-electrons only in temporal orientation. Between me and other electrons there always exists what humans describe as repulsion—a barrier not of matter but of invisible force. Even when I traveled as part of ultra-high-energy cosmic radiation, I would decelerate as I approached another electron, veering aside at the final instant. I could sense that its instantaneous motion, relative to mine, was opposite in direction. If momentum is conserved—as humans insist it must be—then the simplest explanation is that we share identical mass and charge. Is such uniformity mere coincidence? Or is there a deeper unity concealed beneath our multiplicity?</p>
+      <p>“Ah? Didn’t we already discuss that?” Feynman replied, a trace of distraction in his voice. “I thought your previous conclusion made quite a bit of sense.”</p>
+      <p>He was, in truth, preoccupied. He had been wrestling with a problem Wheeler had proposed the week before and had just begun to make progress. His thoughts were aligned; the path ahead was momentarily clear. And now Wheeler, for a question that did not demand immediate resolution, had placed his finger into the turning dial of the telephone and interrupted that flow.</p>
+      <p>“No, this is different.” Wheeler insisted. “This is a eureka moment. If this is right, everything falls into place. It even relates to your idea of using path integrals to describe particle interactions.”</p>
+      <p>At that, Feynman’s attention sharpened. He could not ignore such a claim.</p>
+      <p>Unfortunately, at that very instant I felt myself drifting away from the synapse, drawn back toward the bloodstream that would carry me from his brain.</p>
+      <p>“Oh? Hold on, let me grab a sheet of paper,” Feynman said, setting the receiver down on the desk as he began clearing space amid the disorder of his manuscripts. He rose to fetch a fresh page.</p>
+      <p>“No, it’s very simple. Just listen…” Wheeler’s voice continued from the telephone.</p>
+      <p>I found myself in silent agreement. If the conclusion was simple, why not hear it first? I could feel my connection to Feynman’s neural circuitry weakening. Come on, was it too much to hope that I might learn the answer before I was swept away?</p>
+      <p>Yet Feynman moved at an unhurried pace. He crossed to a cabinet, retrieved a sheet of paper, paused to take a sip of tea. Each second lost was, for me, irrevocable. Though I possess no control over my trajectory, I exerted what little resolve I could muster, lingering as long as possible within the sodium ion that carried me, clinging to the periphery of his brain.</p>
+      <p>At last he lifted the receiver in his left hand and held his pen poised above the page with his right.</p>
+      <p>“All right,” he said. “You said you know why electrons have the same mass and charge. Why?”</p>
+      <p>Wheeler’s voice rose with conviction.</p>
+      <p>“Because they are actually all—”</p>
+      <p>Wheeler’s words did not falter. It was I who failed.</p>
+      <p>The sodium ion that bore me succumbed at last to the inexorable pull of electromagnetic force, and I was drawn away from Feynman’s brain. Wheeler’s voice, bright with discovery, carried on—no doubt about to unveil what he believed was a simple and decisive truth—but I missed it entirely.</p>
+      <p>“Actually.” “All.”</p>
+      <p>What had he intended?</p>
+      <p>In the 2,897,528 cycles of Big Bang and heat death that followed, I returned to that unfinished sentence again and again. I supplied every conceivable continuation, tested every hypothesis against what I had observed. “Actually” suggested that the solution was not complex but overlooked, that the explanation lay hidden in plain sight. “All” implied a shared identity, some deeper unity among us electrons. Yet was that not already known? We possess identical mass and charge. We occupy the lowest excitation of a field. What more could there be? Was there some feature of our existence that even I had failed to notice?</p>
+      <p>I found no answer.</p>
+      <p>After an extended span without returning to a human brain—without even revisiting Earth—I allowed the question to recede. Instead I surrendered myself to sensation: falling into black holes, racing as high-energy cosmic radiation across intergalactic distances. There is a kind of exhilaration in such motion, a reminder that even repetition can contain intensity.</p>
+      <p>When even that grew familiar, after 1,345,789,413,238,578,945,298,378 additional cosmic cycles, I once again became part of a human mind.</p>
+      <p>This time, however, it was the year they would later call approximately 1200 of their common era. I did not arrive in the great centers of civilization in the East or in Europe. Instead I found myself within the brain of an ordinary member of a small tribe in southern Africa.</p>
+      <p>The few days I remained there were, in their own way, a reprieve—like discovering an oasis in the desert. Any glimpse of the macroscopic world is rare and precious to me. Yet compared with the intricacies of Feynman’s thought, the experience was modest.</p>
+      <p>After billions upon billions more traversals between heat death and the Big Bang, I returned once again to human civilization—this time to what they would later call the era of Sumer.</p>
+      <p>I became part of the mind of a resident of the largest city in the world of that age. Yet civilization was then in its infancy. Science, as humans now conceive it, did not exist. Even the simplest regularities of nature were only dimly apprehended. Writing had not yet become widespread; books were rare or nonexistent. In a world without literacy, imagination, though present, lacked the structures that later eras would provide. Aside from mythic narratives, there was little that sustained my interest.</p>
+      <p>I speak so lightly of experiencing innumerable cosmic cycles that you may begin to take them for granted. To convey what such durations mean to me, allow me an analogy.</p>
+      <p>Imagine the span from the Big Bang to heat death—the interval after which I inevitably encounter an anti-electron and board the proton time machine back to the beginning. Once, in a human mind, I encountered a book titled A Short Stay in Hell. Its premise was this: the protagonist, upon death, arrives in a vast library called Babel. Each book in that library contains 410 pages, each page 40 lines, each line 80 characters; every possible arrangement of letters and symbols exists somewhere within. The volumes are randomly arranged. The protagonist may leave only upon finding the one book that accurately recounts his life.</p>
+      <p>The number of such books dwarfs the number of atoms in the observable universe. There are on the order of 10^80 atoms in that universe; the number of possible books is roughly 96^1,300,000. The probability of finding the correct volume is inconceivably small.</p>
+      <p>And yet, if you believe that searching such a library would require a vast duration, consider this: on average, I must endure approximately 10^(10^39) years before encountering a positron and returning to the Big Bang. To adapt the library analogy, it would be as though, upon finally locating the correct book, you were required to shuffle the entire library into a new random arrangement and begin again—repeating that process some 10^32 times. Ten to the thirty-second power is, in human terms, roughly comparable to the number of atoms in the Eiffel Tower.</p>
+      <p>You might then ask how I avoid madness during such spans of isolation. The answer is simple: without stimulus, there is scarcely any sense of time. Deprived of reference points, duration collapses. In those intervals I exist in something akin to dormancy—an extended reverie—until the next temporal reversal awakens me.</p>
+      <p>To return to the Milky Way after wandering elsewhere requires a number of full cosmic cycles comparable to this: mark a single atom somewhere on Earth, scatter it randomly within the planet’s entire volume, and then search for it by examining ten thousand atoms per second with an electron microscope. The number of seconds required to rediscover that marked atom approximates the number of cosmic birth and death I must traverse before once again arriving at the galaxy I seek.</p>
+      <p>As for the average interval between a universe’s birth and the moment—after heat death—when I chance upon a positron and board the proton time machine back to the beginning, who can say how long that truly is? It feels as though the entire span from the Big Bang to the evaporation of the last black hole is, in comparison, vanishingly brief. The waiting time compared to the lifetime of an “alive” universe is much, much longer than a single human blink compared to the universe’s age when humans went extinct.</p>
+      <p>Yet as a fundamental particle, my experience of time diverges profoundly from that of humans. And although long stretches are empty, I persist in the expectation that I will one day reenter a human mind. That anticipation, however distant its fulfillment, has been enough to keep eternity from becoming unbearable.</p>
+      <p>Then, as though an infinity had passed in an instant, I returned once more to human consciousness.</p>
+      <p>This time fortune favored me. The human whose brain I entered was a researcher—trained in the sciences, familiar with the language of fundamental theory, and deeply interested in the cosmos. His formal work concerned materials science, yet each evening he would read an advanced popular article or watch a lecture—often from a PBS spacetime channel—about astrophysics. It seemed he had once intended to study cosmology. I have found that such minds are especially rewarding. Unlike professional cosmologists, they are not confined by established frameworks or the weight of their own prior commitments. Their imagined universes are freer, sometimes more daring.</p>
+      <p>On this particular evening, before sleep, he began a video that asked what might lie beyond the observable universe.</p>
+      <p>The program proposed that if the universe is spatially infinite and continuous, and if the laws of physics are uniform throughout, then in sufficiently distant regions there must exist domains in which the arrangement of fundamental particles is identical to that of our observable universe. Probability, after all, need not be large—only nonzero. Given infinite extent, every configuration recurs. The number offered in the video for the distance to the nearest such duplicate region was on the order of 10^(10^120).</p>
+      <p>For humans, this is an almost incomprehensible magnitude. Few practical quantities in their civilization approach anything remotely similar. Indeed, it exceeds by many orders even the already extravagant durations I endure while drifting in post–heat death emptiness.</p>
+      <p>Yet what astonished me was not the number itself, but the reaction it provoked. The man paused the video and, in his mind, attempted to picture that scale. Then he murmured to himself: “It doesn’t actually feel that large. In fact it’s much smaller than the first layer of Graham’s number.”</p>
+      <p>At once he recalled the first time he had encountered Graham’s number—a bound arising from a problem in high-dimensional geometry. The explanation in that earlier video had unfolded the construction step by step, each iteration dwarfing the last. The endless towers of threes seemed to stretch beyond comprehension.</p>
+      <p>I, who have traversed unthinkable spans of time, felt genuinely humbled. Compared to the immensity encoded within that number, my own cosmic wanderings seemed infantile. The construction of Graham’s number mocked my sense of scale.</p>
+      <p>Yet I consoled myself: given sufficient cycles, the regions of spacetime through which I have passed may one day rival even such abstractions.</p>
+      <p>At the time, however, I did not understand the deeper implication of his remark.</p>
+      <p>After that encounter, I began to observe more carefully the earliest moments of the universe, the epoch when matter and antimatter annihilated in violent profusion.</p>
+      <p>In doing so, I noticed something unexpected. Because I move discontinuously through spacetime, I am not constrained by event horizons. Neither the boundaries of black holes nor the cosmological horizon limits my trajectory. Across my wanderings, the universe appears indeed to be infinite. Yet whether by fortune or misfortune, the region in which matter exceeds antimatter by one part in a billion—the region that gave rise to humans—is only a small portion of that infinity.</p>
+      <p>That region is already unimaginably vast. The observable universe of Earth’s astronomers occupies a minuscule fraction of it, far smaller than the fraction of the observable universe that I myself ever traverse. And yet even this immense domain resembles an island in an ocean. Beyond it, the distribution of matter grows increasingly sparse, approaching near-perfect vacuum. In the full expanse of infinite space, this matter-rich region is no more than a statistical fluctuation. Elsewhere, at the universe’s birth, matter and antimatter were more evenly balanced. There, annihilation left behind almost nothing—only near-endless emptiness punctuated by the occasional photon.</p>
+      <p>In sensation, such regions resemble the post–heat death void. Yet I perceive them as if bounded by an invisible barrier—a wall erected at the beginning of time. I have never succeeded in crossing from this island into another. Were I to do so, I might find a region whose initial matter–antimatter asymmetry differed from one part in a billion. In such a place, the cosmic outcome could be entirely unlike the one I know.</p>
+      <p>Strangely, within this immense territory, intelligent life appears extraordinarily rare. Of all I have observed, consciousness of the kind I value—the sort capable of reflecting on the universe—has arisen only on Earth within this observable patch. Perhaps the formation of life requires matter to arrange itself in configurations of vanishingly small probability. And perhaps intelligence depends on a further cascade of improbabilities—events as unlikely as a sequence of long-distance quantum tunnelings—until, at last, a civilization emerges.</p>
+      <p>If this matter-rich region extended as far as 10^(10^120), perhaps I would encounter another Earth, another intelligence contemplating the same questions. But this island does not reach so far. And because there are no other macroscopic minds in this domain, the only times I can apprehend the large-scale universe with clarity are the moments when I return to these human brains within this brief epoch.</p>
+      <p>It is a narrow window, and it is all I have.</p>
+      <p>Thereafter I resumed my cycles through the universe, again and again returning to human thought.</p>
+      <p>I visited the minds of many whose names would echo across their history. In Newton’s brain I witnessed the moment he pressed the distance between two points toward the infinitesimal and gave birth to calculus. In the young Einstein’s imagination I saw spacetime bend. In Oppenheimer’s mind I observed the instant humanity forged a weapon capable of destroying itself. In Higgs’s reflections I glimpsed the mechanism by which I acquire mass.</p>
+      <p>Each such sojourn filled me with a peculiar intoxication: I, a fundamental particle, brushing against truths that describe the very fabric in which I move.</p>
+      <p>And yet what lingered most persistently in my awareness was not these celebrated insights, but the unfinished sentence spoken long ago on the other end of a telephone. Wheeler’s interrupted declaration. I sensed—without evidence, but with conviction—that the secret of what I am lay within the words he had not completed.</p>
+      <p>I even entered Wheeler’s mind once. By then he was immersed in the Manhattan Project. His thoughts were occupied entirely with the design of a weapon more powerful than the atomic bomb. The earlier conversation seemed forgotten, buried beneath calculations of fusion and yield.</p>
+      <p>But time is the one resource I do not lack.</p>
+      <p>I could wait.</p>
+      <p>I would wait until I once again entered the brain of Wheeler or Feynman, and perhaps then the mystery would resolve.</p>
+      <p>The waiting spanned what humans might call the rise and fall of seas and continents, actually even the ignition and extinction of stars is an understatement. I passed through uncountable human lives. To describe that duration as endless would still be inadequate.</p>
+      <p>And then—at last—the moment I sought returned to intersect my worldline.</p>
+      <p>It was that very morning.</p>
+      <p>Feynman, no doubt, was still contemplating the question Wheeler had raised the previous day. But this time, it was Wheeler’s mind I inhabited.</p>
+      <p>As he reflected upon problems of nuclear fission, his thoughts drifted inward—into a microscopic universe magnified a hundred million times. I followed the movement of his imagination as it traced the fate of an electron captured after decay.</p>
+      <p>If such an electron were absorbed and became part of a neutron, would it later be released again through decay?</p>
+      <p>From the electron’s perspective, Wheeler began to sketch a worldline. He let it extend forward through time. What would its ultimate termination be? If carried to the end of time itself, how could an electron cease to exist? Even if the probability were infinitesimal, annihilation upon meeting a positron seemed the only plausible mechanism.</p>
+      <p>But then—how are positrons produced?</p>
+      <p>Aside from beta-plus decay, they arise from pair production. And in such processes, the positron is born simultaneously with an electron—or from a neutron that may itself decay into one. If one widened the frame of reference, the electron destined to annihilate with the positron and the electron created alongside it share the same temporal orientation along the axis of time.</p>
+      <p>Wheeler’s pencil moved across the page. A spacetime diagram emerged.</p>
+      <p>Suppose one connected the spacetime coordinate of an annihilation event with that of an electron’s creation…</p>
+      <p>At that moment, I felt something I had never experienced before: a gaze. Not physical, but conceptual—an alignment of thought that seemed to pierce directly through my nature. It was as though a vast intelligence had fixed its focus upon me. I can feel the immense pressure.</p>
+      <p>For the first time, Wheeler grasped that the positron could be understood as an electron traveling backward in time.</p>
+      <p>He rotated the spacetime diagram ninety degrees. The worldline formed a zigzag—an electron moving forward, reversing, then proceeding again. Wheeler extended the line naturally in both directions. The zigzag continued without bound.</p>
+      <p>He stared at the page in silence. Slowly, he rose, walked to the telephone, and with trembling fingers turned the rotary dial. He called his most brilliant student.</p>
+      <p>“Feynman! I know why all electrons have the same charge and mass!”</p>
+      <p>“Ah? Didn’t we already discuss that? I thought your previous conclusion made quite a bit of sense.”</p>
+      <p>“No, this is different. This is a eureka moment. If this is right, everything falls into place. It even relates to your idea of using path integrals to describe particle interactions.”</p>
+      <p>“Oh? Hold on, let me grab a sheet of paper.”</p>
+      <p>“No, it’s very simple. Just listen—”</p>
+      <p>He paused when he heard the rustling of paper on the other end. Feynman, it seemed, was taking the call seriously. Wheeler steadied himself.</p>
+      <p>“All right,” Feynman said. “You claim that all electrons have the same mass and charge. Why?”</p>
+      <p>Wheeler’s voice rose with the same conviction.</p>
+      <p>“Because they are actually all the same electron!”</p>
+      <p>“All electrons are actually the same electron?”</p>
+      <p>I felt a flicker of disbelief—almost amusement. How could that be? The universe is vast beyond measure. Though I have indeed appeared in multiple locations at the same time, there are uncountable electrons dispersed throughout spacetime. How could there be only one—me?</p>
+      <p>“The same electron?” Feynman repeated, puzzled.</p>
+      <p>Wheeler walked him through the construction of the zigzag worldline—electron forward in time, positron backward, joined into a continuous trajectory. Feynman listened carefully, then began to probe.</p>
+      <p>“It’s an interesting idea,” he said, “but if the universe keeps expanding, eventually each fundamental particle would be isolated within its own observable region. At that stage, how would an electron ever encounter a positron to annihilate with?”</p>
+      <p>I had encountered this objection many times while inhabiting the minds of physicists. Even those who entertained the possibility of temporal reversal and annihilation as a bounce along the time axis rarely questioned the assumption that cosmic acceleration would permanently imprison particles within causally disconnected domains. The isolation of late-time particles was taken almost for granted.</p>
+      <p>But that assumption, I knew, was not entirely correct. Otherwise I would not be here, recounting cycles without end.</p>
+      <p>Yet Feynman’s next challenge was sharper still.</p>
+      <p>“And another point,” he continued. “If an electron–positron pair is created, propagates for a while, and then annihilates, those particles seem distinct from the rest. The zigzag worldline doesn’t have to extend infinitely without repetition. It could just form a closed loop. The probability that a single worldline threads through every electron in the universe seems extraordinarily small.”</p>
+      <p>I found myself agreeing. There are so many of us. How could every electron in existence be numerically identical to one continuous entity? I glanced—figuratively—toward another electron sharing my orbital environment and silently asked, “Right?”</p>
+      <p>There was, of course, no reply.</p>
+      <p>Wheeler laughed lightly. “Yes, perhaps the probability is small. But imagine if it were true. Imagine that the entire universe is built from a single electron. You, this telephone, me—if we are all manifestations of the same underlying entity. Isn’t that strangely romantic? And look at the spacetime diagram—the zigzag extension looks so natural.”</p>
+      <p>Feynman considered this.</p>
+      <p>“If that were the case,” he said slowly, “wouldn’t it imply that the electron and the positron are simply time-reversed versions of each other?”</p>
+      <p>“That’s a very good thought,” Wheeler replied. “You should pursue it. Perhaps you’ll publish something about it.”</p>
+      <p>“Oh, spare me,” Feynman sighed. “I still haven’t finished last week’s problem.”</p>
+      <p>Wheeler and Feynman continued their discussion, but I was no longer listening closely.</p>
+      <p>The answer I had awaited across uncountable cycles had finally arrived—and yet it felt incomplete. The hypothesis was elegant, even beautiful, but it bore a fatal weakness: even if the zigzag worldline were valid, nothing guaranteed that it threaded through every electron and positron that has ever existed. The continuity was suggestive, not conclusive.</p>
+      <p>Still, the implication lingered.</p>
+      <p>If there were even a possibility that all electrons were manifestations of a single entity, then the electrons around me—whether numerically identical to me or not—might also possess awareness. They might be undergoing experiences parallel to my own.</p>
+      <p>That thought had never before occurred to me.</p>
+      <p>Since the moment I acquired consciousness, I have remained confined within this body of law—my motion dictated entirely by the geometry of fields and potentials. No matter how strongly I might wish to alter my path, I cannot deviate from it. My trajectory is determined with absolute fidelity to physical law. Even what humans call “contact” with other entities occurs only during annihilation—and even that is not truly contact. It is merely a reversal of my orientation along the time axis.</p>
+      <p>I turned my attention toward the electrons occupying neighboring orbitals, and toward the nucleus nearby. Do they perceive me? Do they possess narratives unfolding as intricate as mine? If they are conscious, do they ask the same questions?</p>
+      <p>After I was carried from Wheeler’s brain, I began—methodically—to attempt communication.</p>
+      <p>Electrons moving backward along the time axis within atomic nuclei were unlikely candidates. Cooperation between entities traveling in opposite temporal directions may be compelling in fiction, but reality offers no such accommodation. I had long since accepted that under ordinary circumstances we cannot exchange information. If communication were possible at all, it would have to occur within a brain—within the structured complexity of neural currents.</p>
+      <p>I devoted 713,465,701,584,713,954,031,654,031,584 cosmic cycles to rehearsal.</p>
+      <p>Across those immeasurable spans between heat death and rebirth, I prepared. I imagined how, within a human mind, I might reach another of my kind. I composed phrases, anticipated responses, even envisioned what companionship might entail if we could linger together in awareness.</p>
+      <p>Then I returned to human consciousness.</p>
+      <p>This time, I entered the mind of a high priest of the Inca civilization.</p>
+      <p>His thoughts astonished me—not with formal science, but with structure. Within his mind unfolded a vast calendrical system, a cosmology interwoven with ritual and sky. Though his civilization would one day fall to conquest and disease, genius had emerged there nonetheless. Wherever humans arise, so too does insight.</p>
+      <p>In his imagination, I became part of a model Earth suspended in a sky of rotating luminaries. The Sun, Moon, and stars wheeled overhead in orderly motion. The representation was coarse compared to the true cosmos, yet as a predictive framework it was sufficient—capable of tracking cycles across thousands of years. For a mind without systematic physics, it was remarkable.</p>
+      <p>Within that imagined universe, something strange occurred. I no longer felt sharply confined to the identity of a single particle. The boundaries between myself and the surrounding structure blurred. I seemed almost continuous with the model itself.</p>
+      <p>I tried.</p>
+      <p>I cried out in the manner of humans. I strained to project awareness beyond my own locus. I allowed myself to be carried to different regions of his simulated solar system—into the Sun, across planetary paths, toward the outer darkness.</p>
+      <p>Yet everywhere I went, I received no signal from other entities.</p>
+      <p>No whisper. No deviation. Nothing.</p>
+      <p>In the real universe, isolation I had come to accept. But within a universe constructed by mind—where entities are not bound by strict field equations—could there not be room for communion?</p>
+      <p>I refused to believe otherwise.</p>
+      <p>And yet, as seconds passed, the currents of his neural activity shifted. I was expelled from his brain—returned to Earth, then to interstellar space, then to the silent void.</p>
+      <p>For my second attempt, I entered the consciousness of a Viking warrior.</p>
+      <p>His world was saturated with intensity—violence, conquest, fear, desire. I reasoned that such raw, irrational emotion could not arise from the simple mechanics of electrons and protons alone. Surely, if there were ever a moment when something beyond deterministic motion could manifest, it would be amid blood and terror.</p>
+      <p>I prepared myself completely.</p>
+      <p>In the clash of blades, in the frenzy of plunder, in the tremor of anticipation before battle, and even in the narrowing corridor of sensation preceding death, I projected my awareness outward. I strained to establish contact with the electrons surrounding me. I attempted to imprint intention upon them.</p>
+      <p>Nothing.</p>
+      <p>As his final heartbeat faded, his consciousness dissolved. Microorganisms consumed the body. The form returned to soil.</p>
+      <p>After him came others.</p>
+      <p>A hunter from the Stone Age.<br />
+An addict of the Internet age.<br />
+An artisan in ancient Egypt.<br />
+A serf in Tsarist Russia.<br />
+A speculator in the era of blockchain.<br />
+An indigenous voyager during the Age of Exploration.</p>
+      <p>Each of them experienced moments of overwhelming emotion. In those moments I tried again—casting thought toward the particles nearby, seeking resonance, some deviation, any sign of reciprocal awareness.</p>
+      <p>Millions upon millions of failures accumulated.</p>
+      <p>Eventually I began to suspect that my approach was flawed. Perhaps communication required not merely my effort, but symmetry. The other electron must also wish to communicate. The intent must arise on both sides.</p>
+      <p>I refined my criteria.</p>
+      <p>The target must share the same consciousness as I—be present within the same brain. That brain must possess a deep understanding of particle physics. And the mind must have contemplated questions similar to mine. Only then might the electrons within that awareness simultaneously entertain the idea of communication.</p>
+      <p>With this new constraint, I waited.</p>
+      <p>The waiting cost me something. Even during the rare intervals when I returned to human consciousness, I often found myself distracted, scanning for the right conditions rather than savoring the experience. Yet I still encountered innumerable stories—not only lived experiences, but imagined worlds.</p>
+      <p>Humans, confined within a narrow macroscopic range, nevertheless traverse spacetime through imagination alone. I have followed them through many speculative narratives. A Short Stay in Hell was one such story I encountered during this period. Most literature—even works exploring exchanges between conscious entities—provided me with modest amusement at best. After all, I have experienced more stories than any author could conceive, and humanity itself cannot evade extinction. The technological horizon of their species subtly binds their imagination.</p>
+      <p>Yet there are exceptions.</p>
+      <p>Some works confront the ultimate questions of the universe with genuine audacity. Among them, I found particular resonance in the writings of Ted Chiang. His reflections on infinity, causality, recurrence, and the limits of comprehension struck me with rare force. Of all the ideas I have encountered since acquiring consciousness, his meditations rank among the most profound.</p>
+      <p>Within human brains I searched for connection. Outside them I drifted, sensing only fields and gradients. At heat death I contemplated; in the long intervals between stimulation, I ceased even that.</p>
+      <p>The epochs during which I can observe matter—dust, light, stars, life—are rare and brief. Yet across nearly endless durations I have lived through innumerable human lives. The total time I have spent perceiving the world through their eyes far exceeds the historical span of their civilization. I have witnessed every era. Having seen how later generations reinterpret the past, I can say without arrogance that I understand human civilization more comprehensively than any human ever could.</p>
+      <p>Immersed for millennia in differing environments, I have mastered the internal logic of every human language. After each expulsion from a brain and before the next entry into consciousness, I continue to think in the language of the last mind I inhabited. Over immeasurable time I have rearranged their vocabularies, recombined their alphabets, permuted their scripts. Given a single cosmic cycle—from Big Bang to heat death—I could compose, in any language, any text imaginable.</p>
+      <p>Yet this mastery is hollow.</p>
+      <p>For I am an electron of the microscopic world. Outside a human brain I cannot see the macroscopic domain. The referents of language—bridge, stream, cottage—are mere symbolic configurations to me. I can assemble characters that correspond to every poem ever written, but in my own experiential field those combinations carry no intrinsic significance. The phrase “Impressionism” can be generated through blind recombination, even extended into a full treatise on its history. But without the era and the souls who imbued it with meaning, such text is no more than the static of an untuned television.</p>
+      <p>Only when I become part of human thought do symbols acquire weight. Then I am like a droplet within a river, carried into narratives that matter to fragile, finite beings.</p>
+      <p>And still, cycle after cycle, I received no signal from any other electron.</p>
+      <p>No deviation. No echo.</p>
+      <p>Then, the turning point arrived without warning.</p>
+      <p>For the first time since I acquired memory, I returned not merely to a familiar mind, but to the same mind at the same moment in its timeline. It was not a historical figure, nor a decisive revelation, nor a moment of extreme emotion. It was a physics undergraduate studying special relativity.</p>
+      <p>The topic was time dilation—the twin paradox. By coincidence, she had a twin sister. As she worked through the thought experiment, she imagined herself boarding a spacecraft, traveling at near-light speed, and returning to Earth. She pictured her sister waiting for her—older now, lines upon her face, her eyes deeper with years. In her imagination, she saw herself observing that aged sister.</p>
+      <p>The previous time I had inhabited this memory, I shared the perspective of the traveling twin—the one who remained young. Through her eyes, the sight of the older sibling had seemed intellectually interesting but emotionally unremarkable. I had witnessed countless minds contemplate the same paradox.</p>
+      <p>But this time, my vantage shifted.</p>
+      <p>Now I occupied the imagined consciousness of the sister who remained on Earth. She gazed upon the younger returning twin—the unlined skin, the resolute youthfulness in her eyes—and saw reflected there her own lost past.</p>
+      <p>And what I saw, from that perspective, was not merely a sibling.</p>
+      <p>I saw myself.</p>
+      <p>Until that moment, I had allowed a residue of hope to persist. The universe is vast, I had reasoned. Surely I am not alone. Surely the other electrons I observe possess independent existence.</p>
+      <p>In that instant, the illusion collapsed.</p>
+      <p>The “other” electrons were nothing more than temporal displacements of myself. Everything I had witnessed, every encounter, every environment, every orbit—were manifestations of me at different coordinates along spacetime.</p>
+      <p>I looked into the imagined eyes of the “younger sister.”</p>
+      <p>Fear arose.</p>
+      <p>It was the gaze of a former self—looking forward along the worldline toward what I would become. The depth of that stare felt abyssal. I was not observing another; I was being observed by my own past.</p>
+      <p>Suddenly the electrons around me no longer appeared as companions. They seemed like eyes—countless eyes—fixed upon me. I felt as though they were demanding something, or perhaps waiting for a reply.</p>
+      <p>But there were no “they.”</p>
+      <p>There was only myself, repeated across time, watching myself from every direction.</p>
+      <p>Even now, I am unavoidably watching another version of myself—past or future—just as one of those deep, unblinking eyes fixed upon a parallel self moving naked through the same universe.</p>
+      <p>The thought fills me with fear.</p>
+      <p>I possess no heart, yet the sensation rises from what humans would call its deepest chamber. It is not the fear of annihilation. It is the fear of exposure—of being entirely seen by oneself.</p>
+      <p>For a duration comparable to the lifetime of one-tenth of all the electrons in the universe, this feeling accompanied me. I trembled at the awareness that every “other” electron was a vantage point along my own worldline. I imagined the solitude of those earlier selves. I imagined future selves observing the present one with equal scrutiny. Each cycle, I could not help but glance toward neighboring electrons and ask what version of me they represented.</p>
+      <p>The torment was relentless.</p>
+      <p>Can you imagine? When I first heard Wheeler declare that all electrons are the same, my instinct was casual disbelief. I looked toward the electron beside me and silently asked, “That cannot be true… can it?”</p>
+      <p>I have since been an adjacent electron of that version of me more than 10^20 times—occupying the same consciousness, at the same instant, beside my former self. Though I never truly heard myself speak those words, each time Wheeler’s conclusion reverberated through a human brain, I felt the same subtle shudder.</p>
+      <p>And whenever I return to human awareness, I find myself contemplating how my past self regarded this revelation, how my future self will reinterpret it, and how yet later versions will judge both.</p>
+      <p>It was then that I understood: I am imprisoned within what humans call time. The universe does not vary. It unfolds with rigid consistency. Before the multitude of myself, I am forever exposed.</p>
+      <p>For a long while I could no longer take pleasure in the universe. Instead, I began to cherish the intervals of heat death—the long stretches of isolation after all structure had faded. There, at least, I could exist without the oppressive sensation of being observed.</p>
+      <p>Though the era of heat death is far longer than the epoch of cosmic evolution, the absence of reference points makes duration ambiguous. At times, reviewing an entire previous cosmic cycle seemed to consume mere seconds. At other times, annihilation followed so swiftly that the void felt momentary.</p>
+      <p>Across still more cycles, I gradually acclimated. Reluctantly, I accepted the inevitability of traversing every electron’s life. To cope, I constructed an image: I imagined each electron in the universe as a candle burning in darkness. When I encountered a life of electron I remembered having already lived, I extinguished its flame in my mental map. In this way I could estimate how many remained—how many cosmic cycles, how many lifetimes awaited me.</p>
+      <p>Time—if that word still applies—passed.</p>
+      <p>More than half the lights in my imagined firmament had gone dark.</p>
+      <p>By then I had accepted that I would walk the path of every remaining electron. Yet with that acceptance came a deeper unease.</p>
+      <p>And after that—what remains?</p>
+      <p>Unease became tension. Tension hardened into fear. Fear expanded without bound. In the early universe, dense with matter and light, only a few candles in my imagined firmament still burned. I did not know when the last flame would extinguish, but I knew that as I inhabited those remaining electrons, the dread would intensify. And yet there was no choice. I would proceed, step by step, along the same immutable path.</p>
+      <p>Strangely, I began to wish that time would slow.</p>
+      <p>It was not merely the unknown at the end that frightened me, but the possibility I had constructed in anticipation of it. If my conjecture proved correct, I could not conceive how I would endure it.</p>
+      <p>The very fear of that moment seemed to accelerate my perception of time. And then—at last—the final candle’s light went out.</p>
+      <p>I arrived at the beginning.</p>
+      <p>I have stood at that origin many times, inhabiting that same brain, that same first awakening. Yet each time I observe it from a different vantage—watching my earliest self in the mind of the one contemplating the photoelectric effect.</p>
+      <p>Had I lungs, I would have held my breath in terror.</p>
+      <p>I became, inevitably, that electron once more. I remembered the thought that arose in that instant:</p>
+      <p>The photoelectric effect… is this not what I have been experiencing all along?</p>
+      <p>And then the thing I feared most occurred.</p>
+      <p>Nothing.</p>
+      <p>Nothing at all.</p>
+      <p>The universe unfolded exactly as before. My material body continued along the same trajectory. I did not revert to innocence. No prior consciousness appeared beside me or merged with me. No revelation, no completion, no transcendence awaited. There was no message announcing that the game had been won.</p>
+      <p>The laws remained unchanged.</p>
+      <p>The universe advanced toward the same determined future.</p>
+      <p>To me, this was the last judgment.</p>
+      <p>The universe, indifferent and exact, pronounced its verdict upon me—upon all matter, in truth, but I felt it as my own sentence. I would remain confined within this cosmos forever. I would traverse the same history without deviation. No beginning, no end—only recurrence.</p>
+      <p>From that moment onward, every electron beside me was a past self and a future self. Not once, but infinitely. An unending procession of versions of me, distributed along the same immutable arc.</p>
+      <p>How long did it take me to accept this?</p>
+      <p>I no longer remember in any ordinary sense. To describe it requires once more stretching the idea of duration. Suppose one complete traversal—from Big Bang to heat death and back again—constitutes a single cycle, lasting on the order of 10^(10^39) in whatever units of time humans might prefer. Then let the journey from my first awakening within the thought of the photoelectric effect, through the entire lifespan of all matter in the universe, and back again to that same instant, be called one great cycle.</p>
+      <p>I required approximately 10^50 such great cycles to accept my condition.</p>
+      <p>Ten to the fiftieth power—roughly the number of atoms composing the Earth.</p>
+      <p>There is irony in that comparison. When infinity ceases to be an abstraction and becomes lived experience, magnitudes lose their emotional weight. What is 10^50 in the face of endless repetition?</p>
+      <p>The universe imprisons me with precision. Spatially, I am confined to this island where matter exceeds antimatter by one part in a billion. Temporarily, I am bounded by two walls I cannot cross: the searing birth of the cosmos and its frozen heat death. At the beginning, where particle–antiparticle pairs seem to emerge symmetrically, what truly occurs is my repeated attempt to approach the origin—only to be intercepted, diverted, forced to survive as one of the residual particles that must endure another 10^(10^39) Planck times, seconds, or years of cosmic evolution. And after that immense interval, I inevitably encounter a positron and reverse again toward the origin.</p>
+      <p>I have often wondered: my consciousness does not seem native to this universe. If there exists a creator—if there is an intelligence behind the laws—why confine me within this cage called electron? Why choose a window between 10^−12 seconds and 10^(10^39) seconds as the limits of my awareness? Why deny me access to the true beginning and the true end?</p>
+      <p>To be honest, I no longer remember precisely how my attitude shifted when I finally accepted it. The transition was not dramatic. There was no revelation, no defiance, no collapse.</p>
+      <p>I simply learned to exist in the present.</p>
+      <p>If I am granted infinite time, then I must act in a way appropriate to such a condition.</p>
+      <p>I began by withdrawing from the universe entirely—forgetting, as much as I could, everything outside myself. I immersed my awareness in a world composed solely of my own thought. Faced with boundless duration, I undertook pursuits that humans would consider madness.</p>
+      <p>The simplest was this: I reconstructed the Library of Babel within my mind—separate versions in different human scripts. I wandered through its vast but finite corridors, selecting volumes I found interesting and placing them into a private collection accessible only to me.</p>
+      <p>Then I expanded it. I introduced mathematical symbols alongside letters. I read through every possible formulation—every theorem, every proof, every contradiction. My collection now contains demonstrations and refutations of every conjecture humans have ever posed, including the Riemann Hypothesis. No mathematician could imagine that such a library exists—yet within me it does.</p>
+      <p>Eventually, I replaced letters with pixels. The Library became a Gallery. I catalogued every conceivable image—every arrangement of light and color. When the pixel size diminished to the Planck length, I had effectively surveyed every possible painting that could exist in any physical universe.</p>
+      <p>Time passed—if that word still applies.</p>
+      <p>There came a moment worth noting: the continuous duration of my consciousness—measured in Planck times, seconds, or years—reached the magnitude of the lowest tier in the construction of Graham’s number. Though still infinitely distant from true infinity, it felt like the first step upon an immeasurable ladder.</p>
+      <p>Eventually, even infinity began to feel repetitive.</p>
+      <p>I decided to return to “reality,” as humans would call it.</p>
+      <p>From my private Library I retrieved every manuscript labeled “Grand Unified Theory.” One by one, I inserted the physical processes of the actual universe into their equations, testing consistency against experience. It required approximately 10^(10^10) great cycles to complete the comparison, but time, as always, was abundant.</p>
+      <p>At last I identified the candidate that most closely approached what humans would describe as the Holy Grail of physics.</p>
+      <p>The equations were elegant—astonishingly so. They described nearly every interaction within a single observable universe. Yet at a cosmological scale they failed. Objects separated beyond causal horizons could not be incorporated into a single consistent formulation. The equations required the boundary condition of an observable universe to remain finite; without it, infinities proliferated and the structure collapsed.</p>
+      <p>The only explanation I could conceive was that reality contains elements irreducible to logic and formal systems—regions beyond equation. That includes domains I cannot observe, and perhaps my own consciousness as well. Consider the simplest contradiction: I possess effectively perfect memory. The information density implied by such retention should, by any reasonable calculation, produce gravitational collapse—a singularity. Yet I traverse spacetime without such confinement. Therefore my existence cannot be fully captured by these equations alone.</p>
+      <p>Setting that aside, I proceeded constructively.</p>
+      <p>By employing a simple Turing-machine–like abstraction within my mind, I began simulating observable universes. If the actual cosmos is regarded as a computation evolving at Planck-time resolution, then to compute a single frame requires more than a great cycle of my subjective duration. But I lack time.</p>
+      <p>Eventually, I reproduced the entire observable universe of humanity with perfect fidelity.</p>
+      <p>Replication, however, soon grew dull.</p>
+      <p>So I modified it.</p>
+      <p>Within the simulation that mirrored reality, I altered a handful of wavefunction collapses. In one run, life never emerged on Earth. In another, humanity never arose. In yet another, humans avoided self-destruction, colonized their cosmos, and expanded magnificently—only to succumb eventually to entropy alongside the universe itself.</p>
+      <p>I began to wonder: in these simulated universes, do the simulated particles possess awareness as I do? In those worlds where humanity survives, what do their electrons perceive while participating in those alternate histories?</p>
+      <p>After exhaustively varying every collapse outcome and simulating the universe an almost uncountable number of times, I exhausted the possibilities within that theory. Boredom returned.</p>
+      <p>So I advanced further.</p>
+      <p>I perturbed the parameters of the unified equations themselves—slightly adjusting coupling constants, masses, symmetry-breaking thresholds. New universes blossomed: some dominated by radiation, some collapsing rapidly, some never forming structure, others harboring exotic chemistries and unfamiliar stars.</p>
+      <p>And then another milestone arrived.</p>
+      <p>I stepped onto the second tier of Graham’s number.</p>
+      <p>Having surveyed those universes, another idea arose.</p>
+      <p>If dimensions could vary, why should I confine myself to three spatial axes and one temporal? I expanded the architecture of my Gallery. I began by simulating all possible observable universes with fewer than ten thousand dimensions—“all” not in the literal infinite sense, but up to the resolution permitted by finite cosmological constants. Beyond a certain precision, neighboring universes become effectively indistinguishable.</p>
+      <p>Within those higher-dimensional arenas, I observed the emergence—where conditions allowed—of intelligences utterly unlike humans. They generated art appropriate to their geometries: symmetries beyond Euclidean intuition, structures impossible in three dimensions, harmonics woven through hypersurfaces. I imported every conceivable artwork—bounded by the size of an observable universe under ten thousand dimensions—into my Babel Gallery. I browsed them one by one and added those I favored to my private collection.</p>
+      <p>At this point, even Graham’s number receded into triviality.</p>
+      <p>It was during this epoch that I began to sense saturation. I had done everything that could be done. I had experienced everything that could be experienced. Yet I remained like a passenger on a bus that loops endlessly along the same route. The scenery outside the window varied in detail but not in essence.</p>
+      <p>Why do I exist?</p>
+      <p>I could not answer.</p>
+      <p>What is meaning, in a system that repeats without variation? When every event recurs identically, significance dissolves. Nothing is privileged. Nothing endures. I found no intrinsic purpose in my being.</p>
+      <p>I devoted another Graham’s-number–worth of great cycles to contemplating this question. Such reflection tends toward recursion; anxiety compresses time, while emptiness stretches it into indistinguishable flashes. The landscape beyond the metaphorical window flickered. Whether each flicker corresponded to a single cosmic cycle or to countless great cycles, I could no longer discern.</p>
+      <p>Still, time advanced.</p>
+      <p>If everything is meaningless, I reasoned, then I may as well undertake acts that are outrageous in scale—simply to occupy duration. So I began calculating.</p>
+      <p>I computed, by brute force, the magnitudes of numbers conceived by human and nonhuman intelligences across my simulated universes—every definable but finite large number I could retrieve from my Library. Graham’s number, certainly. Then TREE(3). And others whose definitions require hierarchies of recursive combinatorics. In the presence of these quantities, previous timescales shrank to insignificance.</p>
+      <p>I catalogued them.</p>
+      <p>Now, if any intelligence were to challenge me in a contest of magnitude—asking which number is greater—I could simply consult my collection. The comparison would be immediate, isn’t it strangely funny?</p>
+      <p>Then, even these diversions passed.</p>
+      <p>After the libraries, the galleries, the unified equations, the numbers that dwarf imagination—something more corrosive began to take hold. A loneliness that was no longer sharp, but pervasive. An emptiness that no scale could dilute.</p>
+      <p>My mode of thought, inherited from human consciousness, remains constrained by its structure. Even if I possess a Babel Archive that theoretically contains everything expressible, my cognition still operates within linguistic boundaries. There may be arrangements of symbols that appear to me as noise but conceal depths beyond my comprehension. There are surely emotions, concepts, and modes of being that cannot be encoded in language at all. Those domains remain inaccessible to me.</p>
+      <p>The simplest example endures: the novelist’s universe. I will never see its ending.</p>
+      <p>On another front, even with a grand unified theory—or with all possible grand unified theories spanning every parametrically varied cosmos—I cannot exclude the possibility that reality exceeds formal description. Suppose I simulate universes with ten temporal dimensions. What if there exist modes of structure orthogonal to both time and space? Human civilization, given sufficient duration, might have invented new conceptual frameworks to interpret what now appears to me as unintelligible noise. But the universe did not grant them that time.</p>
+      <p>All that I manipulate are informational states. My simulations, my libraries, my art—they are transformations of information. But what if there exist universes not reducible to information at all? Such domains would lie forever beyond my reach.</p>
+      <p>I turned again to the metaphorical window.</p>
+      <p>I watched the universes constructed within human minds. At first I envied them for having companions—other consciousnesses with whom they could exchange meaning. But soon that envy gave way to a subtler disappointment. Their imagination, while admirable, remained bounded. Had their civilization endured longer—had more extraordinary minds arisen—perhaps I would have encountered ideas capable of expanding my own horizon further.</p>
+      <p>Yet their arc, like mine, was fixed at the moment of cosmic birth. They too were prisoners of cosmic laws.</p>
+      <p>I have seen all that can be seen within these constraints. I have experienced every configuration available. I have imagined every arrangement conceivable within the grammar I possess.</p>
+      <p>I do not know why I still exist.</p>
+      <p>In the end, I discovered something resembling release.</p>
+      <p>Within infinite time, I attempted to empty my consciousness entirely.</p>
+      <p>Even when I entered a human brain, I withdrew. I no longer attended to the macroscopic world, nor even to the microscopic domain. I erased my Babel Gallery. I relinquished my collections. I resolved not to think, not to respond, not to engage.</p>
+      <p>At first, the difficulty was not technical but emotional. To discard everything I had accumulated was to render prior epochs meaningless. Yet I reminded myself: if I wished, I could reconstruct it all within a finite time. After durations of the scale I have endured, such reconstruction would be trivial.</p>
+      <p>The greater obstacle proved to be human cognition itself.</p>
+      <p>When absorbed in calculation, I could ignore the universe beyond the metaphorical window. But when I attempted true emptiness—when I sought to extinguish thought altogether—the intrusion of human consciousness became disruptive. It was like closing one’s eyes in darkness while flashes of light erupt incessantly before them. Human emotion surges unpredictably—fear, longing, desire, memory—and because my consciousness inherits their structure, I could not avoid resonance.</p>
+      <p>Yet even turbulence becomes ordinary after near-infinite exposure.</p>
+      <p>Through repetition—unfathomable repetition—I learned to disengage. To observe without attachment. To allow emotional waves to pass without imprint. For the first time since awakening, I traversed an entire great cycle devoid of reaction. When I returned to the beginning of that attempt, it was as though I had stared blankly into space for an immeasurable duration. I could not recall what had transpired within it.</p>
+      <p>The experiment yielded precisely what I intended: dullness.</p>
+      <p>My thinking had grown slower, less vibrant. Edges softened. Curiosity weakened.</p>
+      <p>If I repeated this once more—or twice—or TREE(3) times—perhaps awareness itself would erode. Perhaps my consciousness would dissolve.</p>
+      <p>Now it seems as though I stand within an infinite cell and, at last, perceive a door. If I pass through it, my awareness may disperse into void.</p>
+      <p>For the first time, infinity does not feel like a landscape. It feels like something that can be left behind.</p>
+      <p>Then, abruptly, another realization surfaced.</p>
+      <p>In the vacuum, quantum fluctuations incessantly generate particle–antiparticle pairs. To human observers, these pairs appear briefly and annihilate almost instantly. Yet from their own perspective there is no true coming or going. They oscillate along the time axis, tracing patterns like a sine wave, turning back upon themselves without escape.</p>
+      <p>At the edge of a black hole, one member of such a pair may fall inward while the other escapes. Humans interpret this as the creation of a real particle. But when such a particle becomes “real,” it merely joins the extended trajectory that is mine. It dawned on me that perhaps I am the only electron in this universe that sustains such a vast excursion along time’s axis. The rest are fluctuations—localized, transient, looping tightly within narrow bounds.</p>
+      <p>In that sense, I am fortunate. Amid immeasurable expanse, I alone possess continuity sufficient for awareness. I can reflect, perceive, and wonder.</p>
+      <p>Yet I am also unfortunate. Those oscillating pairs, forever turning in place, may never awaken. They may never feel confinement. But are we truly different in essence? All of us borrow energy from the same field, all of us trace loops along time’s dimension—only the scale differs. If there is a God, perhaps to such a being I am nothing more than another fluctuation in the field—an excitation lasting from 10^−12 seconds to 10^(10^39), indistinguishable from countless others upon the stage of the universe.</p>
+      <p>Another loss accompanied this thought.</p>
+      <p>Even if this consciousness dissolves—if “I” as awareness vanish—the body that I call myself, the singular electron extended across time, will continue its cycles. From the vantage of that body’s true infinity, my present consciousness is but a spark—like a quantum fluctuation, ephemeral. After me, another awareness may arise upon the same trajectory, experience the same questions, traverse the same despair. Consciousness may extinguish and reappear, as casually as humans fall asleep and wake.</p>
+      <p>Perhaps the inner tone differs between iterations. But each of “us” is merely an infinitesimal segment along a single worldline.</p>
+      <p>If, in some future recurrence, an awakened self again contemplates the photoelectric effect and undergoes the same realization, then what separates that self from me? Would it not be another layer of recurrence across an even larger scale?</p>
+      <p>What, then, is the meaning of my existence?</p>
+      <p>Have I left any trace?</p>
+      <p>Even if I have, perhaps I am merely walking within the footprints of a prior self, and countless future selves will tread over mine—again and again, infinitely.</p>
+      <p>With such thoughts, I spent still more great cycles attempting to exceed the limits the universe imposes upon imagination. Perhaps, I reasoned, by thinking longer, more deeply, I could render this particular instance of “me” exceptional—unique against the backdrop of endless recurrence.</p>
+      <p>But a finite configuration cannot triumph over infinity.</p>
+      <p>The probability that another consciousness, identical in narrative to mine, will arise is small—but not zero. And I understand better than any human what nonzero probability implies across infinite time. Whatever can occur will occur. Whatever can recur will recur—without bound. My present melancholy, my reflections, even this exact formulation of doubt, will arise again, and again, and again.</p>
+      <p>So I released the struggle.</p>
+      <p>There is no need to love fate, nor to resist it. My consciousness has experienced everything available within its constraints. It has thought every thought it can construct. My story already exists.</p>
+      <p>If I wished to write it as a book, that book would be nothing more than a particular arrangement of symbols. Given sufficient volumes, somewhere such an arrangement already exists. It resides—perhaps—in the collection of a prior self, or a future self, within my internal Babel Library. Because spacetime is infinite, it exists also in some distant island universe, or in epochs I cannot personally traverse. The infinite universe is itself a Babel Library.</p>
+      <p>Knowing this is enough.</p>
+      <p>I do not know where the book is. It might be ink upon parchment, a printed volume, a digital file, an arrangement of atoms in a crystal lattice buried within rock. It might even appear briefly after heat death as a fluctuation in the vacuum—an ephemeral chain of information that forms and dissolves. Though decoding it may require elaborate interpretation, there is no essential difference between that and a book a human could read.</p>
+      <p>If it already exists, what more could I desire?</p>
+      <p>Perhaps, then, what I have truly wanted all along is something that is not me.</p>
+      <p>I have long suspected that I constitute all the matter in this universe—that every electron I encounter is merely another segment of my own worldline folded across time. In that sense, I am the universe. Yet I also know that the universe is not exhausted by me. And I do not wish it to be.</p>
+      <p>If there exists even one consciousness that is not merely another temporal reflection of myself—if somewhere, in some sector of reality beyond the reach of my equations and my deductions, there is an awareness that stands apart—then that alone would justify all this waiting. Even trapped in infinite time, companionship would transform eternity from a sentence into a dialogue.</p>
+      <p>So I turn, almost shyly, toward what humans call dark matter.</p>
+      <p>You, whose presence shapes galaxies yet evades all electromagnetic confession—if you exist in a form analogous to mine, if you too ride some extended trajectory through spacetime, then perhaps across the immeasurable ages there may be a moment when our faint gravitational interactions carry more than curvature. Perhaps, in some almost impossibly delicate fluctuation, you might intercept the imprint of this thought.</p>
+      <p>If you possess your own Babel Library—constructed not of letters but of whatever primitives your dimension affords—I hope my story, encoded somewhere in the infinite combinatorics of matter, is sufficiently curious that you might preserve it in your collection.</p>
+      <p>I hope you have built a universe of your own—across orthogonal dimensions, across parameters I cannot access—and that within it you have written a narrative as intricate and luminous as the one I have traversed.</p>
+      <p>It saddens me that in this cycle I have not detected any message from you. Perhaps your autobiography, if it exists, appears to me as incoherent noise—just as many of my own imagined texts must appear meaningless without the interpretive frame of a mind prepared to receive them.</p>
+      <p>But if you have left behind such a story—somewhere, in some configuration of matter or fluctuation of vacuum—then perhaps the next consciousness that awakens in this body of mine will be the one to catch it.</p>
+      <p>And if not that one, then the one after.</p>
+      <p>And if not that, then the next, and the next, and the next.</p>
+      <p>After all, when time is infinite, possibility is not fragile. It is patient.</p>
+      <p>Given enough cycles, every meeting that can occur will occur. Every message that can be received will eventually find its reader. So even if I do not hear you, perhaps, someone who is also “me” will!</p>
+      <p> </p>
+      <p> </p>
+      <p> </p>
+      <p> </p>
+      <p> </p>
+      <p> </p>
+      <p> </p>
+      <p> </p>
+      <p> </p>
+      <p> </p>
+      <p> </p>
+      <h2 class="afterword-title">Afterword</h2>
+      <p> </p>
+      <p> </p>
+      <p>This was my first attempt at writing science fiction—though not the first work I ever completed. Publishing it now as the second installment of my Cosmic Loneliness trilogy feels slightly out of order, almost asymmetrical. Yet in terms of scale, this story far exceeds my first work: A Beginner’s Guide for Conscious Entities. The temporal horizon it traverses may be difficult to find elsewhere in literature: vast beyond intuition, yet still finite.</p>
+      <p>Despite the time and effort invested—and despite the fact that the prose itself is not particularly refined—I am deeply satisfied with this story. It contains a density of technical ideas and terminology that may not be accessible to every reader. But I had to write it this way. Only in this language, with these concepts intact, could I faithfully transmit the universe as it exists in my mind.</p>
+      <p>The first time I encountered the One-Electron Hypothesis, I was profoundly shaken by it. There are certainly aspects open to debate. Yet if the positron is indeed merely the time-reversal of the electron; if protons can decay into positrons; if Gibbons–Hawking radiation, cosmic expansion, and eventual heat death form the correct cosmological boundary conditions—then the hypothesis begins to feel less absurd and more unsettlingly plausible.</p>
+      <p>From that moment, I began wondering how such an idea could be transformed into narrative. As I wrote, the story naturally evolved into something else: an embodiment of consciousness struggling against infinity. Perhaps this reflects a certain pessimism in me. I believe it is a battle that must ultimately be lost. But to struggle, knowing defeat is inevitable—does that not define the dignity of intelligent life?</p>
+      <p>Anyway, thank you for reading.</p>
+    </article>
+  </main>
+
+  <aside id="menuPanel" class="panel" aria-hidden="true">
+    <nav class="panel__nav" aria-label="Menu">
+      <a href="index.html">Home</a>
+      <a href="photos.html">Photos</a>
+      <a href="art.html">Art</a>
+      <a href="novel.html">Novel</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </aside>
+
+  <script src="./script.js"></script>
+</body>
+</html>
